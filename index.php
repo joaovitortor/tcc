@@ -62,7 +62,7 @@
         </div>
 
         <div class="recent-orders">
-                <h2>Pedidos Recentes</h2>
+                <h2 class="text">Pedidos Recentes</h2>
                 <table>
                     <thead>
                         <tr>
