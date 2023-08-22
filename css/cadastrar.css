@@ -1,0 +1,142 @@
+.corpo {
+    align-items: center;
+    background-color: #ffd8be;
+    background-size: cover;
+    display: flex;
+    height: auto;
+    justify-items: center;
+    margin: 0;
+    transition: .2s all linear;
+    width: auto;
+}
+
+.corpo:focus-within {
+    background-color: #9381ff;
+}
+
+.geekcb-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw;
+}
+
+.geekcb-form-contact {
+    background-color: #f8f7ff;
+    border: 2px solid black;
+    box-shadow: 15px 15px 1px #9381ff, 15px 15px 1px 2px black;
+    padding: 50px 100px;
+    transition: .2s all linear;
+}
+
+.geekcb-field {
+    background-color: transparent;
+    border: none;
+    border-bottom: 5px solid black;
+    color: black;
+    display: block;
+    font-family: "Fjalla One";
+    font-size: 14pt;
+    line-height: 28pt;
+    margin-bottom: 28pt;
+    min-width: 250px;
+    outline: none;
+    padding-left: 5px;
+    width: 100%;
+}
+
+.geekcb-field:focus {
+    border-bottom: 5px solid #9381ff;
+}
+
+.geekcb-field::selection {
+    background-color: #ffd8be;
+}
+
+.geekcb-btn {
+    background-color: #9381ff;
+    border: 1px solid black;
+    box-shadow: 3px 3px 1px #ffd8be, 3px 3px 1px 1px black;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    letter-spacing: 2px;
+    line-height: 28pt;
+    margin: 0 auto;
+    outline: none;
+    padding: 0 20px;
+    text-transform: uppercase;
+    transition: .2 all ease-in-out;
+}
+
+.geekcb-btn:hover {
+    background-color: #ffd8be;
+    border: 1px solid black;
+    box-shadow: -3px -3px 1px #9381ff, -3px -3px 1px 1px black;
+    color: black;
+}
+
+.geekcb-btn:active {
+    box-shadow: 0 0 0 #ffd8be;
+    transform: translateX(-3px) translateY(-3px);
+}
+
+.geekcb-field:-webkit-autofill,
+.geekcb-field:-webkit-autofill:hover,
+.geekcb-field:-webkit-autofill:focus {
+    border-bottom: 5px solid #95a4ff;
+    box-shadow: 0 0 0px 1000px #f8f4e5 inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.esquerda {
+    padding-right: 50px;
+}
+
+.titulo {
+    padding-bottom: 10px;
+    text-align: center;
+    font-family: Fjalla One;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+select {
+    background-color: transparent;
+    display: block;
+    border: none;
+    border-bottom: 5px solid black;
+    color: black;
+    font-family: "Fjalla One";
+    border-radius: 0;
+    border-bottom-color: black;
+    font-size: 14pt;
+    line-height: 28pt;
+    margin-bottom: 28pt;
+    min-width: 250px;
+    outline: none;
+    padding-left: 5px;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.fonte-status{
+    opacity:.5;
+}
+.select:focus {
+border-bottom: 5px solid #9381ff;
+}
+
+.select::selection {
+background-color: #ffd8be;
+}
