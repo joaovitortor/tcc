@@ -13,16 +13,37 @@ if (isset($_POST['cadastrar'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
+    
+
     //3. preparar sql para inserir
-    $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
+    $sql = "insert into leitor (statusLeitor, nome, telefone, endereco, cpf, dn, email, senha)
 values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
+
+
+// Criar objetos DateTime para a data de nascimento e a data atual
+$dataNascimentoObj = new DateTime($dn);
+$dataAtualObj = new DateTime();
+
+// Calcular a diferença entre as datas
+$diferenca = $dataNascimentoObj->diff($dataAtualObj);
+
+// Obter a idade em anos
+$idade = $diferenca->y;
 
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
 
     //5.mostrar uma mensagem ao usuário
     $mensagem = "Cadastro realizado com sucesso!";
+
+    if($idade < 18){
+        $idUsuario = mysqli_insert_id($conexao);
+        header("Location: cadastrarResponsavel2.php?idusuario=$idUsuario");
+        exit;
+    }
+
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -130,31 +151,30 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact">
+                <form method="post" class="geekcb-form-contact" id="leitorForm">
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
-                            <select id="selectbox" data-selected="">
+                            <select class="geekcb-field" name="status" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" selected="selected" disabled="disabled"
                                     placeholder="Status">Status</option>
-                                <option value="1">Ocean Wall</option>
-                                <option value="2">Skate Park</option>
-                                <option value="3">Mountain View</option>
-                                <option value="4">Cityscape</option>
-                                <option value="5">Workshop</option>
+                                <option value="1">Ativo</option>
+                                <option value="2">Inativo</option>
                             </select>
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" placeholder="Nome" required type="texto" name="nome">
+                            <input class="geekcb-field" id="dn" placeholder="Data de Nascimento" required type="date"
+                                name="dn">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
+                            <input class="geekcb-field" placeholder="Nome" required type="texto" name="nome">
+                        </div>
+                       
+                        <div class="form-column">
                             <input class="geekcb-field" id="telefone" name="telefone" placeholder="Telefone" required
                                 type="texto" name="telefone">
-                        </div>
-                        <div class="form-column">
-                            <input class="geekcb-field" placeholder="Endereço" required type="texto" name="endereco">
                         </div>
                     </div>
                     <div class="form-row">
@@ -162,8 +182,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                             <input class="geekcb-field" id="cpf" placeholder="Cpf" required type="texto" name="cpf">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" id="dn" placeholder="Data de Nascimento" required type="texto"
-                                name="dn">
+                            <input class="geekcb-field" placeholder="Endereço" required type="texto" name="endereco">
                         </div>
                     </div>
                     <div class="form-row">
@@ -175,10 +194,9 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                         </div>
                     </div>
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
-
-
-
                 </form>
+
+               
             </div>
         </div>
         </div>
