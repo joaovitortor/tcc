@@ -16,7 +16,7 @@ if (isset($_POST['cadastrar'])) {
     
 
     //3. preparar sql para inserir
-    $sql = "insert into leitor (statusLeitor, nome, telefone, endereco, cpf, dn, email, senha)
+    $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
 values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
 
@@ -38,7 +38,7 @@ $idade = $diferenca->y;
 
     if($idade < 18){
         $idUsuario = mysqli_insert_id($conexao);
-        header("Location: cadastrarResponsavel2.php?idusuario=$idUsuario");
+        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
         exit;
     }
 
