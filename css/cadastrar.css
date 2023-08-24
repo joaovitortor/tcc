@@ -1,18 +1,13 @@
 .corpo {
     align-items: center;
-    background-color: #ffd8be;
-    background-size: cover;
     display: flex;
     height: auto;
     justify-items: center;
     margin: 0;
-    transition: .2s all linear;
     width: auto;
 }
 
-.corpo:focus-within {
-    background-color: #9381ff;
-}
+
 
 .geekcb-wrapper {
     align-items: center;
@@ -163,20 +158,31 @@ background-color: #ffd8be;
     padding-left: 5px;
     width: 100%;
   }
-  /*
-  #minha-tabela th {
-   
+
+  .botao{
+  background-color: #9381ff;
+  border: 1px solid black;
+  box-shadow: 3px 3px 1px #ffd8be, 3px 3px 1px 1px black;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: 2px;
+  line-height: 20pt;
+  margin: 0 auto;
+  outline: none;
+  padding: 0 10px;
+  text-transform: uppercase;
+  transition: .2 all ease-in-out;
   }
-  
-  #minha-tabela td {
-    
-  }
-  
-  #minha-tabela tbody tr:nth-child(even) {
-   
-  }
-  
-  #minha-tabela tbody tr:nth-child(odd) {
-    
-  }*/
-  
+
+  .botao:hover {
+    background-color: #ffd8be;
+    border: 1px solid black;
+    box-shadow: -3px -3px 1px #9381ff, -3px -3px 1px 1px black;
+    color: black;
+}
+
+.botao:active {
+    box-shadow: 0 0 0 #ffd8be;
+    transform: translateX(-3px) translateY(-3px);
+}

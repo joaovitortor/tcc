@@ -5,13 +5,13 @@ require_once("conexao.php");
 
 // Excluir
 if(isset($_GET['id'])){ // Verifica se o botão excluir foi clicado
-  $sql= "delete from genero where id = " . $_GET['id'];
+  $sql= "delete from administrador where id = " . $_GET['id'];
   mysqli_query($conexao,$sql);
   $mensagem= "Exclusão realizada com sucesso.";
 }
 
 //2. Prepara a SQL
-$sql = "select * from genero";
+$sql = "select * from administrador";
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -133,7 +133,7 @@ $resultado = mysqli_query($conexao, $sql);
 
                 <form method="post" class="geekcb-form-contact">
                 <div class="listar">
-                <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero</h2><br>
+                <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de administradores</h2><br>
                 <table>
                     <thead>
                         <tr>
@@ -148,13 +148,13 @@ $resultado = mysqli_query($conexao, $sql);
       <td><?=$linha['status']?></td>
       <td><?=$linha['nome']?></td>
 
-    <td>
+      <td>
     
     <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
-    <i class="fa-solid fa-pen-to-square"></i></a>
+    <i class="fa-solid fa-pen-to-square"></i>
+    </a>
     
-
-    <a href="listarGenero.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+    <a href="listarAdministrador.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
     <i class="fa-sharp fa-solid fa-trash"></i> </a>
    
   </td>

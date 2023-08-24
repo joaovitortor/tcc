@@ -132,9 +132,14 @@ if (isset($_POST['cadastrar'])) {
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                    <h1 class="titulo">Cadastrar Gênero</h1>
+                    <h1 class="titulo">Cadastrar Gêneros</h1>
 
-                    <input class="geekcb-field" value="<?= $status ?>" placeholder="Status" required type="texto" name="status">
+                    <select class="geekcb-field" name="status" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                                    placeholder="Status">Status</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
 
                     <input class="geekcb-field"  value="<?= $nome ?>" placeholder="Nome" required type="texto" name="nome">
 

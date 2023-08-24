@@ -5,17 +5,13 @@ require_once("conexao.php");
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
-    $nome = $_POST['nome'];
-    $telefone = $_POST['telefone'];
-    $endereco = $_POST['endereco'];
-    $cpf = $_POST['cpf'];
-    $dn = $_POST['dn'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $nome = $_POST['login'];
+    $telefone = $_POST['senha'];
+ 
 
     //3. preparar sql para inserir
-    $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
-values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
+    $sql = "insert into administrador (status, login, senha, nome)
+values ('$status', '$login', '$senha', '$nome')";
 
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
@@ -143,11 +139,9 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
 
                     <select id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled" placeholder="Status">Status</option>
-                        <option value="1">Ocean Wall</option>
-                        <option value="2">Skate Park</option>
-                        <option value="3">Mountain View</option>
-                        <option value="4">Cityscape</option>
-                        <option value="5">Workshop</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+
                     </select>
 
 

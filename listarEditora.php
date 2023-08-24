@@ -1,23 +1,3 @@
-<?php
-//1. Conecta no banco de dados (IP, usuario, senha, nome do banco)
-//require_once("verificaautenticacao.php");
-require_once("conexao.php");
-
-// Excluir
-if(isset($_GET['id'])){ // Verifica se o botão excluir foi clicado
-  $sql= "delete from genero where id = " . $_GET['id'];
-  mysqli_query($conexao,$sql);
-  $mensagem= "Exclusão realizada com sucesso.";
-}
-
-//2. Prepara a SQL
-$sql = "select * from genero";
-
-//3. Executa a SQL
-$resultado = mysqli_query($conexao, $sql);
-
-?>
-
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -112,61 +92,76 @@ $resultado = mysqli_query($conexao, $sql);
     <section class="dashboard">
 
         <div class="corpo">
-            <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
+                <div class="top">
+                    <i class="uil uil-bars sidebar-toggle"></i>
 
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
+                    <div class="search-box">
+                        <i class="uil uil-search"></i>
+                        <input type="text" placeholder="Search here...">
+                    </div>
+
+                    <!--<img src="images/profile.jpg" alt="">-->
                 </div>
+                <div class="activity">
+                    <div class="title">
+                        <i class="uil uil-clock-three"></i>
+                        <span class="text">Recent Activity</span>
+                    </div>
 
-                <!--<img src="images/profile.jpg" alt="">-->
-            </div>
-            <div class="geekcb-wrapper">
-                <form method="post" class="container">
-                    <?php
-                    $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                    ?>
-
-                </form>
-
-                <form method="post" class="geekcb-form-contact">
-                <div class="listar">
-                <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero</h2><br>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>ID</td>
-                            <td>Status</td>
-                            <td>Nome</td>
-                        </tr>
-                        <tbody>
-                        <?php while($linha = mysqli_fetch_array($resultado)){ ?>
-    <tr>
-      <td><?=$linha['id']?></td>
-      <td><?=$linha['status']?></td>
-      <td><?=$linha['nome']?></td>
-
-    <td>
-    
-    <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
-    <i class="fa-solid fa-pen-to-square"></i></a>
-    
-
-    <a href="listarGenero.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-    <i class="fa-sharp fa-solid fa-trash"></i> </a>
-   
-  </td>
-    </tr>
-    <?php } ?>
-
-                    </tbody>
-                </table>
-               
-            </div>
-                </form>
-            </div>
+                    <div class="recent-orders">
+                        <h2 class="text">Pedidos Recentes</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome do Produto</th>
+                                    <th>Número do Produto</th>
+                                    <th>Método de Pagamento</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Blusa Listrada</td>
+                                    <td>59234</td>
+                                    <td>Pix</td>
+                                    <td class="warning">Pendente</td>
+                                    <td class="primary">Detalhes</td>
+                                </tr>
+                                <tr>
+                                    <td>Blusa Listrada</td>
+                                    <td>59234</td>
+                                    <td>Pix</td>
+                                    <td class="warning">Pendente</td>
+                                    <td class="primary">Detalhes</td>
+                                </tr>
+                                <tr>
+                                    <td>Blusa Listrada</td>
+                                    <td>59234</td>
+                                    <td>Pix</td>
+                                    <td class="warning">Pendente</td>
+                                    <td class="primary">Detalhes</td>
+                                </tr>
+                                <tr>
+                                    <td>Blusa Listrada</td>
+                                    <td>59234</td>
+                                    <td>Pix</td>
+                                    <td class="warning">Pendente</td>
+                                    <td class="primary">Detalhes</td>
+                                </tr>
+                                <tr>
+                                    <td>Blusa Listrada</td>
+                                    <td>59234</td>
+                                    <td>Pix</td>
+                                    <td class="warning">Pendente</td>
+                                    <td class="primary">Detalhes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="#">Mostrar Tudo</a>
+                    </div>
+                </div>
+                
         </div>
         </div>
     </section>

@@ -484,7 +484,7 @@ nav.close ~ .dashboard .top{
 table tbody td{
     height: 2.8rem;
     border-bottom: 1px solid #f8eae9;
-    color: #677483;
+    color: #000000;
 }
 table tbody tr:last-child td{
     border: none;
@@ -498,4 +498,16 @@ table tbody tr:last-child td{
 
 .text {
     color: var(--text-color);
+}
+
+.listar table{
+    width: 100%;
+    border-radius: 0.5 rem;
+    text-align: center;
+    transition: all 300ms ease;
+}
+
+.listar table td{
+   padding-right: 50px;
+   text-align: center;
 }
