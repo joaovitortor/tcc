@@ -10,8 +10,16 @@ if(isset($_GET['id'])){ // Verifica se o botão excluir foi clicado
   $mensagem= "Exclusão realizada com sucesso.";
 }
 
-//2. Prepara a SQL
-$sql = "select * from genero";
+//geração de sql para relatório
+$V_WHERE ="";
+if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
+  $V_WHERE= " and nome like '%" . $_POST['nome']."%' ";
+}
+
+//2. Preparar a sql
+$sql = "select * from usuario
+where 1 = 1" . $V_WHERE;
+
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -120,7 +128,8 @@ $resultado = mysqli_query($conexao, $sql);
                     <input type="text" placeholder="Search here...">
                 </div>
 
-                <div>
+                  <!--pesquisar usuarios-->
+    <div>
   <div class="search-box">
   <i class="uil uil-search"></i>
     <h2>Pesquisar</h2>
@@ -132,6 +141,7 @@ $resultado = mysqli_query($conexao, $sql);
     </div>
     </form>
   </div>
+
 
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
