@@ -154,16 +154,10 @@ $resultado = mysqli_query($conexao, $sql);
                         <?php while($linha = mysqli_fetch_array($resultado)){ ?>
     <tr>
       <td><?=$linha['id']?></td>
-      <td><?=$linha['status']?></td>
       <td><?=$linha['nome']?></td> <td><?=$linha['id']?></td>
-      <td><?=$linha['CPF']?></td>
-      <td><?=$linha['E-mail']?></td>
-      <td><?=$linha['Data de nascimento']?></td>
-      <td><?=$linha['Telefone']?></td>
-      <td><?=$linha['Endereço']?></td>
-      <td><?=$linha['Nome responsável']?></td>
-      <td><?=$linha['CPF responsável']?></td>
-      <td><?=$linha['Telefone responsável']?></td> 
+      <td><?=$linha['cpf']?></td>
+      <td><?=$linha['email']?></td>
+      <td><?=$linha['telefone']?></td>
                        
     <td>
     
