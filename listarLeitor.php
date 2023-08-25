@@ -6,7 +6,7 @@ require_once("conexao.php");
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $sql = "delete from leitor where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
+    mysqli_query($conexao,$sql);
     $mensagem = "Exclusão realizada com sucesso.";
 }
 
@@ -151,9 +151,6 @@ $resultado = mysqli_query($conexao, $sql);
                                         </td>
                                         <td>
                                             <?= $linha['nome'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['id'] ?>
                                         </td>
                                         <td>
                                             <?= $linha['cpf'] ?>
