@@ -138,16 +138,16 @@ $resultado = mysqli_query($conexao, $sql);
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>Status</td>
+                            <!--<td>Status</td>-->
                             <td>Nome</td>
                             <td>CPF</td>
                             <td>E-mail</td>
-                            <td>Data de nascimento</td>
+                            <!--<td>Data de nascimento</td>-->
                             <td>Telefone</td>
-                            <td>Endereço</td>
-                            <td>Nome responsável</td>
+                            <!--<td>Endereço</td>-->
+                            <!--<td>Nome responsável</td>
                             <td>CPF responsável</td>   
-                            <td>Telefone responsável</td>                     
+                            <td>Telefone responsável</td>-->                   
 
                         </tr>
                         <tbody>
