@@ -4,10 +4,10 @@
 require_once("conexao.php");
 
 // Excluir
-if(isset($_GET['id'])){ // Verifica se o botão excluir foi clicado
-  $sql= "delete from leitor where id = " . $_GET['id'];
-  mysqli_query($conexao,$sql);
-  $mensagem= "Exclusão realizada com sucesso.";
+if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
+    $sql = "delete from leitor where id = " . $_GET['id'];
+    mysqli_query($conexao, $sql);
+    $mensagem = "Exclusão realizada com sucesso.";
 }
 
 //2. Prepara a SQL
@@ -132,54 +132,61 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <div class="listar">
-                <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores</h2><br>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>ID</td>
-                            <!--<td>Status</td>-->
-                            <td>Nome</td>
-                            <td>CPF</td>
-                            <td>E-mail</td>
-                            <!--<td>Data de nascimento</td>-->
-                            <td>Telefone</td>
-                            <!--<td>Endereço</td>-->
-                            <!--<td>Nome responsável</td>
-                            <td>CPF responsável</td>   
-                            <td>Telefone responsável</td>-->                   
+                    <div class="listar">
+                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores</h2><br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Nome</td>
+                                    <td>CPF</td>
+                                    <td>E-mail</td>
+                                    <td>Telefone</td>
+                                </tr>
+                            <tbody>
+                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                                    <tr>
+                                        <td>
+                                            <?= $linha['id'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['nome'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['id'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['cpf'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['email'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['telefone'] ?>
+                                        </td>
 
-                        </tr>
-                        <tbody>
-                        <?php while($linha = mysqli_fetch_array($resultado)){ ?>
-    <tr>
-      <td><?=$linha['id']?></td>
-      <td><?=$linha['nome']?></td> <td><?=$linha['id']?></td>
-      <td><?=$linha['cpf']?></td>
-      <td><?=$linha['email']?></td>
-      <td><?=$linha['telefone']?></td>
-                       
-    <td>
-    
-    <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
-    <i class="fa-solid fa-pen-to-square"></i>
-    </a>
+                                        <td>
 
-    <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
-    <i class="fi fi-rr-menu-dots"></i>
-    </a>
-    
-    <a href="listarLeitor.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-    <i class="fa-sharp fa-solid fa-trash"></i> </a>
-   
-  </td>
-    </tr>
-    <?php } ?>
+                                            <a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
 
-                    </tbody>
-                </table>
-               
-            </div>
+                                            <a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                                <i class="fi fi-rr-menu-dots"></i>
+                                            </a>
+
+                                            <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
+                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
                 </form>
             </div>
         </div>
