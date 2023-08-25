@@ -170,6 +170,10 @@ $resultado = mysqli_query($conexao, $sql);
     <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
     <i class="fa-solid fa-pen-to-square"></i>
     </a>
+
+    <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
+    <i class="fi fi-rr-menu-dots"></i>
+    </a>
     
     <a href="listarLeitor.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
     <i class="fa-sharp fa-solid fa-trash"></i> </a>

@@ -5,13 +5,13 @@ require_once("conexao.php");
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $idUsuario = $_POST['id_usuario'];
-    $nomeResponsavel = $_POST['nomeResponsavel'];
-    $telefoneResponsavel = $_POST['telefoneResponsavel'];
-    $cpfResponsavel = $_POST['cpfResponsavel'];
+    $nomeResp = $_POST['nomeResp'];
+    $telResp = $_POST['telResp'];
+    $cpfResp = $_POST['cpfResp'];
     
 
     // Montar a consulta SQL de atualização
-    $sql = "UPDATE leitor SET nomeResponsavel = '$nomeResponsavel', telefoneResponsavel = '$telefoneResponsavel', cpfResponsavel = '$cpfResponsavel' WHERE id = $idUsuario";
+    $sql = "UPDATE leitor SET nomeResp = '$nomeResp', telResp = '$telResp', cpfResp = '$cpfResp' WHERE id = $idUsuario";
     mysqli_query($conexao, $sql);
 
     header("Location: cadastrarLeitor.php");
@@ -128,18 +128,18 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="container">
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nomeResponsavel']) ? $_POST['nomeResponsavel'] : "";
+                    $nome = isset($_POST['nomeResp']) ? $_POST['nomeResp'] : "";
                     ?>
 
                 </form>
 
-                <form action="cadastrarResponsavel2.php" method="post" class="geekcb-form-contact">
+                <form action="cadastrarResponsavel.php" method="post" class="geekcb-form-contact">
                 <input type="hidden" name="id_usuario" value="<?php echo $_GET['idusuario']; ?>">
                 <h1 class="titulo">Cadastrar Responsável</h1>                 
 
-                    <input class="geekcb-field"  placeholder="Nome do responsável" required type="texto" name="nomeResponsavel">
-                    <input class="geekcb-field" id="cpf" placeholder="CPF do responsável" required type="texto" name="cpfResponsavel">
-                    <input class="geekcb-field" id="telefone" placeholder="Telefone do responsável" required type="texto" name="telefoneResponsavel">
+                    <input class="geekcb-field"  placeholder="Nome do responsável" required type="texto" name="nomeResp">
+                    <input class="geekcb-field" id="cpf" placeholder="CPF do responsável" required type="texto" name="cpfResp">
+                    <input class="geekcb-field" id="telefone" placeholder="Telefone do responsável" required type="texto" name="telResp">
                         
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
