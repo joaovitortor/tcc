@@ -120,19 +120,6 @@ $resultado = mysqli_query($conexao, $sql);
                     <input type="text" placeholder="Search here...">
                 </div>
 
-                <div>
-  <div class="search-box">
-  <i class="uil uil-search"></i>
-    <h2>Pesquisar</h2>
-    <form method = "post">
-    <label name="nome" for="exampleFormControlInput1">Nome</label>
-        <input name="nome" type="text">
-        <p style="padding: 1px"></p>
-        <button name="pesquisar" type="button">Pesquisar</button>
-    </div>
-    </form>
-  </div>
-
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">

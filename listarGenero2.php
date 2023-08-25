@@ -17,7 +17,7 @@ if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
 }
 
 //2. Preparar a sql
-$sql = "select * from usuario
+$sql = "select * from genero
 where 1 = 1" . $V_WHERE;
 
 
@@ -168,7 +168,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <?php while($linha = mysqli_fetch_array($resultado)){ ?>
     <tr>
       <td><?=$linha['id']?></td>
-      <td><?=$linha['status']?></td>
+     
       <td><?=$linha['nome']?></td>
 
     <td>
