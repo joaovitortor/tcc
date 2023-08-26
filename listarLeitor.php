@@ -6,7 +6,7 @@ require_once("conexao.php");
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $sql = "delete from leitor where id = " . $_GET['id'];
-    mysqli_query($conexao,$sql);
+    mysqli_query($conexao, $sql);
     $mensagem = "Exclusão realizada com sucesso.";
 }
 
@@ -133,7 +133,12 @@ $resultado = mysqli_query($conexao, $sql);
 
                 <form method="post" class="geekcb-form-contact">
                     <div class="listar">
-                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores</h2><br>
+                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
+                            <a href="cadastrarLeitor.php" class="botao">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
+                        </h2><br>
+
                         <table>
                             <thead>
                                 <tr>
@@ -164,13 +169,17 @@ $resultado = mysqli_query($conexao, $sql);
 
                                         <td>
 
-                                            <a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                            <a style="margin-right: 8px;" href="produtoAlterar.php? id=<?= $linha['id'] ?>"
+                                                class="botao">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <!--<a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
-                                                <i class="fi fi-rr-menu-dots"></i> -->
-                                            </a>
+                                            <button style="margin-right: 8px;"
+                                                href="produtoAlterar.php? id=<?= $linha['id'] ?>" onclick="openModal()"
+                                                class="botao">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+
 
                                             <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
                                                 onclick="return confirm('Deseja mesmo excluir o cadastro?')">
@@ -187,6 +196,23 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
             </div>
         </div>
+        </div>
+        <div class="modal-container">
+            <div class="modal">
+                <h2>Info</h2>
+                <hr />
+                <span>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text
+                    ever since the 1500s, when an unknown printer took a galley of
+                    type and scrambled it to make a type specimen book.
+                </span>
+                <hr />
+                <div class="btns">
+                    <button class="btnOK" onclick="closeModal()">OK</button>
+                    <button class="btnClose" onclick="closeModal()">Close</button>
+                </div>
+            </div>
         </div>
     </section>
     <script>
@@ -216,6 +242,17 @@ $resultado = mysqli_query($conexao, $sql);
         });
     </script>
     <script src="js/script.js"></script>
+    <script>
+        const modal = document.querySelector('.modal-container')
+
+        function openModal() {
+            modal.classList.add('active')
+        }
+
+        function closeModal() {
+            modal.classList.remove('active')
+        }
+    </script>
 </body>
 
 </html>
