@@ -168,8 +168,8 @@ $resultado = mysqli_query($conexao, $sql);
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
-                                                <i class="fi fi-rr-menu-dots"></i>
+                                            <!--<a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                                <i class="fi fi-rr-menu-dots"></i> -->
                                             </a>
 
                                             <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
