@@ -169,13 +169,13 @@ $resultado = mysqli_query($conexao, $sql);
 
                                         <td>
 
-                                            <a style="margin-right: 8px;" href="produtoAlterar.php? id=<?= $linha['id']?>"
+                                            <a style="margin-right: 8px;" href="produtoAlterar.php? id=<?= $linha['id'] ?>"
                                                 class="botao">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <button onclick="openModal()" style="margin-right: 8px;" value="id=<?=$informacao['resultado'] ?>"
-                                                class="botao">
+                                            <button onclick="openModal()" style="margin-right: 8px;" name="info"
+                                                value="<?= $linha['id'] ?>" class="botao">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
 
@@ -197,11 +197,24 @@ $resultado = mysqli_query($conexao, $sql);
         </div>
 
         <div class="modal-container">
+            <?php if (isset($_POST['info'])) {
+                //2. Receber os dados para inserir no BD
+                $id = $_POST['id'];
+                //4. Executar a SQL
+                mysqli_query($conexao, $sql);
+
+                //5. Mostrar uma mensagem ao usuário
+                $mensagem = "Inserido com sucesso &#128515;";
+            }
+            $sql = "select * from leitor where id = " . $_GET['id'];
+            ?>
+
             <div class="modal">
                 <h2>Info</h2>
                 <hr />
                 <span>
-                    Nome = <?=  ['nome'] ?>
+                    Nome =
+                    <?= ['nome'] ?>
                 </span>
                 <hr />
                 <div class="btns">
