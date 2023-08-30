@@ -131,7 +131,7 @@ $resultado = mysqli_query($conexao, $sql);
 
                 </form>
 
-                <form method="post" class="geekcb-form-contact">
+                <form method="post" class="geekcb-form-contact" onsubmit="return false;">
                     <div class="listar">
                         <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
                             <a href="cadastrarLeitor.php" class="botao">
@@ -174,8 +174,7 @@ $resultado = mysqli_query($conexao, $sql);
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <button style="margin-right: 8px;"
-                                                href="produtoAlterar.php? id=<?= $linha['id'] ?>" onclick="openModal()"
+                                            <button onclick="openModal()" style="margin-right: 8px;"
                                                 class="botao">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
@@ -197,6 +196,7 @@ $resultado = mysqli_query($conexao, $sql);
             </div>
         </div>
         </div>
+
         <div class="modal-container">
             <div class="modal">
                 <h2>Info</h2>
@@ -214,6 +214,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </div>
             </div>
         </div>
+
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
