@@ -169,7 +169,7 @@ $resultado = mysqli_query($conexao, $sql);
 
                                         <td>
 
-                                            <a style="margin-right: 8px;" href="produtoAlterar.php? id=<?= $linha['id'] ?>"
+                                            <a style="margin-right: 8px;" href="produtoAlterar.php? id=<?= $linha['id']?>"
                                                 class="botao">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
