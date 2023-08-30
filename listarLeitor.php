@@ -174,11 +174,10 @@ $resultado = mysqli_query($conexao, $sql);
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <button onclick="openModal()" style="margin-right: 8px;"
+                                            <button onclick="openModal()" style="margin-right: 8px;" value="id=<?=$informacao['resultado'] ?>"
                                                 class="botao">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
-
 
                                             <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
                                                 onclick="return confirm('Deseja mesmo excluir o cadastro?')">
@@ -202,10 +201,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <h2>Info</h2>
                 <hr />
                 <span>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                    industry. Lorem Ipsum has been the industry's standard dummy text
-                    ever since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book.
+                    Nome = <?=  ['nome'] ?>
                 </span>
                 <hr />
                 <div class="btns">
