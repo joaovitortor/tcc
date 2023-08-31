@@ -144,13 +144,13 @@ $linha = mysqli_fetch_array($resultado)
                     <h1 class="titulo">Alterar Editora</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="status" selected="selected" disabled="disabled"
+                                <option class="fonte-status" value="<?= $linha['status']?>" selected="selected" disabled="disabled"
                                     placeholder="Status">Status</option>
                                 <option value="Ativo">Ativo</option>
                                 <option value="Inativo">Inativo</option>
                             </select>
 
-                    <input class="geekcb-field"  value="<?= $nome ?>" placeholder="Nome" required type="texto" name="nome">
+                    <input class="geekcb-field" value="<?= $linha['nome']?>"  placeholder="Nome" required type="texto" name="nome">
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>

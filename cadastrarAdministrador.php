@@ -6,12 +6,12 @@ if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
     $nome = $_POST['login'];
-    $telefone = $_POST['senha'];
+    $senha = $_POST['senha'];
  
 
     //3. preparar sql para inserir
-    $sql = "insert into administrador (status, login, senha, nome)
-values ('$status', '$login', '$senha', '$nome')";
+    $sql = "insert into administrador (status, login, senha)
+values ('$status', '$login', '$senha')";
 
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
