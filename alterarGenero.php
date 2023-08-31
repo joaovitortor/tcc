@@ -1,23 +1,36 @@
 <?php
-//1. Conecta no banco de dados (IP, usuario, senha, nome do banco)
-//require_once("verificaautenticacao.php");
+//1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
+if (isset($_POST['salvar'])) {
+  //2. Receber os dados para inserir no BD
+  $id = $_POST['id'];
+  $nome = $_POST['nome'];
+  $status = $_POST['status'];
 
-// Excluir
-if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from genero where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
-    $mensagem = "Exclusão realizada com sucesso.";
+  //3. Preparar a SQL
+  $sql = "update genero
+    set nome= '$nome',
+    status = '$status'
+    where id = $id";
+
+  //4. Executar a SQL
+  mysqli_query($conexao, $sql);
+
+  //5. Mostrar uma mensagem ao usuário
+  $mensagem = "Inserido com sucesso &#128515;";
 }
 
-//2. Prepara a SQL
-$sql = "select * from genero";
-
-//3. Executa a SQL
+//Busca usuário selecionado pelo "usuarioListar.php"
+$sql = "select * from genero where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
-
+$linha = mysqli_fetch_array($resultado)
 ?>
 
+<?php //require_once("mensagem.php") ?>
+<?php
+//1. conectar no banco de dados (ip, usuario, senha, nome do banco)
+require_once("conexao.php");
+?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -132,50 +145,19 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                    <div class="listar">
-                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero
-                            <a href="cadastrarGenero.php" class="botao">
-                                <i class="fa-solid fa-plus"></i>
-                            </a>
-                        </h2><br>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Status</td>
-                                    <td>Nome</td>
-                                </tr>
-                            <tbody>
-                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                                    <tr>
-                                        <td>
-                                            <?= $linha['id'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['status'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['nome'] ?>
-                                        </td>
+                <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                    <h1 class="titulo">Alterar Gênero</h1>
 
-                                        <td>
+                    <select class="geekcb-field" value="<?= $linha['status'] ?>" name="status" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                                    placeholder="Status">Status</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
 
-                                            <a style="margin-right: 8px;" href="alterarGenero.php? id=<?= $linha['id'] ?>" class="botao">
-                                                <i class="fa-solid fa-pen-to-square"></i></a>
+                    <input class="geekcb-field"  value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto" name="nome">
 
-
-                                            <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
-                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-
-                            </tbody>
-                        </table>
-
-                    </div>
+                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>
             </div>
         </div>
