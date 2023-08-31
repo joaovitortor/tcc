@@ -1,7 +1,6 @@
 <?php
 //1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
-$corpo = "";
 if (isset($_POST['salvar'])) {
   //2. Receber os dados para inserir no BD
   $id = $_POST['id'];
@@ -27,26 +26,10 @@ $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
 ?>
 
-<?php require_once("mensagem.php") ?>
+<?php //require_once("mensagem.php") ?>
 <?php
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
-
-if (isset($_POST['cadastrar'])) {
-    //2. Receber os dados para inserir no BD
-    $status = $_POST['status'];
-    $nome = $_POST['nome'];
-
-    //3. preparar sql para inserir
-    $sql = "insert into genero (status, nome) values ('$status', '$nome')";
-
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
-
-    //5.mostrar uma mensagem ao usuário
-    $mensagem = "Cadastro realizado com sucesso!";
-}
-
 ?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
@@ -172,9 +155,9 @@ if (isset($_POST['cadastrar'])) {
                                 <option value="Inativo">Inativo</option>
                             </select>
 
-                    <input class="geekcb-field"  value="<?= $nome ?>" placeholder="Nome" required type="texto" name="nome">
+                    <input class="geekcb-field"  value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto" name="nome">
 
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>
             </div>
         </div>
