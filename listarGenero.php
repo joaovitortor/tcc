@@ -4,10 +4,10 @@
 require_once("conexao.php");
 
 // Excluir
-if(isset($_GET['id'])){ // Verifica se o botão excluir foi clicado
-  $sql= "delete from genero where id = " . $_GET['id'];
-  mysqli_query($conexao,$sql);
-  $mensagem= "Exclusão realizada com sucesso.";
+if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
+    $sql = "delete from genero where id = " . $_GET['id'];
+    mysqli_query($conexao, $sql);
+    $mensagem = "Exclusão realizada com sucesso.";
 }
 
 //2. Prepara a SQL
@@ -132,39 +132,50 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <div class="listar">
-                <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero</h2><br>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>ID</td>
-                            <td>Status</td>
-                            <td>Nome</td>
-                        </tr>
-                        <tbody>
-                        <?php while($linha = mysqli_fetch_array($resultado)){ ?>
-    <tr>
-      <td><?=$linha['id']?></td>
-      <td><?=$linha['status']?></td>
-      <td><?=$linha['nome']?></td>
+                    <div class="listar">
+                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero
+                            <a href="cadastrarGenero.php" class="botao">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
+                        </h2><br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Status</td>
+                                    <td>Nome</td>
+                                </tr>
+                            <tbody>
+                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                                    <tr>
+                                        <td>
+                                            <?= $linha['id'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['status'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['nome'] ?>
+                                        </td>
 
-    <td>
-    
-    <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
-    <i class="fa-solid fa-pen-to-square"></i></a>
-    
+                                        <td>
 
-    <a href="listarGenero.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-    <i class="fa-sharp fa-solid fa-trash"></i> </a>
-   
-  </td>
-    </tr>
-    <?php } ?>
+                                            <a style="margin-right: 8px;" href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                                <i class="fa-solid fa-pen-to-square"></i></a>
 
-                    </tbody>
-                </table>
-               
-            </div>
+
+                                            <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
+                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
                 </form>
             </div>
         </div>
