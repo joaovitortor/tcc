@@ -148,7 +148,12 @@ values ('$status', '$login', '$senha')";
                     <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
                         name="nome">
 
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                        <table>
+                        <tr>
+                            <td style="padding-right: 70px"> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
+                            <td ><a href="listarAdministrador.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                        </tr>
+                    </table>
                 </form>
             </div>
         </div>
