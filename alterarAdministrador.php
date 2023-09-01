@@ -4,14 +4,18 @@ require_once("conexao.php");
 $corpo = "";
 if (isset($_POST['salvar'])) {
   //2. Receber os dados para inserir no BD
-  $id = $_POST['id'];
-  $nome = $_POST['nome'];
+
   $status = $_POST['status'];
+  $status = $_POST['login'];
+  $status = $_POST['senha'];
+
 
   //3. Preparar a SQL
-  $sql = "update editora
-    set nome= '$nome',
-    status = '$status'
+  $sql = "update administrador
+    set 
+    status = '$status',
+    login = '$login',
+    senha = '$senha'
     where id = $id";
 
   //4. Executar a SQL
@@ -135,6 +139,8 @@ $linha = mysqli_fetch_array($resultado)
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
                     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
+                    $login = isset($_POST['login']) ? $_POST['login'] : "";
+
                     ?>
 
                 </form>
@@ -150,7 +156,9 @@ $linha = mysqli_fetch_array($resultado)
                                 <option value="Inativo">Inativo</option>
                             </select>
 
-                    <input class="geekcb-field"  value="<?= $nome ?>" placeholder="Nome" required type="texto" name="nome">
+                    <input class="geekcb-field"  value="<?= $login ?>" placeholder="Login" required type="texto" name="login">
+                    <input class="geekcb-field"  value="<?= $senha ?>" placeholder="Senha" required type="password" name="senha">
+
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>

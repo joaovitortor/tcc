@@ -5,7 +5,7 @@ require_once("conexao.php");
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
-    $nome = $_POST['login'];
+    $login = $_POST['login'];
     $senha = $_POST['senha'];
  
 
@@ -129,7 +129,7 @@ values ('$status', '$login', '$senha')";
                 <form method="post" class="container">
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
+                    $nome = isset($_POST['login']) ? $_POST['login'] : "";
                     ?>
 
                 </form>
@@ -145,8 +145,8 @@ values ('$status', '$login', '$senha')";
                     </select>
 
 
-                    <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
-                        name="nome">
+                    <input class="geekcb-field"  placeholder="Login" required type="text" name="nome">
+                    <input class="geekcb-field"  placeholder="Senha" required type="password" name="senha">
 
                         <table>
                         <tr>
