@@ -150,8 +150,9 @@ values ('$status', '$login', '$senha')";
 
                         <table>
                         <tr>
-                            <td style="padding-right: 70px"> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
-                            <td ><a href="listarAdministrador.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td style="padding-right: 70px"><a href="listarAdministrador.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td > <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
+                            
                         </tr>
                     </table>
                 </form>

@@ -145,9 +145,10 @@ if (isset($_POST['cadastrar'])) {
 
                     
                     <table>
-                        <tr>
-                            <td style="padding-right: 70px"> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
-                            <td ><a href="listarEditora.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                        <tr> 
+                            <td style="padding-right: 70px"><a href="listarEditora.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td > <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
+                           
                         </tr>
                    
                     </table>

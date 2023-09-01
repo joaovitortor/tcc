@@ -135,7 +135,7 @@ if (isset($_POST['cadastrar'])) {
 
                 <form action="cadastrarResponsavel.php" method="post" class="geekcb-form-contact">
                 <input type="hidden" name="id_usuario" value="<?php echo $_GET['idusuario']; ?>">
-                <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
+               
                 <h1 class="titulo">Cadastrar Responsável</h1>                 
 
                     <input class="geekcb-field"  placeholder="Nome do responsável" required type="texto" name="nomeResp">

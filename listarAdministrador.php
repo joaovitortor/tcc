@@ -126,7 +126,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <form method="post" class="container">
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
+                    $login = isset($_POST['login']) ? $_POST['login'] : "";
                     ?>
 
                 </form>
@@ -146,7 +146,8 @@ $resultado = mysqli_query($conexao, $sql);
     <tr>
       <td><?=$linha['id']?></td>
       <td><?=$linha['status']?></td>
-      <td><?=$linha['nome']?></td>
+      <td><?=$linha['login']?></td>
+      <td><?=$linha['senha']?></td>
 
       <td>
     

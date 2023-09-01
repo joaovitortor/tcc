@@ -4,7 +4,7 @@ require_once("conexao.php");
 $corpo = "";
 if (isset($_POST['salvar'])) {
   //2. Receber os dados para inserir no BD
-
+  $id = $_POST['id'];
   $status = $_POST['status'];
   $status = $_POST['login'];
   $status = $_POST['senha'];
@@ -157,7 +157,7 @@ $linha = mysqli_fetch_array($resultado)
                             </select>
 
                     <input class="geekcb-field"  value="<?= $login ?>" placeholder="Login" required type="texto" name="login">
-                    <input class="geekcb-field"  value="<?= $senha ?>" placeholder="Senha" required type="password" name="senha">
+                    <input class="geekcb-field"  value="<?= $senha ?>" placeholder="Senha" required type="password" name="login">
 
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
