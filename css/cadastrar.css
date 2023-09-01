@@ -73,6 +73,28 @@
     color: black;
 }
 
+.botaolistar {
+    background-color: #9381ff;
+    border: 1px solid black;
+    box-shadow: 3px 3px 1px #ffd8be, 3px 3px 1px 1px black;
+    color: #fff;
+    cursor: pointer;
+    line-height: 15pt;
+    outline: none;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    transition: .2 all ease-in-out;
+    width: 8%;
+    align-items: flex-start;
+}
+
+.botaolistar:hover {
+    background-color: #ffd8be;
+    border: 1px solid black;
+    box-shadow: -3px -3px 1px #9381ff, -3px -3px 1px 1px black;
+    color: black;
+}
+
 .geekcb-btn:active {
     box-shadow: 0 0 0 #ffd8be;
     transform: translateX(-3px) translateY(-3px);

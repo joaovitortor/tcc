@@ -152,6 +152,7 @@ $idade = $diferenca->y;
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
+                <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
@@ -193,6 +194,7 @@ $idade = $diferenca->y;
                             <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
+                   
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
 
