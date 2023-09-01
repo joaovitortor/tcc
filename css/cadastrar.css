@@ -79,12 +79,12 @@
     box-shadow: 3px 3px 1px #ffd8be, 3px 3px 1px 1px black;
     color: #fff;
     cursor: pointer;
-    line-height: 15pt;
+    line-height: 5pt;
     outline: none;
     padding: 5px 10px;
     text-transform: uppercase;
     transition: .2 all ease-in-out;
-    width: 8%;
+    width: 5%;
     align-items: flex-start;
 }
 
