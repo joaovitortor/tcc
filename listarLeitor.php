@@ -284,7 +284,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 
 
-            modal.style.display = 'block'; // Defina o estilo de exibição como 'block' para mostrar o modal
+            modal.style.display = 'flex'; // Defina o estilo de exibição como 'block' para mostrar o modal
         },
         error: function () {
             alert('Falha ao buscar os dados do usuário.');
