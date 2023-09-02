@@ -174,8 +174,8 @@ $resultado = mysqli_query($conexao, $sql);
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <button onclick="openModal()" style="margin-right: 8px;" name="info"
-                                                value="<?= $linha['id'] ?>" class="botao">
+                                            <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;" name="info"
+                                                class="botao">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
 
@@ -197,25 +197,19 @@ $resultado = mysqli_query($conexao, $sql);
         </div>
 
         <div class="modal-container">
-            <?php if (isset($_POST['info'])) {
-                //2. Receber os dados para inserir no BD
-                $id = $_POST['id'];
-                //4. Executar a SQL
-                mysqli_query($conexao, $sql);
-
-                //5. Mostrar uma mensagem ao usuário
-                $mensagem = "Inserido com sucesso &#128515;";
-            }
-            $sql = "select * from leitor where id = " . $_GET['id'];
-            ?>
 
             <div class="modal">
-                <h2>Info</h2>
+                <h2>Informações do Usuário</h2>
                 <hr />
-                <span>
-                    Nome =
-                    <?= ['nome'] ?>
-                </span>
+                <span>Nome: <span id="modalNome"></span></span>
+                <span>Telefone: <span id="modalTelefone"></span></span>
+                <span>Email: <span id="modalEmail"></span></span>
+                <span>Endereco: <span id="modalEndereco"></span></span>
+                <span>Data de Nascimento: <span id="modalDn"></span></span>
+                <span>CPF: <span id="modalCpf"></span></span>
+                <span>Nome do Responsável: <span id="modalNomeResp"></span></span>
+                <span>CPF do Responsável: <span id="modalCpfResp"></span></span>
+                <span>Telefone do Responsável: <span id="modalTelResp"></span></span>
                 <hr />
                 <div class="btns">
                     <button class="btnOK" onclick="closeModal()">OK</button>
@@ -253,14 +247,55 @@ $resultado = mysqli_query($conexao, $sql);
     </script>
     <script src="js/script.js"></script>
     <script>
-        const modal = document.querySelector('.modal-container')
 
-        function openModal() {
-            modal.classList.add('active')
+        const modal = document.querySelector('.modal-container');
+
+        function openModal(userId) {
+    const modal = document.querySelector('.modal-container');
+    const modalContent = modal.querySelector('.modal');
+
+    // Faça uma solicitação AJAX para buscar os dados do usuário com base no userId
+    $.ajax({
+        type: 'GET',
+        url: 'buscar_dados_usuario.php', // Substitua pelo URL real para buscar os dados do usuário
+        data: { id: userId },
+        dataType: 'json',
+        success: function (data) {
+            // Atualize o campo "Nome" do modal com os dados do usuário obtidos
+            const modalNome = modalContent.querySelector('#modalNome');
+            const modalTelefone = modalContent.querySelector('#modalTelefone');
+            const modalEmail = modalContent.querySelector('#modalEmail');
+            const modalEndereco = modalContent.querySelector('#modalEndereco');
+            const modalDn = modalContent.querySelector('#modalDn');
+            const modalCpf = modalContent.querySelector('#modalCpf');
+            const modalNomeResp = modalContent.querySelector('#modalNomeResp');
+            const modalCpfResp = modalContent.querySelector('#modalCpfResp');
+            const modalTelResp = modalContent.querySelector('#modalTelResp');
+
+            modalNome.textContent = data.nome;
+            modalTelefone.textContent = data.telefone;
+            modalEmail.textContent = data.email;
+            modalEndereco.textContent = data.endereco;
+            modalDn.textContent = data.dn;
+            modalCpf.textContent = data.cpf;
+            modalNomeResp.textContent = data.nomeResp;
+            modalCpfResp.textContent = data.cpfResp;
+            modalTelResp.textContent = data.telResp;
+
+
+
+            modal.style.display = 'block'; // Defina o estilo de exibição como 'block' para mostrar o modal
+        },
+        error: function () {
+            alert('Falha ao buscar os dados do usuário.');
         }
+    });
+}
 
         function closeModal() {
-            modal.classList.remove('active')
+            const modal = document.querySelector('.modal-container');
+            modal.classList.remove('active');
+            modal.style.display = 'none';
         }
     </script>
 </body>
