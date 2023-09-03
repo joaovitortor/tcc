@@ -157,9 +157,9 @@ $resultado = mysqli_query($conexao, $sql);
                                         <td>
                                             <?= $linha['nome'] ?>
                                         </td>
-                                        <td>
-                                            <?= $linha['cpf'] ?>
-                                        </td>
+                                        <!--<td>
+                                            $linha['cpf'] ?>
+                                        </td>-->
                                         <td>
                                             <?= $linha['email'] ?>
                                         </td>
@@ -174,8 +174,8 @@ $resultado = mysqli_query($conexao, $sql);
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 
-                                            <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;" name="info"
-                                                class="botao">
+                                            <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;"
+                                                name="info" class="botao">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
 
@@ -251,46 +251,46 @@ $resultado = mysqli_query($conexao, $sql);
         const modal = document.querySelector('.modal-container');
 
         function openModal(userId) {
-    const modal = document.querySelector('.modal-container');
-    const modalContent = modal.querySelector('.modal');
+            const modal = document.querySelector('.modal-container');
+            const modalContent = modal.querySelector('.modal');
 
-    // Faça uma solicitação AJAX para buscar os dados do usuário com base no userId
-    $.ajax({
-        type: 'GET',
-        url: 'buscar_dados_usuario.php', // Substitua pelo URL real para buscar os dados do usuário
-        data: { id: userId },
-        dataType: 'json',
-        success: function (data) {
-            // Atualize o campo "Nome" do modal com os dados do usuário obtidos
-            const modalNome = modalContent.querySelector('#modalNome');
-            const modalTelefone = modalContent.querySelector('#modalTelefone');
-            const modalEmail = modalContent.querySelector('#modalEmail');
-            const modalEndereco = modalContent.querySelector('#modalEndereco');
-            const modalDn = modalContent.querySelector('#modalDn');
-            const modalCpf = modalContent.querySelector('#modalCpf');
-            const modalNomeResp = modalContent.querySelector('#modalNomeResp');
-            const modalCpfResp = modalContent.querySelector('#modalCpfResp');
-            const modalTelResp = modalContent.querySelector('#modalTelResp');
+            // Faça uma solicitação AJAX para buscar os dados do usuário com base no userId
+            $.ajax({
+                type: 'GET',
+                url: 'buscar_dados_usuario.php', // Substitua pelo URL real para buscar os dados do usuário
+                data: { id: userId },
+                dataType: 'json',
+                success: function (data) {
+                    // Atualize o campo "Nome" do modal com os dados do usuário obtidos
+                    const modalNome = modalContent.querySelector('#modalNome');
+                    const modalTelefone = modalContent.querySelector('#modalTelefone');
+                    const modalEmail = modalContent.querySelector('#modalEmail');
+                    const modalEndereco = modalContent.querySelector('#modalEndereco');
+                    const modalDn = modalContent.querySelector('#modalDn');
+                    const modalCpf = modalContent.querySelector('#modalCpf');
+                    const modalNomeResp = modalContent.querySelector('#modalNomeResp');
+                    const modalCpfResp = modalContent.querySelector('#modalCpfResp');
+                    const modalTelResp = modalContent.querySelector('#modalTelResp');
 
-            modalNome.textContent = data.nome;
-            modalTelefone.textContent = data.telefone;
-            modalEmail.textContent = data.email;
-            modalEndereco.textContent = data.endereco;
-            modalDn.textContent = data.dn;
-            modalCpf.textContent = data.cpf;
-            modalNomeResp.textContent = data.nomeResp;
-            modalCpfResp.textContent = data.cpfResp;
-            modalTelResp.textContent = data.telResp;
+                    modalNome.textContent = data.nome;
+                    modalTelefone.textContent = data.telefone;
+                    modalEmail.textContent = data.email;
+                    modalEndereco.textContent = data.endereco;
+                    modalDn.textContent = data.dn;
+                    modalCpf.textContent = data.cpf;
+                    modalNomeResp.textContent = data.nomeResp;
+                    modalCpfResp.textContent = data.cpfResp;
+                    modalTelResp.textContent = data.telResp;
 
 
 
-            modal.style.display = 'flex'; // Defina o estilo de exibição como 'block' para mostrar o modal
-        },
-        error: function () {
-            alert('Falha ao buscar os dados do usuário.');
+                    modal.style.display = 'flex'; // Defina o estilo de exibição como 'block' para mostrar o modal
+                },
+                error: function () {
+                    alert('Falha ao buscar os dados do usuário.');
+                }
+            });
         }
-    });
-}
 
         function closeModal() {
             const modal = document.querySelector('.modal-container');
