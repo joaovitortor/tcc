@@ -1,21 +1,20 @@
 <?php
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
-require_once("verificaAutenticacao.php");
 require_once("conexao.php");
 
 
 //EXCLUSÃO//
-if(isset($_GET['id'])){ //verifica se o botão excluir foi clicado
-  $sql= "delete from leitor where id = " . $_GET['id'];
-  mysqli_query($conexao,$sql);
-  $mensagem= "Exclusão realizada com sucesso.";
+if (isset($_GET['id'])) { //verifica se o botão excluir foi clicado
+    $sql = "delete from leitor where id = " . $_GET['id'];
+    mysqli_query($conexao, $sql);
+    $mensagem = "Exclusão realizada com sucesso.";
 }
 ////
 
 //geração de sql para relatório
-$V_WHERE ="";
+$V_WHERE = "";
 if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
-  $V_WHERE= " and nome like '%" . $_POST['nome']."%' ";
+    $V_WHERE = " and nome like '%" . $_POST['nome'] . "%' ";
 }
 
 //2. Preparar a sql
@@ -130,31 +129,64 @@ $resultado = mysqli_query($conexao, $sql);
                     <i class="uil uil-search"></i>
                     <input type="text" placeholder="Search here...">
                 </div>
+</div>
+                
 
-                <!--<img src="images/profile.jpg" alt="">-->
-            </div>
-            <div class="geekcb-wrapper">
-                <form method="post" class="container">
-                    <?php
-                    $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                    ?>
-                </form>
-            </div>
-            <!--pesquisar usuarios-->
-    <div class="card mt-3 mb-3">
-  <div class="card-body">
-    <h2 class="card-title">Pesquisar</h2>
-    <form method = "post">
-    <label name="nome" for="exampleFormControlInput1" class="form-label">Nome</label>
-        <input name="nome" type="text" class="form-control">
-        <p style="padding: 1px"></p>
-        <button name="pesquisar" stype="button" class="btn btn-primary">Pesquisar</button>
-    </div>
-    </form>
+         <div class="table-container">
+            
+                <h2 class="text">Listagem de leitores</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome do Produto</th>
+                            <th>Número do Produto</th>
+                            <th>Método de Pagamento</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Blusa Listrada</td>
+                            <td>59234</td>
+                            <td>Pix</td>
+                            <td class="warning">Pendente</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Blusa Listrada</td>
+                            <td>59234</td>
+                            <td>Pix</td>
+                            <td class="warning">Pendente</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Blusa Listrada</td>
+                            <td>59234</td>
+                            <td>Pix</td>
+                            <td class="warning">Pendente</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Blusa Listrada</td>
+                            <td>59234</td>
+                            <td>Pix</td>
+                            <td class="warning">Pendente</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Blusa Listrada</td>
+                            <td>59234</td>
+                            <td>Pix</td>
+                            <td class="warning">Pendente</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+      
+        </div>
   </div>
-        </div>
-        </div>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
