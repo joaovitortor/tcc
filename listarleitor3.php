@@ -133,20 +133,25 @@ $resultado = mysqli_query($conexao, $sql);
 
               <!--  <form method="post" class="geekcb-form-contact" onsubmit="return false;"> -->
                     <div class="listar">
-                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
+                <div class="tabelaleitor"><br>
+                    <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
                             <a href="cadastrarLeitor.php" class="botao">
                                 <i class="fa-solid fa-plus"></i>
                             </a>
                         </h2><br>
-
                         <table>
                             <thead>
                                 <tr>
+                                    
                                     <td>ID</td>
                                     <td>Nome</td>
-                                    <td>CPF</td>
                                     <td>E-mail</td>
                                     <td>Telefone</td>
+                                    <td>CPF</td>
+                                    <td>Data de nascimento</td>
+                                    <td>Ações</td>
+
+                                    
                                 </tr>
                             <tbody>
                                 <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
@@ -165,6 +170,14 @@ $resultado = mysqli_query($conexao, $sql);
                                         </td>
                                         <td>
                                             <?= $linha['telefone'] ?>
+                                        </td>
+
+                                        <td>
+                                            <?= $linha['cpf'] ?>
+                                        </td>
+
+                                        <td>
+                                            <?= $linha['dn'] ?>
                                         </td>
 
                                         <td>
@@ -191,6 +204,7 @@ $resultado = mysqli_query($conexao, $sql);
                         </table>
 
                     </div>
+                </div>
                  <!--</form>-->
             </div>
         </div>

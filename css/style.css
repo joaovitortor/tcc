@@ -568,7 +568,7 @@ table tbody td {
 }
 
 table tbody tr:last-child td {
-    border: none;
+    border: 2;
 }
 
 .recent-orders a {
@@ -582,17 +582,6 @@ table tbody tr:last-child td {
     color: var(--text-color);
 }
 
-.listar table {
-    width: 100%;
-    border-radius: 0.5 rem;
-    text-align: center;
-    transition: all 300ms ease;
-}
-
-.listar table td {
-    padding-right: 50px;
-    text-align: center;
-}
 
 hr {
     border: 0px;
@@ -706,5 +695,24 @@ span {
     box-shadow: none;
 }
 
-/* Rest of your CSS styles */
+.tabelaleitor{
+    font-family: "Fjalla One";
+    background-color: #f8f7ff;
+    border: 2px solid black;
+    width: 100%;
+    border-radius: 0.5 rem;
+    text-align: center;
+    transition: all 300ms ease;
+}
+
+.tabelaleitor td {
+    border-bottom: 1px solid black;
+}
+
+.listar table td {
+    padding-right: 50px;
+    text-align: center;
+}
+
+
 
