@@ -144,7 +144,6 @@ $resultado = mysqli_query($conexao, $sql);
                                 <tr>
                                     <td>ID</td>
                                     <td>Nome</td>
-                                    <td>CPF</td>
                                     <td>E-mail</td>
                                     <td>Telefone</td>
                                 </tr>
