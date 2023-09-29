@@ -147,36 +147,65 @@ $linha = mysqli_fetch_array($resultado)
 
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
-            <form method="post" class="container">
-                <?php
-                $status = isset($_POST['status']) ? $_POST['status'] : "";
-                $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                $login = isset($_POST['login']) ? $_POST['login'] : "";
-                ?>
 
-            </form>
             <div class="geekcb-wrapper">
 
-
-                <form method="post" class="geekcb-form-contact">
-                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                    <h1 class="titulo">Alterar Editora</h1>
-
-                    <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="status" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
-                    </select>
-
-                    <input class="geekcb-field" value="<?= $login ?>" placeholder="Login" required type="texto"
-                        name="login">
-                    <input class="geekcb-field" value="<?= $senha ?>" placeholder="Senha" required type="password"
-                        name="login">
-
-
-                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                <form method="post" class="container">
+                    <?php
+                    $status = isset($_POST['status']) ? $_POST['status'] : "";
+                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
+                    $login = isset($_POST['login']) ? $_POST['login'] : "";
+                    ?>
                 </form>
+                
+                <form method="post" class="geekcb-form-contact" id="leitorForm">
+                    <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
+                    <h1 class="titulo">Cadastrar Leitor</h1>
+                    <div class="form-row">
+                        <div class="form-column; esquerda">
+                            <select class="geekcb-field" name="status" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                                    placeholder="Status">Status</option>
+                                <option value="1">Ativo</option>
+                                <option value="2">Inativo</option>
+                            </select>
+                        </div>
+                        <div class="form-column">
+                            <input class="geekcb-field" id="dn" placeholder="Data de Nascimento" required type="date"
+                                name="dn">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
+                            <input class="geekcb-field" placeholder="Nome" required type="texto" name="nome">
+                        </div>
+
+                        <div class="form-column">
+                            <input class="geekcb-field" id="telefone" name="telefone" placeholder="Telefone" required
+                                type="texto" name="telefone">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
+                            <input class="geekcb-field" id="cpf" placeholder="Cpf" required type="texto" name="cpf">
+                        </div>
+                        <div class="form-column">
+                            <input class="geekcb-field" placeholder="Endereço" required type="texto" name="endereco">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
+                            <input class="geekcb-field" placeholder="E-mail" required type="email" name="email">
+                        </div>
+                        <div class="form-column">
+                            <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
+                        </div>
+                    </div>
+
+                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                </form>
+
+
             </div>
         </div>
         </div>
