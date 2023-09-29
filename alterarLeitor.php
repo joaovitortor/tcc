@@ -178,34 +178,34 @@ $linha = mysqli_fetch_array($resultado)
                             </select>
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" id="dn" placeholder="Data de Nascimento" required type="date"
+                            <input class="geekcb-field" id="dn" value="<?= $linha['dn']?>" placeholder="Data de Nascimento" required type="date"
                                 name="dn">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="Nome" required type="texto" name="nome">
+                            <input class="geekcb-field" value="<?= $linha['nome']?>" placeholder="Nome" required type="texto" name="nome">
                         </div>
 
                         <div class="form-column">
-                            <input class="geekcb-field" id="telefone" name="telefone" placeholder="Telefone" required
+                            <input class="geekcb-field" value="<?= $linha['telefone']?>" id="telefone" name="telefone" placeholder="Telefone" required
                                 type="texto" name="telefone">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" id="cpf" placeholder="Cpf" required type="texto" name="cpf">
+                            <input class="geekcb-field" value="<?= $linha['cpf']?>" id="cpf" placeholder="Cpf" required type="texto" name="cpf">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" placeholder="Endereço" required type="texto" name="endereco">
+                            <input class="geekcb-field" value="<?= $linha['endereco']?>" placeholder="Endereço" required type="texto" name="endereco">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="E-mail" required type="email" name="email">
+                            <input class="geekcb-field" value="<?= $linha['email']?>" placeholder="E-mail" required type="email" name="email">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
+                            <input class="geekcb-field"  value="<?= $linha['status']?>" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
 
