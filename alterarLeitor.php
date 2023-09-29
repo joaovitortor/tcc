@@ -1,7 +1,6 @@
 <?php
 //1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
-$corpo = "";
 if (isset($_POST['salvar'])) {
     //2. Receber os dados para inserir no BD
     $id = $_POST['id'];
@@ -209,7 +208,7 @@ $linha = mysqli_fetch_array($resultado)
                         </div>
                     </div>
 
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>
 
 
