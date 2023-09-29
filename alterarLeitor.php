@@ -16,7 +16,7 @@ if (isset($_POST['salvar'])) {
     $telResp = $_POST['telResp'];
 
     //3. Preparar a SQL
-    $sql = "update administrador
+    $sql = "update leitor
     set 
     status = '$status',
     nome = '$nome',
