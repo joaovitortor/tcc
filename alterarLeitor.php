@@ -3,21 +3,21 @@
 require_once("conexao.php");
 $corpo = "";
 if (isset($_POST['salvar'])) {
-  //2. Receber os dados para inserir no BD
-  $id = $_POST['id'];
-  $status = $_POST['status'];
-  $nome = $_POST['nome'];
-  $telefone = $_POST['telefone'];
-  $endereco = $_POST['endereco'];
-  $dn = $_POST['dn'];
-  $cpf = $_POST['cpf'];
-  $email = $_POST['email'];
-  $nomeResp = $_POST['nomeResp'];
-  $cpfResp = $_POST['cpfResp'];
-  $telResp = $_POST['telResp'];
+    //2. Receber os dados para inserir no BD
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+    $nome = $_POST['nome'];
+    $telefone = $_POST['telefone'];
+    $endereco = $_POST['endereco'];
+    $dn = $_POST['dn'];
+    $cpf = $_POST['cpf'];
+    $email = $_POST['email'];
+    $nomeResp = $_POST['nomeResp'];
+    $cpfResp = $_POST['cpfResp'];
+    $telResp = $_POST['telResp'];
 
-  //3. Preparar a SQL
-  $sql = "update administrador
+    //3. Preparar a SQL
+    $sql = "update administrador
     set 
     status = '$status',
     nome = '$nome',
@@ -31,18 +31,18 @@ if (isset($_POST['salvar'])) {
     telResp = '$telResp'
     where id = $id";
 
-  //4. Executar a SQL
-  mysqli_query($conexao, $sql);
+    //4. Executar a SQL
+    mysqli_query($conexao, $sql);
 
-  //5. Mostrar uma mensagem ao usuário
-  $mensagem = "Inserido com sucesso &#128515;";
+    //5. Mostrar uma mensagem ao usuário
+    $mensagem = "Inserido com sucesso &#128515;";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
-$sql = "select * from editora where id = " . $_GET['id'];
+$sql = "select * from leitor where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
-  ?>
+    ?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -147,30 +147,32 @@ $linha = mysqli_fetch_array($resultado)
 
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
+            <form method="post" class="container">
+                <?php
+                $status = isset($_POST['status']) ? $_POST['status'] : "";
+                $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
+                $login = isset($_POST['login']) ? $_POST['login'] : "";
+                ?>
+
+            </form>
             <div class="geekcb-wrapper">
-                <form method="post" class="container">
-                    <?php
-                    $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                    $login = isset($_POST['login']) ? $_POST['login'] : "";
 
-                    ?>
-
-                </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <h1 class="titulo">Alterar Editora</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="status" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
-                            </select>
+                        <option class="fonte-status" value="status" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
 
-                    <input class="geekcb-field"  value="<?= $login ?>" placeholder="Login" required type="texto" name="login">
-                    <input class="geekcb-field"  value="<?= $senha ?>" placeholder="Senha" required type="password" name="login">
+                    <input class="geekcb-field" value="<?= $login ?>" placeholder="Login" required type="texto"
+                        name="login">
+                    <input class="geekcb-field" value="<?= $senha ?>" placeholder="Senha" required type="password"
+                        name="login">
 
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
@@ -209,7 +211,3 @@ $linha = mysqli_fetch_array($resultado)
 </body>
 
 </html>
-
-
-
-

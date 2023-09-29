@@ -13,22 +13,22 @@ if (isset($_POST['cadastrar'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    
+
 
     //3. preparar sql para inserir
     $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
 values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
 
-// Criar objetos DateTime para a data de nascimento e a data atual
-$dataNascimentoObj = new DateTime($dn);
-$dataAtualObj = new DateTime();
+    // Criar objetos DateTime para a data de nascimento e a data atual
+    $dataNascimentoObj = new DateTime($dn);
+    $dataAtualObj = new DateTime();
 
-// Calcular a diferença entre as datas
-$diferenca = $dataNascimentoObj->diff($dataAtualObj);
+    // Calcular a diferença entre as datas
+    $diferenca = $dataNascimentoObj->diff($dataAtualObj);
 
-// Obter a idade em anos
-$idade = $diferenca->y;
+    // Obter a idade em anos
+    $idade = $diferenca->y;
 
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
@@ -36,7 +36,7 @@ $idade = $diferenca->y;
     //5.mostrar uma mensagem ao usuário
     $mensagem = "Cadastro realizado com sucesso!";
 
-    if($idade < 18){
+    if ($idade < 18) {
         $idUsuario = mysqli_insert_id($conexao);
         header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
         exit;
@@ -152,7 +152,7 @@ $idade = $diferenca->y;
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
-                <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
+                    <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
@@ -172,7 +172,7 @@ $idade = $diferenca->y;
                         <div class="form-column esquerda">
                             <input class="geekcb-field" placeholder="Nome" required type="texto" name="nome">
                         </div>
-                       
+
                         <div class="form-column">
                             <input class="geekcb-field" id="telefone" name="telefone" placeholder="Telefone" required
                                 type="texto" name="telefone">
@@ -194,11 +194,11 @@ $idade = $diferenca->y;
                             <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
-                   
+
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
 
-               
+
             </div>
         </div>
         </div>
