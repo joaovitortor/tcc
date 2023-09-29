@@ -154,10 +154,17 @@ $linha = mysqli_fetch_array($resultado)
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
                     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                    $login = isset($_POST['login']) ? $_POST['login'] : "";
+                    $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : "";
+                    $endereco = isset($_POST['endereco']) ? $_POST['endereco'] : "";
+                    $dn = isset($_POST['dn']) ? $_POST['dn'] : "";
+                    $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : "";
+                    $email = isset($_POST['email']) ? $_POST['email'] : "";
+                    $nomeResp = isset($_POST['nomeResp']) ? $_POST['nomeResp'] : "";
+                    $cpfResp = isset($_POST['cpfResp']) ? $_POST['cpfResp'] : "";
+                    $telResp = isset($_POST['telResp']) ? $_POST['telResp'] : "";
                     ?>
                 </form>
-                
+
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
