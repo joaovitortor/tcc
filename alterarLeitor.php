@@ -20,8 +20,15 @@ if (isset($_POST['salvar'])) {
   $sql = "update administrador
     set 
     status = '$status',
-    login = '$login',
-    senha = '$senha'
+    nome = '$nome',
+    telefone = '$telefone',
+    endereco = '$endereco',
+    dn = '$dn',
+    cpf = '$cpf',
+    email = '$email',
+    nomeResp = '$nomeResp',
+    cpfResp = '$cpfResp',
+    telResp = '$telResp'
     where id = $id";
 
   //4. Executar a SQL
