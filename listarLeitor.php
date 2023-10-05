@@ -123,71 +123,62 @@ $resultado = mysqli_query($conexao, $sql);
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="container">
-                    <?php
-                    $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                    ?>
-
-                </form>
-
-                <form method="post" class="geekcb-form-contact" onsubmit="return false;">
-                    <div class="listar">
+                <form method="post" class="geekcb-form-contact1" onsubmit="return false;">
+                    <div>
                         <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
                             <a href="cadastrarLeitor.php" class="botao">
                                 <i class="fa-solid fa-plus"></i>
                             </a>
                         </h2><br>
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Nome</td>
-                                    <td>E-mail</td>
-                                    <td>Telefone</td>
-                                </tr>
-                            <tbody>
-                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                                    <tr>
-                                        <td>
-                                            <?= $linha['id'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['nome'] ?>
-                                        </td>
-                                        <!--<td>
-                                            $linha['cpf'] ?>
-                                        </td>-->
-                                        <td>
-                                            <?= $linha['email'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['telefone'] ?>
-                                        </td>
+                        <div class="caixaPai">
+                            <div class="caixa1">ID</div>
+                            <div class="caixa2">Nome</div>
+                            <div class="caixa3">E-mail</div>
+                            <div class="caixa4">Telefone</div>
+                            <div class="caixa5"></div>
+                        </div>
 
-                                        <td>
+                        <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                            <div class="caixaPai">
 
-                                            <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
-                                                class="botao">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
+                                <div class="caixa1">
+                                    <?= $linha['id'] ?>
+                                </div>
 
-                                            <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;"
-                                                name="info" class="botao">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
+                                <div class="caixa2">
+                                    <?= $linha['nome'] ?>
+                                </div>
 
-                                            <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
-                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
+                                <div class="caixa3">
+                                    <?= $linha['email'] ?>
+                                </div>
 
-                                        </td>
-                                    </tr>
-                                <?php } ?>
+                                <div class="caixa4">
+                                    <?= $linha['telefone'] ?>
+                                </div>
 
-                            </tbody>
-                        </table>
+                                <div class="caixa5">
+
+                                    <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
+                                        class="botao">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+
+                                    <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;" name="info"
+                                        class="botao">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
+                                        onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                        <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                </div>
+                            </div>
+                        <?php } ?>
+
+
 
                     </div>
                 </form>

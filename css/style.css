@@ -554,7 +554,7 @@ nav.close~.dashboard .top {
     text-align: center;
     box-shadow: 0 2rem 3rem #f8eae9;
     transition: all 300ms ease;
-    
+
 }
 
 .recent-orders table:hover {
@@ -670,8 +670,9 @@ span {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Make the container take the full height of the viewport */
-    
+    height: 100vh;
+    /* Make the container take the full height of the viewport */
+
 }
 
 .table-container h2.text {
@@ -687,7 +688,8 @@ span {
     text-align: center;
     box-shadow: 0 2rem 3rem #f8eae9;
     transition: all 300ms ease;
-    margin-top: 1rem; /* Add margin to separate from the heading */
+    margin-top: 1rem;
+    /* Add margin to separate from the heading */
     font-family: 'Fjalla One';
 }
 
@@ -695,7 +697,7 @@ span {
     box-shadow: none;
 }
 
-.tabelaleitor{
+.tabelaleitor {
     font-family: "Fjalla One";
     background-color: #f8f7ff;
     border: 2px solid black;
@@ -710,9 +712,38 @@ span {
 }
 
 .listar table td {
-    padding-right: 50px;
+    padding-right: 20px;
     text-align: center;
 }
 
+.caixaPai {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+    max-width: 1000px;
+    min-width: 300px;
+    align-items: center;
+    justify-content: center center;
+}
 
+.caixa1 {
+    width: 50px;
+}
 
+.caixa2 {
+    width: 250px;
+}
+
+.caixa3 {
+    width: 250px;
+}
+
+.caixa4 {
+    width: 150px;
+}
+
+.caixa5 {
+    width: 150px;
+    justify-content: center center;
+    align-content: center;
+}
