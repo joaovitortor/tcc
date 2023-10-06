@@ -696,7 +696,12 @@ span {
     box-shadow: none;
 }
 
+<<<<<<< Updated upstream
 .tabelaleitor {
+=======
+/*-------------LISTAR----------------*/
+.tabelaleitor{
+>>>>>>> Stashed changes
     font-family: "Fjalla One";
     background-color: #f8f7ff;
     border: 2px solid black;
