@@ -207,6 +207,19 @@ $linha = mysqli_fetch_array($resultado)
                             <input class="geekcb-field"  value="<?= $linha['status']?>" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
+                            <input class="geekcb-field" value="<?= $linha['nomeResp']?>" placeholder="E-mail" required type="email" name="email">
+                        </div>
+                        <div class="form-column">
+                            <input class="geekcb-field"  value="<?= $linha['cpfResp']?>" placeholder="Cpf" required type="texto" name="senha">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
+                            <input class="geekcb-field" value="<?= $linha['telResp']?>" placeholder="E-mail" required type="email" name="email">
+                        </div>
+                        </div>
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>

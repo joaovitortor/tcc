@@ -192,7 +192,6 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                             <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
-
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
 
