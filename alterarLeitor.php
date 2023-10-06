@@ -165,6 +165,7 @@ $linha = mysqli_fetch_array($resultado)
                 </form>
 
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
+                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
@@ -198,8 +199,8 @@ $linha = mysqli_fetch_array($resultado)
                                 type="texto" name="cpf">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" value="<?= $linha['endereco'] ?>" placeholder="Endereço" required
-                                type="texto" name="endereco">
+                            <input class="geekcb-field" value="<?= $linha['endereco'] ?>" placeholder="Endereço"
+                                required type="texto" name="endereco">
                         </div>
                     </div>
                     <div class="form-row">
