@@ -191,15 +191,15 @@ $resultado = mysqli_query($conexao, $sql);
             <div class="modal">
                 <h2>Informações do Usuário</h2>
                 <hr/>
-                <span>Nome: <span id="modalNome"></span></span>
-                <span>Telefone: <span id="modalTelefone"></span></span>
-                <span>Email: <span id="modalEmail"></span></span>
-                <span>Endereco: <span id="modalEndereco"></span></span>
-                <span>Data de Nascimento: <span id="modalDn"></span></span>
-                <span>CPF: <span id="modalCpf"></span></span>
-                <span>Nome do Responsável: <span id="modalNomeResp"></span></span>
-                <span>CPF do Responsável: <span id="modalCpfResp"></span></span>
-                <span>Telefone do Responsável: <span id="modalTelResp"></span></span>
+                <span><b>Nome: </b><span id="modalNome"></span></span>
+                <span><b>Telefone: </b><span id="modalTelefone"></span></span>
+                <span><b>Email: </b><span id="modalEmail"></span></span>
+                <span><b>Endereco: </b><span id="modalEndereco"></span></span>
+                <span><b>Data de Nascimento: </b><span id="modalDn"></span></span>
+                <span><b>CPF: </b><span id="modalCpf"></span></span>
+                <span><b>Nome do Responsável: </b><span id="modalNomeResp"></span></span>
+                <span><b>CPF do Responsável: </b><span id="modalCpfResp"></span></span>
+                <span><b>Telefone do Responsável: </b><span id="modalTelResp"></span></span>
                 <hr/>
                 <div class="btns">
                     <button class="btnOK" onclick="closeModal()">OK</button>
@@ -271,8 +271,6 @@ $resultado = mysqli_query($conexao, $sql);
                     modalNomeResp.textContent = data.nomeResp;
                     modalCpfResp.textContent = data.cpfResp;
                     modalTelResp.textContent = data.telResp;
-
-
 
                     modal.style.display = 'flex'; // Defina o estilo de exibição como 'block' para mostrar o modal
                 },
