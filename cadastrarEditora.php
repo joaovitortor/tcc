@@ -55,21 +55,21 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul id="menu" class="nav-links">
-                
+
                 <li><a>
                         <i class="uil uil-estate"></i>
                         <span class="link-name">Leitor</span>
                     </a>
-                <ul class="submenu">
-                    <li><a href="cadastrarLeitor.php">Cadastrar</a></li>
-                    <li><a href="listarLeitor.php">Listar</a></li>
-                </ul>
+                    <ul class="submenu">
+                        <li><a href="cadastrarLeitor.php">Cadastrar</a></li>
+                        <li><a href="listarLeitor.php">Listar</a></li>
+                    </ul>
                 </li>
 
                 <li><a href="#">
                         <i class="uil uil-files-landscapes"></i>
                         <span class="link-name">Livro</span>
-                    </a></li>  
+                    </a></li>
 
                 <li><a href="#">
                         <i class="uil uil-thumbs-up"></i>
@@ -110,8 +110,8 @@ if (isset($_POST['cadastrar'])) {
                     </div>
                 </li>
             </ul>
-        </div> 
-    
+        </div>
+
     </nav>
 
     <section class="dashboard">
@@ -140,22 +140,24 @@ if (isset($_POST['cadastrar'])) {
                     <h1 class="titulo">Cadastrar Editora</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
-                            </select>
+                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
 
-                    <input class="geekcb-field"  value="<?= $nome ?>" placeholder="Nome" required type="texto" name="nome">
+                    <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
+                        name="nome">
 
-                    
+
                     <table>
-                        <tr> 
-                            <td style="padding-right: 70px"><a href="listarEditora.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
-                            <td > <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
-                           
+                        <tr>
+                            <td style="padding-right: 70px"><a href="listarEditora.php" class="botaolistar"> <i
+                                        class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
+
                         </tr>
-                   
+
                     </table>
                 </form>
             </div>
@@ -192,14 +194,13 @@ if (isset($_POST['cadastrar'])) {
 
     <script> const dropdowns = document.querySelectorAll('.sidebar li');
 
-dropdowns.forEach((item) => {
-    item.addEventListener('click', function() {
-        const submenu = this.querySelector('.submenu');
-        if (submenu) {
-            submenu.classList.toggle('show');
-        }
-    });
-});
+        dropdowns.forEach((item) => {
+            item.addEventListener('click', function () {
+                const submenu = this.querySelector('.submenu');
+                if (submenu) {
+                    submenu.classList.toggle('show');
+                }
+            });
+        });
 
-</script>
-    
+    </script>
