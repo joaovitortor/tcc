@@ -55,18 +55,24 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="cadastrarLeitor.php">
+                <li><a href="">
                         <i class="uil uil-estate"></i>
-                        <span class="link-name">Leitor</span>
-                    </a></li>
+                        <span class="link-name">Leitor<i class="fa fa-caret-down"></i></span>
+                    </a>
+                    <button class="dropdown-btn">Dropdown 
+    
+  </button>
+  <div class="dropdown-container">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
+                </li>
                 <li><a href="#">
                         <i class="uil uil-files-landscapes"></i>
                         <span class="link-name">Livro</span>
                     </a></li>
-                <li><a href="#">
-                        <i class="uil uil-chart"></i>
-                        <span class="link-name">Exemplar</span>
-                    </a></li>
+
                 <li><a href="#">
                         <i class="uil uil-thumbs-up"></i>
                         <span class="link-name">Autor</span>
@@ -184,6 +190,24 @@ if (isset($_POST['cadastrar'])) {
         });
     </script>
     <script src="js/script.js"></script>
+    <script>
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
+}
+</script>
+
 </body>
 
 </html>
