@@ -136,7 +136,8 @@ $resultado = mysqli_query($conexao, $sql);
                             <div class="caixa2">Nome</div>
                             <div class="caixa3">E-mail</div>
                             <div class="caixa4">Telefone</div>
-                            <div class="caixa5"></div>
+                            <div class="caixa5">CPF</div>
+                            <div class="caixa6"></div>
                         </div>
 
                         <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
@@ -157,8 +158,10 @@ $resultado = mysqli_query($conexao, $sql);
                                 <div class="caixa4">
                                     <?= $linha['telefone'] ?>
                                 </div>
-
                                 <div class="caixa5">
+                                <?= $linha['cpf'] ?>
+                                </div>
+                                <div class="caixa6"></div>
 
                                     <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
                                         class="botao">
