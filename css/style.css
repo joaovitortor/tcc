@@ -743,6 +743,10 @@ span {
 
 .caixa5 {
     width: 150px;
+}
+
+.caixa6 {
+    width: 150px;
     justify-content: center center;
     align-content: center;
 }
