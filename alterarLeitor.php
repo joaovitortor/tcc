@@ -177,56 +177,61 @@ $linha = mysqli_fetch_array($resultado)
                             </select>
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" id="dn" value="<?= $linha['dn']?>" placeholder="Data de Nascimento" required type="date"
-                                name="dn">
+                            <input class="geekcb-field" id="dn" value="<?= $linha['dn'] ?>"
+                                placeholder="Data de Nascimento" required type="date" name="dn">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['nome']?>" placeholder="Nome" required type="texto" name="nome">
+                            <input class="geekcb-field" value="<?= $linha['nome'] ?>" placeholder="Nome" required
+                                type="texto" name="nome">
                         </div>
 
                         <div class="form-column">
-                            <input class="geekcb-field" value="<?= $linha['telefone']?>" id="telefone" name="telefone" placeholder="Telefone" required
-                                type="texto" name="telefone">
+                            <input class="geekcb-field" value="<?= $linha['telefone'] ?>" id="telefone" name="telefone"
+                                placeholder="Telefone" required type="texto" name="telefone">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['cpf']?>" id="cpf" placeholder="Cpf" required type="texto" name="cpf">
+                            <input class="geekcb-field" value="<?= $linha['cpf'] ?>" id="cpf" placeholder="Cpf" required
+                                type="texto" name="cpf">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" value="<?= $linha['endereco']?>" placeholder="Endereço" required type="texto" name="endereco">
+                            <input class="geekcb-field" value="<?= $linha['endereco'] ?>" placeholder="Endereço" required
+                                type="texto" name="endereco">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['email']?>" placeholder="E-mail" required type="email" name="email">
+                            <input class="geekcb-field" value="<?= $linha['email'] ?>" placeholder="E-mail" required
+                                type="email" name="email">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field"  value="<?= $linha['senha']?>" placeholder="Senha" required type="password" name="senha">
+                            <input class="geekcb-field" value="<?= $linha['senha'] ?>" placeholder="Senha" required
+                                type="password" name="senha">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['nomeResp']?>" placeholder="E-mail" required type="texto" name="email">
+                            <input class="geekcb-field" value="<?= $linha['nomeResp'] ?>" placeholder="E-mail" required
+                                type="texto" name="email">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field"  value="<?= $linha['cpfResp']?>" placeholder="Cpf" required type="texto" name="senha">
+                            <input class="geekcb-field" value="<?= $linha['cpfResp'] ?>" placeholder="Cpf" required
+                                type="texto" name="senha">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['telResp']?>" placeholder="E-mail" required type="texto" name="email">
+                            <input class="geekcb-field" value="<?= $linha['telResp'] ?>" placeholder="E-mail" required
+                                type="texto" name="email">
                         </div>
-                        </div>
+                    </div>
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>
-
-
             </div>
-        </div>
         </div>
     </section>
     <script>
