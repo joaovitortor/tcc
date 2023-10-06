@@ -742,11 +742,11 @@ span {
 }
 
 .caixa5 {
-    width: 150px;
+    width: 100px;
 }
 
 .caixa6 {
-    width: 150px;
+    width: 50px;
     justify-content: center center;
     align-content: center;
 }
