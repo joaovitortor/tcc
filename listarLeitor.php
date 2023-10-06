@@ -197,14 +197,9 @@ $resultado = mysqli_query($conexao, $sql);
                 <span>Endereco: <span id="modalEndereco"></span></span>
                 <span>Data de Nascimento: <span id="modalDn"></span></span>
                 <span>CPF: <span id="modalCpf"></span></span>
-                <?php
-                if ($linha['nomeResp' != ""]) {
-                    echo '<span>Nome do Responsável: <span id="modalNomeResp"></span></span>
-                          <span>CPF do Responsável: <span id="modalCpfResp"></span></span>
-                          <span>Telefone do Responsável: <span id="modalTelResp"></span></span>';
-                }
-                ?>
-                
+                <span>Nome do Responsável: <span id="modalNomeResp"></span></span>
+                <span>CPF do Responsável: <span id="modalCpfResp"></span></span>
+                <span>Telefone do Responsável: <span id="modalTelResp"></span></span>
                 <hr/>
                 <div class="btns">
                     <button class="btnOK" onclick="closeModal()">OK</button>
