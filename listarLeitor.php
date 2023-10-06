@@ -190,17 +190,22 @@ $resultado = mysqli_query($conexao, $sql);
 
             <div class="modal">
                 <h2>Informações do Usuário</h2>
-                <hr />
+                <hr/>
                 <span>Nome: <span id="modalNome"></span></span>
                 <span>Telefone: <span id="modalTelefone"></span></span>
                 <span>Email: <span id="modalEmail"></span></span>
                 <span>Endereco: <span id="modalEndereco"></span></span>
                 <span>Data de Nascimento: <span id="modalDn"></span></span>
                 <span>CPF: <span id="modalCpf"></span></span>
-                <span>Nome do Responsável: <span id="modalNomeResp"></span></span>
-                <span>CPF do Responsável: <span id="modalCpfResp"></span></span>
-                <span>Telefone do Responsável: <span id="modalTelResp"></span></span>
-                <hr />
+                <?php
+                if ($linha['nomeResp' != ""]) {
+                    echo '<span>Nome do Responsável: <span id="modalNomeResp"></span></span>
+                          <span>CPF do Responsável: <span id="modalCpfResp"></span></span>
+                          <span>Telefone do Responsável: <span id="modalTelResp"></span></span>';
+                }
+                ?>
+                
+                <hr/>
                 <div class="btns">
                     <button class="btnOK" onclick="closeModal()">OK</button>
                     <button class="btnClose" onclick="closeModal()">Close</button>
