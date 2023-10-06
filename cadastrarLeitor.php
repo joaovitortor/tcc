@@ -12,12 +12,6 @@ if (isset($_POST['cadastrar'])) {
     $dn = $_POST['dn'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-echo $dn;
-
-$data_preparada = new DateTime($dn);
-
- $data_formata = $data_preparada->format('d/m/Y');
-$dn = $data_formata;
 
     //3. preparar sql para inserir
     $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
