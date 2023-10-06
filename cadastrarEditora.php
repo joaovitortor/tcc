@@ -202,7 +202,4 @@ dropdowns.forEach((item) => {
 });
 
 </script>
-
-</body>
-
-</html>
+    

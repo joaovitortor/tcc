@@ -768,6 +768,7 @@ span {
  #menu a {
      text-decoration: none;
      color: #707070;
+     padding: 0.5px;
      
  }
  
@@ -777,10 +778,11 @@ span {
  }
  
  .submenu li {
-     padding: 10px;
+     padding-bottom: 1px;
  }
  
  .submenu a {
      color: #fff;
  }
+ 
  
