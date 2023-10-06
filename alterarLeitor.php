@@ -215,17 +215,17 @@ $linha = mysqli_fetch_array($resultado)
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['nomeResp'] ?>" placeholder="E-mail" required
+                            <input class="geekcb-field" value="<?= $linha['nomeResp'] ?>" placeholder="Nome do Responsavel" required
                                 type="texto" name="email">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" value="<?= $linha['cpfResp'] ?>" placeholder="Cpf" required
+                            <input class="geekcb-field" value="<?= $linha['cpfResp'] ?>" placeholder="Cpf do Responsavel" required
                                 type="texto" name="senha">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" value="<?= $linha['telResp'] ?>" placeholder="E-mail" required
+                            <input class="geekcb-field" value="<?= $linha['telResp'] ?>" placeholder="Telefone do Responsavel" required
                                 type="texto" name="email">
                         </div>
                     </div>
