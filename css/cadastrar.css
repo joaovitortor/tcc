@@ -15,25 +15,7 @@
     flex-direction: column;
     height: 100vh;
     justify-content: center;
-<<<<<<< Updated upstream
     width: 150vw;
-=======
-    width: 100vw;
-
-    max-width: 900px;
-    padding: 1.6rem;
-    margin: 1.6rem auto;
-    display: grid;
-    /*grid-template-columns: 1fr 1fr 1fr;*/
-   /* grid-template-columns: repeat(3, fr);*/
-   grid-template-columns: minmax(280px, 1fr) minmax(400px, 3fr) 100px;
-    grid-template-areas: 
-    "header header header"
-    "sidebar-left content sidebar-right"
-    "footer footer footer"
-    ;
-    gap: 1.6rem;
->>>>>>> Stashed changes
 }
 
 .geekcb-form-contact {
@@ -53,6 +35,7 @@
     transition: .2s all linear;
     width: 93%;
 }
+
 
 .geekcb-field {
     background-color: transparent;

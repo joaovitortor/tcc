@@ -123,7 +123,8 @@ $resultado = mysqli_query($conexao, $sql);
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact1" onsubmit="return false;">
+
+            <form method="post" class="geekcb-form-contact1" onsubmit="return false;">
                     <div>
                         <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
                             <a href="cadastrarLeitor.php" class="botao">
@@ -158,9 +159,10 @@ $resultado = mysqli_query($conexao, $sql);
                                 <div class="caixa4">
                                     <?= $linha['telefone'] ?>
                                 </div>
-                                <div class="caixa5">
+
+                             <div class="caixa5">
                                 <?= $linha['cpf'] ?>
-                                </div>
+                             </div>
                                 <div class="caixa6"></div>
 
                                     <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
@@ -193,7 +195,7 @@ $resultado = mysqli_query($conexao, $sql);
 
             <div class="modal">
                 <h2>Informações do Usuário</h2>
-                <hr/>
+                <hr />
                 <span><b>Nome: </b><span id="modalNome"></span></span>
                 <span><b>Telefone: </b><span id="modalTelefone"></span></span>
                 <span><b>Email: </b><span id="modalEmail"></span></span>
@@ -203,7 +205,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <span><b>Nome do Responsável: </b><span id="modalNomeResp"></span></span>
                 <span><b>CPF do Responsável: </b><span id="modalCpfResp"></span></span>
                 <span><b>Telefone do Responsável: </b><span id="modalTelResp"></span></span>
-                <hr/>
+                <hr />
                 <div class="btns">
                     <button class="btnOK" onclick="closeModal()">OK</button>
                     <button class="btnClose" onclick="closeModal()">Close</button>
@@ -274,6 +276,8 @@ $resultado = mysqli_query($conexao, $sql);
                     modalNomeResp.textContent = data.nomeResp;
                     modalCpfResp.textContent = data.cpfResp;
                     modalTelResp.textContent = data.telResp;
+
+
 
                     modal.style.display = 'flex'; // Defina o estilo de exibição como 'block' para mostrar o modal
                 },
