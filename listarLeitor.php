@@ -124,7 +124,7 @@ $resultado = mysqli_query($conexao, $sql);
             </div>
             <div class="geekcb-wrapper">
 
-            <form method="post" class="geekcb-form-contact1" onsubmit="return false;">
+                <form method="post" class="geekcb-form-contact1" onsubmit="return false;">
                     <div>
                         <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de leitores
                             <a href="cadastrarLeitor.php" class="botao">
@@ -160,34 +160,34 @@ $resultado = mysqli_query($conexao, $sql);
                                     <?= $linha['telefone'] ?>
                                 </div>
 
-                             <div class="caixa5">
-                                <?= $linha['cpf'] ?>
-                             </div>
+                                <div class="caixa5">
+                                    <?= $linha['cpf'] ?>
+                                </div>
                                 <div class="caixa6"></div>
 
-                                    <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
-                                        class="botao">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
+                                <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
+                                    class="botao">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
 
-                                    <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;" name="info"
-                                        class="botao">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
+                                <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;" name="info"
+                                    class="botao">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
 
-                                    <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
-                                        onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                        <i class="fa-sharp fa-solid fa-trash"></i> </a>
+                                <a href="listarLeitor.php? id=<?= $linha['id'] ?>" class="botao"
+                                    onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                    <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
-                                </div>
                             </div>
-                        <?php } ?>
+                        </div>
+                    <?php } ?>
 
 
 
-                    </div>
-                </form>
             </div>
+            </form>
+        </div>
         </div>
         </div>
 
@@ -267,11 +267,19 @@ $resultado = mysqli_query($conexao, $sql);
                     const modalCpfResp = modalContent.querySelector('#modalCpfResp');
                     const modalTelResp = modalContent.querySelector('#modalTelResp');
 
+
+                    // Formate a data no formato "dd/mm/yyyy"
+                    const dataNascimento = new Date(data.dn);
+                    const dia = (dataNascimento.getDate() + 1).toString().padStart(2, '0');
+                    const mes = (dataNascimento.getMonth() + 1).toString().padStart(2, '0');
+                    const ano = dataNascimento.getFullYear();
+                    const dataFormatada = `${dia}/${mes}/${ano}`;
+
                     modalNome.textContent = data.nome;
                     modalTelefone.textContent = data.telefone;
                     modalEmail.textContent = data.email;
                     modalEndereco.textContent = data.endereco;
-                    modalDn.textContent = data.dn;
+                    modalDn.textContent = dataFormatada;
                     modalCpf.textContent = data.cpf;
                     modalNomeResp.textContent = data.nomeResp;
                     modalCpfResp.textContent = data.cpfResp;
