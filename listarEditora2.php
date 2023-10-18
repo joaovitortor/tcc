@@ -33,11 +33,11 @@ $resultado = mysqli_query($conexao, $sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -124,56 +124,15 @@ $resultado = mysqli_query($conexao, $sql);
 
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
-            <div class="geekcb-wrapper">       
-                
-                <form method="post" class="geekcb-form-contact">
-      
-                    <div class="listar">
-                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Editoras
-                            <a href="cadastrarEditora.php" class="botao">
-                                <i class="fa-solid fa-plus"></i>
-                            </a>
-                        </h2><br>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Status</td>
-                                    <td>Nome</td>
-                                </tr>
-                            <tbody>
-                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                                    <tr>
-                                        <td>
-                                            <?= $linha['id'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['status'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['nome'] ?>
-                                        </td>
-
-                                        <td>
-
-                                            <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>" class="botao">
-                                                <i class="fa-solid fa-pen-to-square"></i></a>
+            
+            <div class="card">
+  <div class="card-body">
+    This is some text within a card body.
+  </div>
+</div>
 
 
-                                            <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
-                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </form>
-            </div>
         </div>
         </div>
     </section>
