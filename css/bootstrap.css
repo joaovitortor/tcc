@@ -285,6 +285,7 @@ address {
   line-height: inherit;
 }
 
+
 ol,
 ul,
 dl {
@@ -3815,6 +3816,7 @@ textarea.form-control-lg {
   --bs-nav-link-hover-color: var(--bs-link-hover-color);
   --bs-nav-link-disabled-color: var(--bs-secondary-color);
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
   padding-left: 0;
   margin-bottom: 0;
@@ -3965,6 +3967,7 @@ textarea.form-control-lg {
   --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
   position: relative;
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -8874,10 +8877,6 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) !important;
 }
 
-.bg-body-tertiary {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
-}
 
 .bg-opacity-10 {
   --bs-bg-opacity: 0.1;

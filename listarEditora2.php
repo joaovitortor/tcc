@@ -33,7 +33,7 @@ $resultado = mysqli_query($conexao, $sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
-   
+
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
@@ -113,28 +113,26 @@ $resultado = mysqli_query($conexao, $sql);
 
     <section class="dashboard">
 
-        <div class="corpo">
-            <div class="top">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <a class="navbar-brand">Navbar</a>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </div>
-            
-            <div class="card">
-  <div class="card-body">
-    This is some text within a card body.
-  </div>
-</div>
-
-
-
+        </nav>
+        <div class="card">
+            <div class="card-body">
+                This is some text within a card body.
+            </div>
         </div>
-        </div>
+
+
+
+
+
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
