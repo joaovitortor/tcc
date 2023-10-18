@@ -134,7 +134,7 @@ $resultado = mysqli_query($conexao, $sql);
                                 <i class="fa-solid fa-plus"></i>
                             </a>
                         </h2><br>
-                        <table >
+                        <table>
                             <thead>
                                 <tr>
                                     <td>ID</td>
