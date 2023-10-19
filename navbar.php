@@ -1,144 +1,105 @@
 <!DOCTYPE html>
-<!-- Coding by CodingNepal | www.codingnepalweb.com -->
-<html lang="en" dir="ltr">
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <title> Drop Down Sidebar Menu | CodingLab </title>
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <!--muda a fonte-->
+    <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
 
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-  <link href="css/cadastrar.css" rel="stylesheet">
-
-  <!-- Boxiocns CDN Link -->
-  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador Bibliotech</title>
 </head>
 
 <body>
-  <div class="sidebar close">
-    <div class="logo-details">
-      <i class='bx bxl-c-plus-plus'></i>
-      <span class="logo_name">CodingLab</span>
-    </div>
-    <ul class="nav-links">
-      <li>
-        <a href="#">
-          <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Dashboard</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Category</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-collection'></i>
-            <span class="link_name">Category</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow'></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Category</a></li>
-          <li><a href="#">HTML & CSS</a></li>
-          <li><a href="#">JavaScript</a></li>
-          <li><a href="#">PHP & MySQL</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-book-alt'></i>
-            <span class="link_name">Posts</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow'></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Posts</a></li>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Login Form</a></li>
-          <li><a href="#">Card Design</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-pie-chart-alt-2'></i>
-          <span class="link_name">Analytics</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Analytics</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-line-chart'></i>
-          <span class="link_name">Chart</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Chart</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-plug'></i>
-            <span class="link_name">Plugins</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow'></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Plugins</a></li>
-          <li><a href="#">UI Face</a></li>
-          <li><a href="#">Pigments</a></li>
-          <li><a href="#">Box Icons</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-compass'></i>
-          <span class="link_name">Explore</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Explore</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-history'></i>
-          <span class="link_name">History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">History</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-cog'></i>
-          <span class="link_name">Setting</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Setting</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="profile-details">
-          <div class="profile-content">
-            <img src="image/profile.jpg" alt="profileImg">
-          </div>
-          <div class="name-job">
-            <div class="profile_name">Prem Shahi</div>
-            <div class="job">Web Desginer</div>
-          </div>
-          <i class='bx bx-log-out'></i>
-        </div>
-      </li>
-    </ul>
-  </div>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
 
-  <section class="home-section">
+            <span class="logo_name">Bibliotech</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="cadastrarLeitor.php">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Leitor</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">Livro</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-chart"></i>
+                        <span class="link-name">Exemplar</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="link-name">Autor</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-comments"></i>
+                        <span class="link-name">Gênero</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-comments"></i>
+                        <span class="link-name">Editora</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-comments"></i>
+                        <span class="link-name">Responsável</span>
+                    </a></li>
+                <li><a href="#">
+                        <i class="uil uil-share"></i>
+                        <span class="link-name">Administrador</span>
+                    </a></li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="#">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Dark Mode</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <i class="uil uil-bars sidebar-toggle"></i>
+
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
