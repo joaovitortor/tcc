@@ -10,8 +10,15 @@ if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $mensagem = "Exclusão realizada com sucesso.";
 }
 
-//2. Prepara a SQL
-$sql = "select * from editora";
+
+$V_WHERE = "";
+if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
+    $V_WHERE = " and nome like '%" . $_POST['nome'] . "%' ";
+}
+
+//2. Preparar a sql
+$sql = "select * from editora
+where 1 = 1" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -116,22 +123,77 @@ $resultado = mysqli_query($conexao, $sql);
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <i class="uil uil-bars sidebar-toggle"></i>
-                <a class="navbar-brand">Navbar</a>
+                
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </nav>
-        <div class="card">
-            <div class="card-body">
-                This is some text within a card body.
+        <br><br><br>
+        <h1 class="titulo">Listagem de Editoras  <a href="cadastrarEditora.php" class="botao">
+                                <i class="fa-solid fa-plus"></i>
+                            </a></h1>
+        
+        <br><br>
+
+
+        <center>
+            <form method="post">
+                <label name="nome" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+                <div class="input-button-container">
+                    <input name="nome" type="text" class="formcampo">
+                    <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
+                </div>
+                <br><br>
+            </form>
+        </center>
+
+
+<center>
+        <div class="card cardlistar">
+            <div class="card-body cardlistar2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td scope="col"><b>ID</b></td>
+                            <td scope="col"><b>Status</b></td>
+                            <td scope="col"><b>Nome</b></td>
+                            <td scope="col"><b>Ações</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                            <tr>
+                                <td>
+                                    <?= $linha['id'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['status'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['nome'] ?>
+                                </td>
+                                <td>
+
+                                    <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>"
+                                        class="botao">
+                                        <i class="fa-solid fa-pen-to-square"></i></a>
+
+
+                                    <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
+                                        onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                        <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                </td>
+                            </tr>
+
+                        <?php } ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-
-
-
+</center>
 
     </section>
     <script>
