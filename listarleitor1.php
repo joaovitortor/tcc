@@ -180,8 +180,8 @@ $resultado = mysqli_query($conexao, $sql);
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
-                                <button onclick="openModal(<?= $linha['id'] ?>)" style="margin-right: 8px;" name="info"
-                                    class="botao">
+                                <button onclick="openModal(<?= $linha['id'] ?>)" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" style="margin-right: 8px;" name="info" class="botao">
                                     <i class="fa-solid fa-eye"></i>
                                 </button>
 
@@ -198,27 +198,29 @@ $resultado = mysqli_query($conexao, $sql);
             </div>
             </form>
         </div>
-        </div>
-        </div>
 
-        <div class="modal-container">
-
-            <div class="modal">
-                <h2>Informações do Usuário</h2>
-                <hr />
-                <span><b>Nome: </b><span id="modalNome"></span></span>
-                <span><b>Telefone: </b><span id="modalTelefone"></span></span>
-                <span><b>Email: </b><span id="modalEmail"></span></span>
-                <span><b>Endereco: </b><span id="modalEndereco"></span></span>
-                <span><b>Data de Nascimento: </b><span id="modalDn"></span></span>
-                <span><b>CPF: </b><span id="modalCpf"></span></span>
-                <span><b>Nome do Responsável: </b><span id="modalNomeResp"></span></span>
-                <span><b>CPF do Responsável: </b><span id="modalCpfResp"></span></span>
-                <span><b>Telefone do Responsável: </b><span id="modalTelResp"></span></span>
-                <hr />
-                <div class="btns">
-                    <button class="btnOK" onclick="closeModal()">OK</button>
-                    <button class="btnClose" onclick="closeModal()">Close</button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span><b>Nome: </b><span id="modalNome"></span></span> <br>
+                        <span><b>Telefone: </b><span id="modalTelefone"></span></span> <br>
+                        <span><b>Email: </b><span id="modalEmail"></span></span><br>
+                        <span><b>Endereco: </b><span id="modalEndereco"></span></span><br>
+                        <span><b>Data de Nascimento: </b><span id="modalDn"></span></span><br>
+                        <span><b>CPF: </b><span id="modalCpf"></span></span><br>
+                        <span id="modalNomeResp"></span>
+                        <span id="modalCpfResp"></span>
+                        <span id="modalTelResp"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -251,33 +253,31 @@ $resultado = mysqli_query($conexao, $sql);
         });
     </script>
     <script src="js/script.js"></script>
-    
+    <script src="js/bootstrap.bundle.js"></script>
     <script>
-
-        const modal = document.querySelector('.modal-container');
+        const modalContent = document.querySelector('.modal-content'); // Seletor para o conteúdo do modal
+        const modal = document.querySelector('.modal.fade'); // Seletor para o modal completo
 
         function openModal(userId) {
-            const modal = document.querySelector('.modal-container');
-            const modalContent = modal.querySelector('.modal');
+            const modal = document.querySelector('.modal.fade'); // Seletor para o modal completo
 
             // Faça uma solicitação AJAX para buscar os dados do usuário com base no userId
             $.ajax({
                 type: 'GET',
-                url: 'buscar_dados_usuario.php', // Substitua pelo URL real para buscar os dados do usuário
+                url: 'buscar_dados_usuario.php',
                 data: { id: userId },
                 dataType: 'json',
                 success: function (data) {
-                    // Atualize o campo "Nome" do modal com os dados do usuário obtidos
-                    const modalNome = modalContent.querySelector('#modalNome');
-                    const modalTelefone = modalContent.querySelector('#modalTelefone');
-                    const modalEmail = modalContent.querySelector('#modalEmail');
-                    const modalEndereco = modalContent.querySelector('#modalEndereco');
-                    const modalDn = modalContent.querySelector('#modalDn');
-                    const modalCpf = modalContent.querySelector('#modalCpf');
-                    const modalNomeResp = modalContent.querySelector('#modalNomeResp');
-                    const modalCpfResp = modalContent.querySelector('#modalCpfResp');
-                    const modalTelResp = modalContent.querySelector('#modalTelResp');
-
+                    // Preencha os campos do modal com os dados do usuário
+                    document.getElementById('modalNome').textContent = data.nome;
+                    document.getElementById('modalTelefone').textContent = data.telefone;
+                    document.getElementById('modalEmail').textContent = data.email;
+                    document.getElementById('modalEndereco').textContent = data.endereco;
+                    document.getElementById('modalDn').textContent = data.dn;
+                    document.getElementById('modalCpf').textContent = data.cpf;
+                    document.getElementById('modalNomeResp').textContent = data.nomeResp;
+                    document.getElementById('modalCpfResp').textContent = data.cpfResp;
+                    document.getElementById('modalTelResp').textContent = data.telResp;
 
                     // Formate a data no formato "dd/mm/yyyy"
                     const dataNascimento = new Date(data.dn);
@@ -286,25 +286,34 @@ $resultado = mysqli_query($conexao, $sql);
                     const ano = dataNascimento.getFullYear();
                     const dataFormatada = `${dia}/${mes}/${ano}`;
 
-                    modalNome.textContent = data.nome;
-                    modalTelefone.textContent = data.telefone;
-                    modalEmail.textContent = data.email;
-                    modalEndereco.textContent = data.endereco;
+                    const NomeResp = data.nomeResp;
+
+                    // Verifica se o campo nomeResp não está vazio
+                    if (data.nomeResp !== null) {
+                        const SpanNomeResp = "<span><b>Nome do Responsável: </b>" + data.nomeResp + "</span> <br>";
+                        const SpanCpfResp = "<span><b>Cpf do Responsável: </b>" + data.cpfResp + "</span> <br>";
+                        const SpanTelResp = "<span><b>Telefone do Responsável: </b>" + data.telResp + "</span> <br>";
+                        modalNomeResp.innerHTML = SpanNomeResp;
+                        modalCpfResp.innerHTML = SpanCpfResp;
+                        modalTelResp.innerHTML = SpanTelResp;
+                    } else {
+                        modalNomeResp.innerHTML = ""; // Limpa o conteúdo se nomeResp estiver vazio
+                        modalCpfResp.innerHTML = "";
+                        modalTelResp.innerHTML = "";
+                    }
+
+
                     modalDn.textContent = dataFormatada;
-                    modalCpf.textContent = data.cpf;
-                    modalNomeResp.textContent = data.nomeResp;
-                    modalCpfResp.textContent = data.cpfResp;
-                    modalTelResp.textContent = data.telResp;
 
 
-
-                    modal.style.display = 'flex'; // Defina o estilo de exibição como 'block' para mostrar o modal
+                    modal.style.display = 'block'; // Defina o estilo de exibição como 'block' para mostrar o modal
                 },
                 error: function () {
                     alert('Falha ao buscar os dados do usuário.');
                 }
             });
         }
+
 
         function closeModal() {
             const modal = document.querySelector('.modal-container');

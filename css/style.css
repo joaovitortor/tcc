@@ -587,7 +587,7 @@ hr {
     border-top: 1px solid lightgray;
 }
 
-.modal-container {
+/*.modal-container {
     width: 100vw;
     position: fixed;
     top: 30px;
@@ -663,7 +663,7 @@ span {
         font-size: smaller;
     }
 }
-
+*/
 .table-container {
     display: flex;
     flex-direction: column;
