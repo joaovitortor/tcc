@@ -146,6 +146,8 @@ if (isset($_POST['cadastrar'])) {
                         <option value="Inativo">Inativo</option>
                     </select>
 
+                    
+
                     <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
                         name="nome">
 

@@ -16,9 +16,11 @@ if (isset($_POST['salvar'])) {
 
   //4. Executar a SQL
   mysqli_query($conexao, $sql);
+}
 
-  //5. Mostrar uma mensagem ao usuário
-  $mensagem = "Inserido com sucesso &#128515;";
+if (isset($_POST['salvar'])) {
+    header("Location: listarEditora2.php");
+    exit;
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
