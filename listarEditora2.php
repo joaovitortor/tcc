@@ -26,7 +26,6 @@ $resultado = mysqli_query($conexao, $sql);
 ?>
 
 <?php require_once("navbar.php"); ?>
-
         <br><br><br>
         <h1 class="titulo">Listagem de Editoras  <a href="cadastrarEditora.php" class="botao">
                                 <i class="fa-solid fa-plus"></i>
@@ -35,7 +34,6 @@ $resultado = mysqli_query($conexao, $sql);
         <br><br>
 
 
-        
         <center>
             <form method="post">
                 <label name="nome" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
