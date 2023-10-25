@@ -5,7 +5,7 @@ require_once("conexao.php");
 
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from editora where id = " . $_GET['id'];
+    $sql = "delete from leitor where id = " . $_GET['id'];
     mysqli_query($conexao, $sql);
     $mensagem = "Exclusão realizada com sucesso.";
 }
@@ -17,7 +17,7 @@ if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
 }
 
 //2. Preparar a sql
-$sql = "select * from editora
+$sql = "select * from leitor
 where 1 = 1" . $V_WHERE;
 
 //3. Executa a SQL
@@ -131,7 +131,7 @@ $resultado = mysqli_query($conexao, $sql);
             </div>
 </div>
         <br><br><br>
-        <h1 class="titulo">Listagem de Editoras  <a href="cadastrarEditora.php" class="botao">
+        <h1 class="titulo">Listagem de Leitores  <a href="cadastrarLeitor.php" class="botao">
                                 <i class="fa-solid fa-plus"></i>
                             </a></h1>
         
@@ -159,6 +159,11 @@ $resultado = mysqli_query($conexao, $sql);
                             <td scope="col"><b>ID</b></td>
                             <td scope="col"><b>Status</b></td>
                             <td scope="col"><b>Nome</b></td>
+                            <td scope="col"><b>Telefone</b></td>
+                            <td scope="col"><b>Endereço</b></td>
+                            <td scope="col"><b>Data de nasc.</b></td>
+                            <td scope="col"><b>CPF</b></td>
+                            <td scope="col"><b>E-mail</b></td>
                             <td scope="col"><b>Ações</b></td>
                         </tr>
                     </thead>
@@ -173,6 +178,21 @@ $resultado = mysqli_query($conexao, $sql);
                                 </td>
                                 <td>
                                     <?= $linha['nome'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['telefone'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['endereco'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['dn'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['cpf'] ?>
+                                </td>
+                                <td>
+                                    <?= $linha['email'] ?>
                                 </td>
                                 <td>
 

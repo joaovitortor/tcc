@@ -40,7 +40,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <div class="input-button-container">
                     <input name="nome" type="text" class="formcampo">
                     <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-                    <a href="listarEditora2.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+                    <a href="listarEditora.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
                 </div>
                 <br><br>
             </form>

@@ -157,8 +157,8 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                             <select class="geekcb-field" name="status" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" selected="selected" disabled="disabled"
                                     placeholder="Status">Status</option>
-                                <option value="1">Ativo</option>
-                                <option value="2">Inativo</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="nativo">Inativo</option>
                             </select>
                         </div>
                         <div class="form-column">
