@@ -249,6 +249,19 @@ background-color: #ffd8be;
       transform: translateX(-3px) translateY(-3px);
   }
 
+  body :focus-within .botaopesquisar {
+    background-color: #ffd8be;
+    border: 1px solid black;
+    box-shadow: 3px 3px 1px #9381ff, 3px 3px 1px 1px black;
+    color: black;
+}
+
+body :focus-within .botaopesquisar:hover {
+    background-color: #ffd8be;
+      border: 1px solid black;
+      box-shadow: -3px -3px 1px #9381ff, -3px -3px 1px 1px black;
+      color: black;
+}
 
 .corpolistar {
     align-items: center;
