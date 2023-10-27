@@ -158,7 +158,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                                 <option class="fonte-status" value="" selected="selected" disabled="disabled"
                                     placeholder="Status">Status</option>
                                 <option value="Ativo">Ativo</option>
-                                <option value="nativo">Inativo</option>
+                                <option value="Inativo">Inativo</option>
                             </select>
                         </div>
                         <div class="form-column">
