@@ -8,7 +8,7 @@ if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
 
     //3. preparar sql para inserir
-    $sql = "insert into genero (status, nome) values ('$status', '$nome')";
+    $sql = "insert into autor (status, nome) values ('$status', '$nome')";
 
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
@@ -134,7 +134,7 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="geekcb-form-contact">
                 
                    
-                   <h1 class="titulo"> Cadastrar Gênero</h1>
+                   <h1 class="titulo"> Cadastrar Autor</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" selected="selected" disabled="disabled"
@@ -147,7 +147,7 @@ if (isset($_POST['cadastrar'])) {
                     
                     <table>
                         <tr> 
-                            <td style="padding-right: 70px"><a href="listarGenero.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td style="padding-right: 70px"><a href="listarAutor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
                             <td > <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
                            
                         </tr>

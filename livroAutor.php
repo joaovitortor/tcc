@@ -15,12 +15,6 @@ if (isset($_POST['cadastrar'])) {
     //3. preparar sql para inserir
     $sql = "insert into livro (status, titulo, isbn, edicao, pag, idEditora, idGenero)
 values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora')";
-
-if (isset($_POST['cadastrar'])) {
-    $idLivro = mysqli_insert_id($conexao);
-    header("Location: livroAutor.php?idLivro=$idLivro");
-    exit;
-}
    
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
@@ -138,73 +132,18 @@ if (isset($_POST['cadastrar'])) {
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
+                <input type="hidden" name="idLivro" value="<?php echo $_GET['idLivro']; ?>">
+                <input type="hidden" name="tituloLivro" value="<?php echo $_GET['tituloLivro']; ?>">
+                
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
-                    <h1 class="titulo">Cadastrar Livro</h1>
+                    <h1 class="titulo">Cadastrar Autor(es)</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
-                            <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Emprestado">Emprestado</option>
-                                <option value="Disponível">Disponível</option>
-                            </select>
-                        </div>
-                        <div class="form-column">
-                            <input class="geekcb-field" id="titulo" placeholder="Título" required type="texto"
-                                name="titulo">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="ISBN" required type="texto" name="isbn">
-                        </div>
-
-                        <div class="form-column">
-                            <input class="geekcb-field" id="edicao" name="edicao" placeholder="Edição" required type="texto">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-column esquerda">
-                            <input class="geekcb-field" id="pag" placeholder="Número de páginas" required type="texto" name="pag">
-                        </div>
-
-                        <div class="form-row"> 
-
-                        <select name="idGenero" id="idGenero" placeholder="Gênero" class="geekcb-field">
-                            <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                                            placeholder="Editora">Gênero</option>
-                            <?php
-                            $sql="select * from genero order by nome";
-                            $resultado= mysqli_query($conexao, $sql);
-                        
-                            while($linha = mysqli_fetch_array($resultado)):
-                              $id = $linha['id'];
-                              $nome= $linha['nome'];
-                        
-                              echo "<option value='{$id}'>{$nome}</option>";
-                            endwhile;
-                            ?>
-                            </select>  
-                            
+                          
   </div>
   </div>
-
-  <div class="form-row"> 
-  <select name="idEditora" id="idEditora" placeholder="Editora" class="geekcb-field">
-    <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Editora">Editora</option>
-    <?php
-    $sql="select * from editora order by nome";
-    $resultado= mysqli_query($conexao, $sql);
-
-    while($linha = mysqli_fetch_array($resultado)):
-      $id = $linha['id'];
-      $nome= $linha['nome'];
-
-      echo "<option value='{$id}'>{$nome}</option>";
-    endwhile;
-    ?>
-    </select>  
+  <h1 class="titulo"><?php echo $titulo ?></h1>
+  
                             
                             
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
