@@ -2,6 +2,8 @@
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
 
+session_start();
+
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
@@ -14,13 +16,14 @@ if (isset($_POST['cadastrar'])) {
 
     //3. preparar sql para inserir
     $sql = "insert into livro (status, titulo, isbn, edicao, pag, idEditora, idGenero)
-values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora')";
+values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', '$idGenero')";
 
-if (isset($_POST['cadastrar'])) {
+
     $idLivro = mysqli_insert_id($conexao);
     header("Location: livroAutor.php?idLivro=$idLivro");
-    exit;
-}
+
+
+$_SESSION['tituloLivro'] = $tituloLivro;
    
     //4. executar sql no bd
     mysqli_query($conexao, $sql);

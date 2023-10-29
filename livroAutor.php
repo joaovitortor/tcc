@@ -2,6 +2,8 @@
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
 
+session_start();
+
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
@@ -14,7 +16,7 @@ if (isset($_POST['cadastrar'])) {
 
     //3. preparar sql para inserir
     $sql = "insert into livro (status, titulo, isbn, edicao, pag, idEditora, idGenero)
-values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora')";
+values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGenero')";
    
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
@@ -133,7 +135,6 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora')";
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
                 <input type="hidden" name="idLivro" value="<?php echo $_GET['idLivro']; ?>">
-                <input type="hidden" name="tituloLivro" value="<?php echo $_GET['tituloLivro']; ?>">
                 
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Autor(es)</h1>
@@ -142,7 +143,7 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora')";
                           
   </div>
   </div>
-  <h1 class="titulo"><?php echo $titulo ?></h1>
+  <h1 class="titulo"><?php echo isset($_SESSION['tituloLivro']) ? $_SESSION['tituloLivro'] : "Nenhum título definido"; ?></h1>
   
                             
                             
