@@ -5,7 +5,7 @@ require_once("conexao.php");
 
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from editora where id = " . $_GET['id'];
+    $sql = "delete from autor where id = " . $_GET['id'];
     mysqli_query($conexao, $sql);
     $mensagem = "Exclusão realizada com sucesso.";
 }
@@ -17,17 +17,43 @@ if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
 }
 
 //2. Preparar a sql
-$sql = "select * from editora
+$sql = "select * from autor
 where 1 = 1" . $V_WHERE;
+
+$nomeAutor = filter_input(INPUT_GET, "nome", FILTER_DEFAULT);
+
+if(!empty($nomeAutor)){
+
+   $pesq_autores = "%" . $nomeAutor . "%"; 
+
+$query_autor = "SELECT id, nome FROM autor WHERE nome LIKE :nome LIMIT 20";
+$result_autores = $conexao->prepare($query_autores);
+$result_autores ->bindParam(':nome', $pesq_autores);
+$result_autores->execute();
+
+if(($result_autores) and ($result_autores->rowCont() != 0)){
+    while($row_autor = $result_autores->fetch(PDO::FETCH_ASSOC)){
+        $dados[] = $row_autor;
+    }
+    $retorna = ['status' => true, 'dados' => $dados];
+} else{
+    $retorna = ['status' => false, 'msg' => "Erro: nenhum produto encontrado!"];
+}
+
+$retorna = ['status' => true,'msg' => 'Autor encontrado!'];
+}
+
+echo json_encode($retorna);
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
+
 
 ?>
 
 <?php require_once("navbar.php"); ?>
         <br><br><br>
-        <h1 class="titulo">Listagem de Editoras  <a href="cadastrarEditora.php" class="botao">
+        <h1 class="titulo">Listagem de Autores  <a href="cadastrarAutores.php" class="botao">
                                 <i class="fa-solid fa-plus"></i>
                             </a></h1>
         
@@ -40,7 +66,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <div class="input-button-container">
                     <input name="nome" type="text" class="formcampo">
                     <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-                    <a href="listarEditora.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+                    <a href="listarAutores.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
                 </div>
                 <br><br>
             </form>
@@ -73,12 +99,12 @@ $resultado = mysqli_query($conexao, $sql);
                                 </td>
                                 <td>
 
-                                    <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>"
+                                    <a style="margin-right: 8px;" href="alterarAutor.php? id=<?= $linha['id'] ?>"
                                         class="botao">
                                         <i class="fa-solid fa-pen-to-square"></i></a>
 
 
-                                    <a href="listarEditora.php? id=<?= $linha['id'] ?>" class="botao"
+                                    <a href="listarAutores.php? id=<?= $linha['id'] ?>" class="botao"
                                         onclick="return confirm('Deseja mesmo excluir o cadastro?')">
                                         <i class="fa-sharp fa-solid fa-trash"></i> </a>
 

@@ -2,7 +2,6 @@
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
 
-session_start();
 
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
@@ -17,7 +16,7 @@ if (isset($_POST['cadastrar'])) {
     //3. preparar sql para inserir
     $sql = "insert into livro (status, titulo, isbn, edicao, pag, idEditora, idGenero)
 values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGenero')";
-   
+
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
 
@@ -39,8 +38,11 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGener
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/custom.js"></script>
     <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
     <!----======== CSS ======== -->
@@ -134,53 +136,33 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGener
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
-                <input type="hidden" name="idLivro" value="<?php echo $_GET['idLivro']; ?>">
-                
-                    <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
-                    <h1 class="titulo">Cadastrar Autor(es)</h1>
+
+
                     <div class="form-row">
                         <div class="form-column; esquerda">
-                          
-  </div>
-  </div>
-  <h1 class="titulo"><?php echo isset($_SESSION['tituloLivro']) ? $_SESSION['tituloLivro'] : "Nenhum título definido"; ?></h1>
-  
+
+                        </div>
+                    </div>
+                    <h1 class="titulo" name="tituloLivro">
+                        <?php echo $_GET['tituloLivro']; ?>
+                    </h1>
+                    <form action="processa.php">
+                        <div class="form-row">
+                            <div class="form-column; esquerda">
+                                <input class="geekcb-field" type="text" name="autor" id="autor" placeholder="Pesquisar autores" onkeyup="carregarAutores(this.value)" autocomplete="off">
+                            </div>
+                            </div>
                             
-                            
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
-                </form>
+                            <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                        </div>
+                    </form>
 
 
             </div>
         </div>
         </div>
     </section>
-    <script>
-        let arrow = document.querySelectorAll(".arrow");
-        for (var i = 0; i < arrow.length; i++) {
-            arrow[i].addEventListener("click", (e) => {
-                let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-                arrowParent.classList.toggle("showMenu");
-            });
-        }
-        let sidebar = document.querySelector(".sidebar");
-        let sidebarBtn = document.querySelector(".bx-menu");
-        console.log(sidebarBtn);
-        sidebarBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#telefone').inputmask('(99) 99999-9999');
-        });
-        $(document).ready(function () {
-            $('#dn').inputmask('99/99/9999');
-        });
-        $(document).ready(function () {
-            $('#cpf').inputmask('999.999.999-99');
-        });
-    </script>
+
     <script src="js/script.js"></script>
 </body>
 
