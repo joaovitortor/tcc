@@ -20,31 +20,6 @@ if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
 $sql = "select * from autor
 where 1 = 1" . $V_WHERE;
 
-$nomeAutor = filter_input(INPUT_GET, "nome", FILTER_DEFAULT);
-
-if(!empty($nomeAutor)){
-
-   $pesq_autores = "%" . $nomeAutor . "%"; 
-
-$query_autor = "SELECT id, nome FROM autor WHERE nome LIKE :nome LIMIT 20";
-$result_autores = $conexao->prepare($query_autores);
-$result_autores ->bindParam(':nome', $pesq_autores);
-$result_autores->execute();
-
-if(($result_autores) and ($result_autores->rowCont() != 0)){
-    while($row_autor = $result_autores->fetch(PDO::FETCH_ASSOC)){
-        $dados[] = $row_autor;
-    }
-    $retorna = ['status' => true, 'dados' => $dados];
-} else{
-    $retorna = ['status' => false, 'msg' => "Erro: nenhum produto encontrado!"];
-}
-
-$retorna = ['status' => true,'msg' => 'Autor encontrado!'];
-}
-
-echo json_encode($retorna);
-
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
 
