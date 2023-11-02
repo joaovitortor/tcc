@@ -42,12 +42,14 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGener
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/custom.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -146,14 +148,16 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGener
                     <h1 class="titulo" name="tituloLivro">
                         <?php echo $_GET['tituloLivro']; ?>
                     </h1>
-                    <form action="processa.php">
-                        <div class="form-row">
-                            <div class="form-column; esquerda">
-                                <input class="geekcb-field" type="text" name="autor" id="autor" placeholder="Pesquisar autores" onkeyup="carregarAutores(this.value)" autocomplete="off">
+           
+                    <form action="">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class=form-group>
+                                    <label for="">Selecione o autor</label>
+                                    <select name="select-autor" id="select-autor"></select>
+                                </div>
                             </div>
-                            </div>
-                            
-                            <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                    
                         </div>
                     </form>
 
@@ -164,6 +168,13 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', $idGener
     </section>
 
     <script src="js/script.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+            $('#select-autor')
+        });
+    </script>
 </body>
 
 </html>
