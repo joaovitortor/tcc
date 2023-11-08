@@ -28,9 +28,6 @@ values ('$status', '$titulo', '$isbn', '$edicao', '$pag',' $idEditora', '$idGene
     //4. executar sql no bd
     mysqli_query($conexao, $sql);
 
-    //5.mostrar uma mensagem ao usuário
-    $mensagem = "Cadastro realizado com sucesso!";
-
 }
 
 
