@@ -8,7 +8,7 @@ if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
 
     //3. preparar sql para inserir
-    $sql = "insert into autor (status, nome) values ('$status', '$nome')";
+    $sql = "INSERT INTO autor (status, nome) VALUES ('$status', '$nome')";
 
     //4. executar sql no bd
     mysqli_query($conexao, $sql);

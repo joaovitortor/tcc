@@ -7,11 +7,11 @@ if (isset($_POST['cadastrar'])) {
     
     $idLivro = $_GET['idLivro'];
     $titulo = $_GET['titulo'];
-    $idAutor = $_POST['idAutor'];
+    $idAutor = $_POST['autor'];
 
     //3. preparar sql para inserir
-    $sql = "insert into livroautor (idLivro, idAutor)
-values ('$idLivro','$idAutor')";
+    $sql = "INSERT INTO livroautor (idLivro, idAutor)
+VALUES ('$idLivro','$idAutor')";
 
    
     //4. executar sql no bd

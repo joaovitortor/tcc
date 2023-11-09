@@ -4,7 +4,7 @@ require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
-    $status = $_POST['status'];
+    $statusLivro = $_POST['statusLivro'];
     $titulo = $_POST['titulo'];
     $pag = $_POST['pag'];
     $isbn = $_POST['isbn'];
@@ -12,20 +12,15 @@ if (isset($_POST['cadastrar'])) {
     $idEditora = $_POST['idEditora'];
     $idGenero = $_POST['idGenero'];
 
-
-
-    //3. preparar sql para inserir
-    $sql = "insert into livro (status, titulo, pag, isbn, edicao, idEditora, idGenero)
-values ('$status', '$titulo', '$pag', '$isbn','$edicao','$idEditora','$idGenero')";
-
-    //4. executar sql no bd
+    //3. preparar sql para inserir usando prepared statement
+    $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero')";
+    
     mysqli_query($conexao, $sql);
 
     $idLivro = mysqli_insert_id($conexao);
-        header("Location: livroAutor.php?idLivro=$idLivro&titulo=$titulo");
+    header("Location: livroAutor.php?idLivro=$idLivro&titulo=$titulo");
 
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -138,7 +133,7 @@ values ('$status', '$titulo', '$pag', '$isbn','$edicao','$idEditora','$idGenero'
                     <h1 class="titulo">Cadastrar Livro</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
-                            <select class="geekcb-field" name="status" id="selectbox" data-selected="">
+                            <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" selected="selected" disabled="disabled"
                                     placeholder="Status">Status</option>
                                 <option value="Disponível">Disponível</option>
@@ -237,6 +232,7 @@ values ('$status', '$titulo', '$pag', '$isbn','$edicao','$idEditora','$idGenero'
             $('#cpf').inputmask('999.999.999-99');
         });
     </script>
+    
     <script src="js/script.js"></script>
 </body>
 
