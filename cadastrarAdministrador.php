@@ -145,7 +145,7 @@ values ('$status', '$login', '$senha')";
                     </select>
 
 
-                    <input class="geekcb-field"  placeholder="Login" required type="text" name="nome">
+                    <input class="geekcb-field"  placeholder="Login" required type="text" name="login">
                     <input class="geekcb-field"  placeholder="Senha" required type="password" name="senha">
 
                         <table>
