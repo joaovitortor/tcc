@@ -9,13 +9,13 @@ if (isset($_POST['cadastrar'])) {
     $pag = $_POST['pag'];
     $isbn = $_POST['isbn'];
     $edicao = $_POST['edicao'];
-    $idEditora = $_POST['editora'];
-    $idGenero = $_POST['genero'];
+    $idEditora = $_POST['idEditora'];
+    $idGenero = $_POST['idGenero'];
 
 
 
     //3. preparar sql para inserir
-    $sql = "insert into livro (status, titulo, pag, isbn, edicao, editora, genero)
+    $sql = "insert into livro (status, titulo, pag, isbn, edicao, idEditora, idGenero)
 values ('$status', '$titulo', '$pag', '$isbn','$edicao','$idEditora','$idGenero')";
 
     //4. executar sql no bd
@@ -165,8 +165,8 @@ values ('$status', '$titulo', '$pag', '$isbn','$edicao','$idEditora','$idGenero'
                             <input class="geekcb-field" id="edicao" placeholder="Edição" required type="texto" name="edicao">
                         </div>
                         <div class="form-column">
-                            <select class="geekcb-field" name="genero" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="idEditora" selected="selected" disabled="disabled"
+                            <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="idGenero" selected="selected" disabled="disabled"
                                     placeholder="Gênero">Gênero</option>
                                     <?php
                             $sql="select * from genero order by nome";
@@ -184,7 +184,7 @@ values ('$status', '$titulo', '$pag', '$isbn','$edicao','$idEditora','$idGenero'
                     </div>
                     <div class="form-row">
                   
-                            <select class="geekcb-field" name="editora" id="selectbox" data-selected="">
+                            <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="idEditora" selected="selected" disabled="disabled"
                                     placeholder="Editora">Editora</option>
                                     <?php
