@@ -9,14 +9,11 @@ if (isset($_POST['cadastrar'])) {
     $titulo = $_GET['titulo'];
     $idAutor = $_POST['autor'];
 
-    //3. preparar sql para inserir
-    $sql = "INSERT INTO livroautor (idLivro, idAutor)
-VALUES ('$idLivro','$idAutor')";
-
+    foreach ($idAutor as $idAutor) {
+        $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
+        mysqli_query($conexao, $sql);
+    }
    
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
-
 }
 
 
@@ -35,12 +32,14 @@ VALUES ('$idLivro','$idAutor')";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="jquery.lwMultiSelect.js"></script>
-  <link rel="stylesheet" href="jquery.lwMultiSelect.css" />
+  
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -131,8 +130,8 @@ VALUES ('$idLivro','$idAutor')";
                 <form method="post" class="geekcb-form-contact" id="insert_data">
                 <input type="hidden" name="idLivro" value="<?php echo $_GET['idLivro'] ?>">
                   <h1 class = "titulo" name="tituloLivro"><?php echo $_GET['titulo']; ?></h1>
-                  <select class="geekcb-field" name="autor" id="autor" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                  <select class="geekcb-field" name="autor[]" id="autor" multiple>
+                                <option class="fonte-status" disabled="disabled"
                                     placeholder="Selecione os autores"></option>
                                     <?php
                             $sql="select * from autor order by nome";
@@ -147,6 +146,7 @@ VALUES ('$idLivro','$idAutor')";
                             ?>
                                 
                             </select>
+                            <br><br>
                   <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
 
@@ -182,6 +182,11 @@ VALUES ('$idLivro','$idAutor')";
         });
     </script>
     <script src="js/script.js"></script>
+    <script>
+         $(document).ready(function() {
+            $('#autor').select2();
+         });
+    </script>
 </body>
 
 </html>
