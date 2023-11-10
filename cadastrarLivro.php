@@ -11,10 +11,20 @@ if (isset($_POST['cadastrar'])) {
     $edicao = $_POST['edicao'];
     $idEditora = $_POST['idEditora'];
     $idGenero = $_POST['idGenero'];
+    
+    $arquivo = $_FILES['arquivo'];
+    $arquivoNovo = explode('.',$arquivo['name']);
+
+    if($arquivoNovo[sizeof($arquivoNovo)-1] != 'jpg'){
+        die("Você não pode fazer upload deste tipo de arquivo");
+    }else{
+        move_uploaded_file($arquivo['tmp_name'], 'uploads/'.$arquivo['name']);
+    }
+
 
     //3. preparar sql para inserir usando prepared statement
-    $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero')";
-    
+    $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero, arquivo) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero','$arquivo')";
+
     mysqli_query($conexao, $sql);
 
     $idLivro = mysqli_insert_id($conexao);
@@ -128,7 +138,7 @@ if (isset($_POST['cadastrar'])) {
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact">
+                <form method="post" class="geekcb-form-contact" enctype="multipart/form-data">
                     <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Livro</h1>
                     <div class="form-row">
@@ -147,56 +157,62 @@ if (isset($_POST['cadastrar'])) {
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="Quantidade de páginas" required type="texto" name="pag">
+                            <input class="geekcb-field" placeholder="Quantidade de páginas" required type="texto"
+                                name="pag">
                         </div>
 
                         <div class="form-column">
-                            <input class="geekcb-field" id="isbn" name="isbn" placeholder="ISBN" required
-                                type="texto">
+                            <input class="geekcb-field" id="isbn" name="isbn" placeholder="ISBN" required type="texto">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" id="edicao" placeholder="Edição" required type="texto" name="edicao">
+                            <input class="geekcb-field" id="edicao" placeholder="Edição" required type="texto"
+                                name="edicao">
                         </div>
                         <div class="form-column">
                             <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="idGenero" selected="selected" disabled="disabled"
                                     placeholder="Gênero">Gênero</option>
-                                    <?php
-                            $sql="select * from genero order by nome";
-                            $resultado= mysqli_query($conexao, $sql);
-                        
-                            while($linha = mysqli_fetch_array($resultado)):
-                              $id = $linha['id'];
-                              $nome= $linha['nome'];
-                        
-                              echo "<option value='{$id}'>{$nome}</option>";
-                            endwhile;
-                            ?>
+                                <?php
+                                $sql = "select * from genero order by nome";
+                                $resultado = mysqli_query($conexao, $sql);
+
+                                while ($linha = mysqli_fetch_array($resultado)):
+                                    $id = $linha['id'];
+                                    $nome = $linha['nome'];
+
+                                    echo "<option value='{$id}'>{$nome}</option>";
+                                endwhile;
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
-                  
+                        <div class="form-column esquerda">
                             <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="idEditora" selected="selected" disabled="disabled"
                                     placeholder="Editora">Editora</option>
-                                    <?php
-                            $sql="select * from editora order by nome";
-                            $resultado= mysqli_query($conexao, $sql);
-                        
-                            while($linha = mysqli_fetch_array($resultado)):
-                              $id = $linha['id'];
-                              $nome= $linha['nome'];
-                        
-                              echo "<option value='{$id}'>{$nome}</option>";
-                            endwhile;
-                            ?>
+                                <?php
+                                $sql = "select * from editora order by nome";
+                                $resultado = mysqli_query($conexao, $sql);
+
+                                while ($linha = mysqli_fetch_array($resultado)):
+                                    $id = $linha['id'];
+                                    $nome = $linha['nome'];
+
+                                    echo "<option value='{$id}'>{$nome}</option>";
+                                endwhile;
+                                ?>
                             </select>
-                      
-                        </div>
+                            </div>
+                            <div class="form-column">
+                                <input type="file" class="geekcb-field" name="arquivo" id="arquivo">
+
+                            </div>
+
                         
+                    </div>
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
@@ -232,7 +248,7 @@ if (isset($_POST['cadastrar'])) {
             $('#cpf').inputmask('999.999.999-99');
         });
     </script>
-    
+
     <script src="js/script.js"></script>
 </body>
 
