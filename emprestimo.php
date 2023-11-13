@@ -4,6 +4,7 @@ require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
     $dataFormatada = $_POST['$dataEmprestimoFormatada'];
+
     $statusEmprestimo = $_POST['statusEmprestimo'];
 
 }
@@ -120,17 +121,10 @@ if (isset($_POST['cadastrar'])) {
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact">
-                <input type="hidden" name="dataEmprestimoFormatada" value="<?= $dataEmprestimoFormatada ?>">
-                <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
-                        <option value="Em andamento">Em andamento</option>
-                        <option value="Finalizado">Finalizado</option>
-                    </select>
-                    <p id="dataAtual"></p>
-
-<script>
+                <form method="post" class="geekcb-form-contact">             
+                
+                <p class="titulo" style="font-size:1.3rem" id="dataAtual"></p>
+                <script>
     // Obtém a data atual
     var dataAtual = new Date();
 
@@ -144,7 +138,40 @@ if (isset($_POST['cadastrar'])) {
 
     // Exibe a data formatada na página HTML
     document.getElementById("dataAtual").innerHTML = "Data do empréstimo: " + dataFormatada;
+
 </script>
+<p class="titulo" style="font-size:1.3rem" id="dataDevolucao"></p>
+<script>
+
+    var dataDevolucao = new Date(dataAtual);
+                        dataDevolucao.setDate(dataDevolucao.getDate() + 7);
+
+                        // Obtém o dia, mês e ano da data de devolução
+                        var diaDevolucao = dataDevolucao.getDate();
+                        var mesDevolucao = dataDevolucao.getMonth() + 1; // Mês é indexado de 0 a 11, então adicionamos 1
+                        var anoDevolucao = dataDevolucao.getFullYear();
+
+                        // Formata a data de devolução como dd/mm/aa
+                        var dataDevolucaoFormatada = (diaDevolucao < 10 ? '0' : '') + diaDevolucao + '/' + (mesDevolucao < 10 ? '0' : '') + mesDevolucao + '/' + anoDevolucao % 100;
+
+                        // Exibe a data de devolução na página HTML
+                        document.getElementById("dataDevolucao").innerHTML = "Data de devolução: " + dataDevolucaoFormatada;
+
+</script>
+
+
+
+
+               
+                <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
+                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                  
+
+
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Realizar empréstimo</button>
                 </form>
