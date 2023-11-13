@@ -128,17 +128,23 @@ if (isset($_POST['cadastrar'])) {
                         <option value="Em andamento">Em andamento</option>
                         <option value="Finalizado">Finalizado</option>
                     </select>
-                
-                <label for="dataEmprestimoFormatada">Data do empréstimo: </label>
-                <h2 id="dataEmprestimoFormatada">
-                <script>
-       const dataAtual = new Date();
-       const dataEmprestimoFormatada = dataAtual.toLocaleDateString();
-       const opcoesFormatacao = { day: 'numeric', month: '2-digit', year: 'numeric' };
-  const dataEmprestimoFormatada = dataAtual.toLocaleDateString('pt-BR', opcoesFormatacao);
-  document.getElementById('dataEmprestimoFormatada').innerText = dataEmprestimoFormatada;
-    </script>
-</h2>
+                    <p id="dataAtual"></p>
+
+<script>
+    // Obtém a data atual
+    var dataAtual = new Date();
+
+    // Obtém o dia, mês e ano
+    var dia = dataAtual.getDate();
+    var mes = dataAtual.getMonth() + 1; // Mês é indexado de 0 a 11, então adicionamos 1
+    var ano = dataAtual.getFullYear();
+
+    // Formata a data como dd/mm/aa
+    var dataFormatada = (dia < 10 ? '0' : '') + dia + '/' + (mes < 10 ? '0' : '') + mes + '/' + ano % 100;
+
+    // Exibe a data formatada na página HTML
+    document.getElementById("dataAtual").innerHTML = "Data do empréstimo: " + dataFormatada;
+</script>
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Realizar empréstimo</button>
                 </form>
@@ -179,7 +185,10 @@ if (isset($_POST['cadastrar'])) {
         $(document).ready(function () {
             $('#autor').select2();
         });
+
+        
     </script>
+
 
 
 </body>

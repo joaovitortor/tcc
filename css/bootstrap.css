@@ -4406,7 +4406,7 @@ textarea.form-control-lg {
 }
 
 .cardlistar{
-  width: 50%;
+  display: flex;
   
 }
 
