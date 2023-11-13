@@ -9,6 +9,8 @@ if (isset($_POST['cadastrar'])) {
 
     $dataDevolucaoFormatada = $_POST['$dataDevolucaoFormatada'];
 
+    $idLeitor = $_POST['leitor'];
+
 }
 
 
@@ -133,6 +135,22 @@ if (isset($_POST['cadastrar'])) {
                         <option value="Finalizado">Finalizado</option>
                     </select>
 
+                    <select class="selectleitor" name="leitor" id="leitor">
+                        <option class="fonte-status" disabled="disabled" placeholder="Selecione o leitor"></option>
+                        <?php
+                        $sql = "select * from leitor order by nome";
+                        $resultado = mysqli_query($conexao, $sql);
+
+                        while ($linha = mysqli_fetch_array($resultado)):
+                            $idAutor = $linha['id'];
+                            $nome = $linha['nome'];
+
+                            echo "<option value='{$idLeitor}'>{$nome}</option>";
+                        endwhile;
+                        ?>
+
+                    </select>
+                        <br><br>
                     <p class="titulo" style="font-size:1.1rem; text-align: left" id="dataAtual"></p>
                     <script>
                       
@@ -202,10 +220,8 @@ if (isset($_POST['cadastrar'])) {
     <script src="js/script.js"></script>
     <script>
         $(document).ready(function () {
-            $('#autor').select2();
+            $('#leitor').select2();
         });
-
-
     </script>
 
 
