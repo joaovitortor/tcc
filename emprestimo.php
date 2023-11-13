@@ -3,21 +3,14 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-    //2. Receber os dados para inserir no BD
-
-    $idLivro = $_GET['idLivro'];
-    $titulo = $_GET['titulo'];
-    $idAutor = $_POST['autor'];
-
-    foreach ($idAutor as $idAutor) {
-        $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
-        mysqli_query($conexao, $sql);
-    }
+    $dataFormatada = $_POST['$dataEmprestimoFormatada'];
+    $statusEmprestimo = $_POST['statusEmprestimo'];
 
 }
 
 
 ?>
+
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -127,28 +120,27 @@ if (isset($_POST['cadastrar'])) {
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact" id="insert_data">
-                    <input type="hidden" name="idLivro" value="<?php echo $_GET['idLivro'] ?>">
-                    <h1 class="titulo" name="tituloLivro">
-                        <?php echo $_GET['titulo']; ?>
-                    </h1>
-                    <select class="geekcb-field" name="autor[]" id="autor" multiple>
-                        <option class="fonte-status" disabled="disabled" placeholder="Selecione os autores"></option>
-                        <?php
-                        $sql = "select * from autor order by nome";
-                        $resultado = mysqli_query($conexao, $sql);
-
-                        while ($linha = mysqli_fetch_array($resultado)):
-                            $idAutor = $linha['id'];
-                            $nome = $linha['nome'];
-
-                            echo "<option value='{$idAutor}'>{$nome}</option>";
-                        endwhile;
-                        ?>
-
+                <form method="post" class="geekcb-form-contact">
+                <input type="hidden" name="dataEmprestimoFormatada" value="<?= $dataEmprestimoFormatada ?>">
+                <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
+                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Finalizado">Finalizado</option>
                     </select>
-                    <br><br>
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                
+                <label for="dataEmprestimoFormatada">Data do empréstimo: </label>
+                <h2 id="dataEmprestimoFormatada">
+                <script>
+       const dataAtual = new Date();
+       const dataEmprestimoFormatada = dataAtual.toLocaleDateString();
+       const opcoesFormatacao = { day: 'numeric', month: '2-digit', year: 'numeric' };
+  const dataEmprestimoFormatada = dataAtual.toLocaleDateString('pt-BR', opcoesFormatacao);
+  document.getElementById('dataEmprestimoFormatada').innerText = dataEmprestimoFormatada;
+    </script>
+</h2>
+
+                    <button class="geekcb-btn" type="submit" name="cadastrar">Realizar empréstimo</button>
                 </form>
 
 
@@ -188,6 +180,8 @@ if (isset($_POST['cadastrar'])) {
             $('#autor').select2();
         });
     </script>
+
+
 </body>
 
 </html>
