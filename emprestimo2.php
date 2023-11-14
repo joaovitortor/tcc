@@ -4,6 +4,7 @@ require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
   
+
     mysqli_query($conexao, $sql);
 }
 
@@ -122,6 +123,8 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
 
+                    <input type="hideen" id="dataEmprestimo" name="dataEmprestimo">
+
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
                             placeholder="Status">Status</option>
@@ -191,7 +194,12 @@ if (isset($_POST['cadastrar'])) {
     </script>
 
 <script>
-  
+  const dataEmprestimo = new Date();
+                    const dia = (dataNascimento.getDate() + 1).toString().padStart(2, '0');
+                    const mes = (dataNascimento.getMonth() + 1).toString().padStart(2, '0');
+                    const ano = dataNascimento.getFullYear();
+                    const dataFormatada = `${dia}/${mes}/${ano}`;
+
 </script>
 
 
