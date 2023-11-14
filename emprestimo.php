@@ -11,6 +11,24 @@ if (isset($_POST['cadastrar'])) {
 
     $idLeitor = $_POST['leitor'];
 
+    $dataDevolvido = $_POST['dataDevolvido'];
+
+
+
+    // Converta as datas para objetos DateTime
+    $dataDevolvidoObj = new DateTime($dataDevolvido);
+    $dataDevolucaoPrevistaObj = new DateTime($dataDevolucaoPrevista);
+
+    // Calcule a diferença em dias
+    $diferencaDias = $dataDevolvidoObj->diff($dataDevolucaoPrevistaObj)->days;
+
+    // Verifique se há atraso e calcule a multa
+    if ($diferencaDias > 0) {
+        $multa = $diferencaDias * 1.00; // R$ 1,00 por dia de atraso
+        // Faça o que for necessário com a multa (pode armazenar no banco de dados, exibir na tela, etc.)
+        echo "Multa: R$ " . number_format($multa, 2, ',', '.');
+    }
+
 }
 
 
@@ -122,12 +140,12 @@ if (isset($_POST['cadastrar'])) {
                     <input type="text" placeholder="Search here...">
                 </div>
 
-            
+
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact">
                     <h1 class="titulo">Empréstimo</h1>
-                    
+
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
                             placeholder="Status">Status</option>
@@ -135,6 +153,8 @@ if (isset($_POST['cadastrar'])) {
                         <option value="Finalizado">Finalizado</option>
                     </select>
 
+                    <label for="leitor" class="titulo" style="font-size:1.1rem; text-align: left">Selecione o leitor:
+                    </label>
                     <select class="selectleitor" name="leitor" id="leitor">
                         <option class="fonte-status" disabled="disabled" placeholder="Selecione o leitor"></option>
                         <?php
@@ -150,18 +170,18 @@ if (isset($_POST['cadastrar'])) {
                         ?>
 
                     </select>
-                        <br><br>
+                    <br><br>
                     <p class="titulo" style="font-size:1.1rem; text-align: left" id="dataAtual"></p>
                     <script>
-                      
+
                         var dataAtual = new Date();
-            
+
                         var dia = dataAtual.getDate();
-                        var mes = dataAtual.getMonth() + 1; 
+                        var mes = dataAtual.getMonth() + 1;
                         var ano = dataAtual.getFullYear();
 
                         var dataFormatada = (dia < 10 ? '0' : '') + dia + '/' + (mes < 10 ? '0' : '') + mes + '/' + ano % 100;
-                        
+
                         document.getElementById("dataAtual").innerHTML = "Data do empréstimo: " + dataFormatada;
 
                     </script>
@@ -170,18 +190,22 @@ if (isset($_POST['cadastrar'])) {
 
                         var dataDevolucao = new Date(dataAtual);
                         dataDevolucao.setDate(dataDevolucao.getDate() + 7);
-                        
+
                         var diaDevolucao = dataDevolucao.getDate();
                         var mesDevolucao = dataDevolucao.getMonth() + 1;
                         var anoDevolucao = dataDevolucao.getFullYear();
 
                         var dataDevolucaoFormatada = (diaDevolucao < 10 ? '0' : '') + diaDevolucao + '/' + (mesDevolucao < 10 ? '0' : '') + mesDevolucao + '/' + anoDevolucao % 100;
 
-                        document.getElementById("dataDevolucao").innerHTML = "Data de devolução: " + dataDevolucaoFormatada;
+                        document.getElementById("dataDevolucao").innerHTML = "Data prevista para devolução: " + dataDevolucaoFormatada;
 
                     </script>
 
-
+                    <div class="form-column">
+                        <label for="dataDevolvido">Data em que o livro foi devolvido</label>
+                        <input class="geekcb-field" id="dataDevolvido" required type="date"
+                            name="dataDevolvido">
+                    </div>
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Realizar empréstimo</button>
                 </form>
