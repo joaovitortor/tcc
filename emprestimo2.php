@@ -3,16 +3,7 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-    $dataAtual = $_POST['dataAtual'];
-
-    $statusEmprestimo = $_POST['statusEmprestimo'];
-
-    $dataDevolucao = $_POST['dataDevolucao'];
-
-    $idLeitor = $_POST['leitor'];
-
-    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataAtual', '$dataDevolucao','$idLeitor')";
-
+  
     mysqli_query($conexao, $sql);
 }
 
@@ -131,9 +122,6 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
 
-                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput">
-                    <input type="hidden" name="dataAtual" id="dataFormatadaInput">
-
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
                             placeholder="Status">Status</option>
@@ -159,35 +147,7 @@ if (isset($_POST['cadastrar'])) {
 
                     </select>
                     <br><br>
-                    <p class="titulo" style="font-size:1.1rem; text-align: left" id="dataAtual"></p>
-                    <script>
-
-                        var dataAtual = new Date();
-
-                        var dia = dataAtual.getDate();
-                        var mes = dataAtual.getMonth() + 1;
-                        var ano = dataAtual.getFullYear();
-
-                        var dataFormatada = (dia < 10 ? '0' : '') + dia + '/' + (mes < 10 ? '0' : '') + mes + '/' + ano % 100;
-
-                        document.getElementById("dataAtual").innerHTML = "Data do empréstimo: " + dataFormatada;
-
-                    </script>
-                    <p class="titulo" style="font-size:1.1rem; text-align: left" id="dataDevolucao"></p>
-                    <script>
-
-                        var dataDevolucao = new Date(dataAtual);
-                        dataDevolucao.setDate(dataDevolucao.getDate() + 7);
-
-                        var diaDevolucao = dataDevolucao.getDate();
-                        var mesDevolucao = dataDevolucao.getMonth() + 1;
-                        var anoDevolucao = dataDevolucao.getFullYear();
-
-                        var dataDevolucaoFormatada = (diaDevolucao < 10 ? '0' : '') + diaDevolucao + '/' + (mesDevolucao < 10 ? '0' : '') + mesDevolucao + '/' + anoDevolucao % 100;
-
-                        document.getElementById("dataDevolucao").innerHTML = "Data prevista para devolução: " + dataDevolucaoFormatada;
-
-                    </script>
+                    
 
                     <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
                 </form>
