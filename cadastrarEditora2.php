@@ -44,7 +44,7 @@ if (isset($_POST['cadastrar'])) {
 </head>
 
 <body>
-<nav class="">
+    <nav class="">
         <div class="logo-name">
             <div class="logo-image">
                 <img src="images/logo.png" alt="">
@@ -55,35 +55,9 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a class="leitor-btn">
-                    <i class="fa-regular fa-user"></i><span class="link-name">Leitor</span></a>
-                <ul class="leitor-show">
-                    <li><a href="cadastrarLeitor.php">Cadastrar</a></li>
-                    <li><a href="listarLeitor.php">Listar</a></li>
-                </ul>
-                </li>
 
-                <li><a class="livro-btn">
-                 <i class="fa-solid fa-book"></i>
-                        <span class="link-name">Livro</span>
-                    </a></li>
-                <li><a class="emp-btn">
-                <i class="fa-solid fa-arrows-left-right-to-line"></i>
-                        <span class="link-name">Empréstimo</span>
-                    </a></li>
-                <li><a class="autor-btn">
-                <i class="fa-solid fa-pen-nib"></i>
-                        <span class="link-name">Autor</span>
-                    </a></li>
-                <li><a class="editora-btn">
-                <i class="fa-solid fa-newspaper"></i>
-                        <span class="link-name">Editora</span>
-                    </a></li>
-                <li><a class="adm-btn">
-                        <i class="fa-solid fa-lock"></i>
-                        <span class="link-name">Administrador</span>
-                    </a></li>
-               
+                <?php require_once('sidebar.php')  ?>
+
             </ul>
 
             <ul class="logout-mode">
@@ -184,11 +158,4 @@ if (isset($_POST['cadastrar'])) {
     </script>
     <script src="js/script.js"></script>
 
-<script>
-   
-    $('.leitor-btn').click(function(){
-        $('nav ul .leitor-show').toggleClass("show");
-    }) 
-
     
-</script>

@@ -82,38 +82,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="cadastrarLeitor.php">
-                        <i class="uil uil-estate"></i>
-                        <span class="link-name">Leitor</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-files-landscapes"></i>
-                        <span class="link-name">Livro</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-chart"></i>
-                        <span class="link-name">Exemplar</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-thumbs-up"></i>
-                        <span class="link-name">Autor</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Gênero</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Editora</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Responsável</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-share"></i>
-                        <span class="link-name">Administrador</span>
-                    </a></li>
+            <?php require_once('sidebar.php')  ?>
             </ul>
 
             <ul class="logout-mode">
