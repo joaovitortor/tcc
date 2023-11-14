@@ -3,32 +3,17 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-    $dataFormatada = $_POST['$dataEmprestimoFormatada'];
+    $dataAtual = $_POST['dataAtual'];
 
     $statusEmprestimo = $_POST['statusEmprestimo'];
 
-    $dataDevolucaoFormatada = $_POST['$dataDevolucaoFormatada'];
+    $dataDevolucao = $_POST['dataDevolucao'];
 
     $idLeitor = $_POST['leitor'];
 
-    $dataDevolvido = $_POST['dataDevolvido'];
+    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataAtual', '$dataDevolucao','$idLeitor')";
 
-
-
-    // Converta as datas para objetos DateTime
-    $dataDevolvidoObj = new DateTime($dataDevolvido);
-    $dataDevolucaoPrevistaObj = new DateTime($dataDevolucaoPrevista);
-
-    // Calcule a diferença em dias
-    $diferencaDias = $dataDevolvidoObj->diff($dataDevolucaoPrevistaObj)->days;
-
-    // Verifique se há atraso e calcule a multa
-    if ($diferencaDias > 0) {
-        $multa = $diferencaDias * 1.00; // R$ 1,00 por dia de atraso
-        // Faça o que for necessário com a multa (pode armazenar no banco de dados, exibir na tela, etc.)
-        echo "Multa: R$ " . number_format($multa, 2, ',', '.');
-    }
-
+    mysqli_query($conexao, $sql);
 }
 
 
@@ -143,8 +128,11 @@ if (isset($_POST['cadastrar'])) {
 
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact">
+                <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
+
+                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput">
+                    <input type="hidden" name="dataAtual" id="dataFormatadaInput">
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
@@ -162,7 +150,7 @@ if (isset($_POST['cadastrar'])) {
                         $resultado = mysqli_query($conexao, $sql);
 
                         while ($linha = mysqli_fetch_array($resultado)):
-                            $idAutor = $linha['id'];
+                            $idLeitor = $linha['id'];
                             $nome = $linha['nome'];
 
                             echo "<option value='{$idLeitor}'>{$nome}</option>";
@@ -201,13 +189,7 @@ if (isset($_POST['cadastrar'])) {
 
                     </script>
 
-                    <div class="form-column">
-                        <label for="dataDevolvido">Data em que o livro foi devolvido</label>
-                        <input class="geekcb-field" id="dataDevolvido" required type="date"
-                            name="dataDevolvido">
-                    </div>
-
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Realizar empréstimo</button>
+                    <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
                 </form>
 
 
@@ -248,6 +230,12 @@ if (isset($_POST['cadastrar'])) {
         });
     </script>
 
+<script>
+    document.getElementById("dataDevolucaoFormatada").value = dataDevolucao;
+        document.getElementById("dataFormatada").value = dataAtual;
+
+        document.getElementById("formularioEmprestimo").submit();
+</script>
 
 
 </body>
