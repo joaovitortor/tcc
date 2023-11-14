@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/11/2023 às 10:16
+-- Tempo de geração: 13/11/2023 às 16:30
 -- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.0.28
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -102,7 +102,7 @@ INSERT INTO `editora` (`id`, `status`, `nome`) VALUES
 
 CREATE TABLE `emprestimo` (
   `id` int(11) NOT NULL,
-  `status` varchar(100) DEFAULT NULL,
+  `statusEmprestimo` varchar(100) DEFAULT NULL,
   `dataEmprestimo` date DEFAULT NULL,
   `dataPrevistaDevolucao` date DEFAULT NULL,
   `idLeitor` int(11) DEFAULT NULL,
@@ -129,6 +129,18 @@ CREATE TABLE `genero` (
 INSERT INTO `genero` (`id`, `status`, `nome`) VALUES
 (1, 'Ativo', 'Drama'),
 (2, 'Ativo', 'Romance');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `itensdeemprestimo`
+--
+
+CREATE TABLE `itensdeemprestimo` (
+  `idLivro` int(11) NOT NULL,
+  `idEmprestimo` int(11) NOT NULL,
+  `dataDevolucao` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -267,6 +279,13 @@ ALTER TABLE `genero`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `itensdeemprestimo`
+--
+ALTER TABLE `itensdeemprestimo`
+  ADD KEY `idLivro` (`idLivro`),
+  ADD KEY `idEmprestimo` (`idEmprestimo`);
+
+--
 -- Índices de tabela `leitor`
 --
 ALTER TABLE `leitor`
@@ -336,6 +355,13 @@ ALTER TABLE `livro`
 --
 ALTER TABLE `emprestimo`
   ADD CONSTRAINT `emprestimo_ibfk_1` FOREIGN KEY (`idLeitor`) REFERENCES `leitor` (`id`);
+
+--
+-- Restrições para tabelas `itensdeemprestimo`
+--
+ALTER TABLE `itensdeemprestimo`
+  ADD CONSTRAINT `idEmprestimo` FOREIGN KEY (`idEmprestimo`) REFERENCES `emprestimo` (`id`),
+  ADD CONSTRAINT `idLivro` FOREIGN KEY (`idLivro`) REFERENCES `livro` (`id`);
 
 --
 -- Restrições para tabelas `livro`

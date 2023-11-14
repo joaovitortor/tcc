@@ -91,7 +91,8 @@ nav {
 }
 
 nav.close {
-    width: 73px;
+    width: 0;
+    
 }
 
 nav .logo-name {
@@ -249,8 +250,8 @@ body.dark .switch:before {
 }
 
 nav.close~.dashboard {
-    left: 73px;
-    width: calc(100% - 73px);
+    left: 0px;
+    width: 100%;
 }
 
 .dashboard .top {
@@ -268,8 +269,8 @@ nav.close~.dashboard {
 }
 
 nav.close~.dashboard .top {
-    left: 73px;
-    width: calc(100% - 73px);
+    left: 3px;
+    width: 100% - 73px;
 }
 
 .dashboard .top .sidebar-toggle {
