@@ -165,12 +165,12 @@ $resultado = mysqli_query($conexao, $sql);
                                 </td>
                                 <td>
 
-                                    <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>"
+                                    <a style="margin-right: 8px;" href="alterarLivro.php? id=<?= $linha['id'] ?>"
                                         class="botao">
                                         <i class="fa-solid fa-pen-to-square"></i></a>
 
 
-                                    <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
+                                    <a href="listarLeitor2.php? id=<?= $linha['id'] ?>" class="botao"
                                         onclick="return confirm('Deseja mesmo excluir o cadastro?')">
                                         <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
