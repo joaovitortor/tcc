@@ -14,7 +14,7 @@
     </ul>
 </li>
 <li><a class="livro-btn">
-        <i class="fa-regular fa-user"></i><span class="link-name">Livro</span></a>
+        <i class="fa-solid fa-book"></i></i><span class="link-name">Livro</span></a>
     <ul class="livro-show">
         <li><a href="cadastrarLivro.php">Cadastrar</a></li>
         <li><a href="listarLivros.php">Listar</a></li>
@@ -24,7 +24,7 @@
         <i class="fa-regular fa-user"></i><span class="link-name">Autor</span></a>
     <ul class="autor-show">
         <li><a href="cadastrarAutor.php">Cadastrar</a></li>
-        <li><a href="listarAutor.php">Listar</a></li>
+        <li><a href="listarAutores.php">Listar</a></li>
     </ul>
 </li>
 <li><a class="administrador-btn">
@@ -37,15 +37,15 @@
 <li><a class="genero-btn">
         <i class="fa-regular fa-user"></i><span class="link-name">Genero</span></a>
     <ul class="genero-show">
-        <li><a href="cadastrarAutor.php">Cadastrar</a></li>
-        <li><a href="listarAutor.php">Listar</a></li>
+        <li><a href="cadastrarGenero.php">Cadastrar</a></li>
+        <li><a href="listarGenero.php">Listar</a></li>
     </ul>
 </li>
 <li><a class="editora-btn">
         <i class="fa-regular fa-user"></i><span class="link-name">Editora</span></a>
     <ul class="editora-show">
-        <li><a href="cadastrarAdministrador.php">Cadastrar</a></li>
-        <li><a href="listarAdministrador.php">Listar</a></li>
+        <li><a href="cadastrarEditora.php">Cadastrar</a></li>
+        <li><a href="listarEditora.php">Listar</a></li>
     </ul>
 </li>
 
