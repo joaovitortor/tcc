@@ -64,38 +64,7 @@ $resultado = mysqli_query($conexao, $sql);
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="cadastrarLeitor.php">
-                        <i class="uil uil-estate"></i>
-                        <span class="link-name">Leitor</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-files-landscapes"></i>
-                        <span class="link-name">Livro</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-chart"></i>
-                        <span class="link-name">Exemplar</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-thumbs-up"></i>
-                        <span class="link-name">Autor</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Gênero</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Editora</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Responsável</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-share"></i>
-                        <span class="link-name">Administrador</span>
-                    </a></li>
+            <?php require_once('sidebar.php')  ?>
             </ul>
 
             <ul class="logout-mode">
@@ -196,12 +165,12 @@ $resultado = mysqli_query($conexao, $sql);
                                 </td>
                                 <td>
 
-                                    <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>"
+                                    <a style="margin-right: 8px;" href="alterarLivro.php? id=<?= $linha['id'] ?>"
                                         class="botao">
                                         <i class="fa-solid fa-pen-to-square"></i></a>
 
 
-                                    <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
+                                    <a href="listarLeitor2.php? id=<?= $linha['id'] ?>" class="botao"
                                         onclick="return confirm('Deseja mesmo excluir o cadastro?')">
                                         <i class="fa-sharp fa-solid fa-trash"></i> </a>
 

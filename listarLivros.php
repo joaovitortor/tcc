@@ -31,7 +31,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
         <br><br><br>
-        <h1 class="titulo">Listagem de Autores  <a href="cadastrarAutores.php" class="botao">
+        <h1 class="titulo">Listagem de Livros  <a href="cadastrarAutores.php" class="botao">
                                 <i class="fa-solid fa-plus"></i>
                             </a></h1>
         
