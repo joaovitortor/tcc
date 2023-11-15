@@ -4,10 +4,13 @@
 require_once("conexao.php");
 
 // Excluir
-if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from leitor where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
-    $mensagem = "Exclusão realizada com sucesso.";
+if (isset($_POST['excluir'])) {
+    if (isset($_POST['check'])) { // Verifica se o botão excluir foi clicado
+        $idUsuario = $_POST['idUsuario'];
+        $sql = "delete from leitor where id = " . $idUsuario;
+        mysqli_query($conexao, $sql);
+        $mensagem = "Exclusão realizada com sucesso.";
+    }
 }
 
 
@@ -163,13 +166,42 @@ $resultado = mysqli_query($conexao, $sql);
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
 
-                                        <a href="listarLeitor2.php? id=<?= $linha['id'] ?>" class="botao"
-                                            onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                        <a href="listarLeitor2.php?id=<?= $linha['id'] ?>" class="botao"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                             <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
                                     </td>
                                 </tr>
-
+                                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário
+                                                </h2>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form method="post">
+                                                <div class="modal-body">
+                                                    <input type="hidden" id="idUsuario" name="idUsuario"
+                                                        value="<?= $linha['id'] ?>">
+                                                    <label for="">Para excluir o Leitor
+                                                        <?= $linha['nome'] ?>, pressione abaixo:
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckIndeterminate" name="check">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                    <button type="submit" name="excluir" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">Excluir Leitor</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             <?php } ?>
                         </tbody>
                     </table>
