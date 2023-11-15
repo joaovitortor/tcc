@@ -166,7 +166,7 @@ $resultado = mysqli_query($conexao, $sql);
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
 
-                                        <a href="listarLeitor2.php?id=<?= $linha['id'] ?>" class="botao"
+                                        <a href="listarLeitor.php?id=<?= $linha['id'] ?>" class="botao"
                                             data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                             <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
