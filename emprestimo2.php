@@ -3,9 +3,12 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
+    $dateArray = getdate();
+print_r($dateArray);
+
   
 
-    mysqli_query($conexao, $sql);
+    //mysqli_query($conexao, $sql);
 }
 
 
@@ -123,7 +126,7 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
 
-                    <input type="hideen" id="dataEmprestimo" name="dataEmprestimo">
+                   <!-- <input type="hideen" id="dataEmprestimo" name="dataEmprestimo"> -->
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
