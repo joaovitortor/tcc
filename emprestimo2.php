@@ -3,12 +3,10 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-    $dateArray = getdate();
-print_r($dateArray);
 
   
 
-    //mysqli_query($conexao, $sql);
+    mysqli_query($conexao, $sql);
 }
 
 
@@ -153,6 +151,13 @@ print_r($dateArray);
 
                     </select>
                     <br><br>
+
+                    <script>
+                        const dataAtual = new Date();
+                        const dataFormatada = dataAtual.toLocaleDateString();
+                        const opcoesFormatacao = { day: 'numeric', month: '2-digit', year: 'numeric' };
+                        const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoesFormatacao);
+                    </script>
                     
 
                     <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
