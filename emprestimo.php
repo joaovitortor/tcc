@@ -3,16 +3,13 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-    $dataAtual = $_POST['dataAtual'];
 
     $statusEmprestimo = $_POST['statusEmprestimo'];
-
     $dataDevolucao = $_POST['dataDevolucao'];
-
     $idLeitor = $_POST['leitor'];
 
-    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataAtual', '$dataDevolucao','$idLeitor')";
-
+    //dataAtual é inserida automática pelo BD
+    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataDevolucao','$idLeitor')";
     mysqli_query($conexao, $sql);
 }
 
@@ -130,9 +127,11 @@ if (isset($_POST['cadastrar'])) {
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
-
-                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput">
-                    <input type="hidden" name="dataAtual" id="dataFormatadaInput">
+                    <?php
+                    $dataAtual = date("Y-m-d"); 
+                    $dataDeDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
+                    ?>
+                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDeDevolucao ?>">
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"

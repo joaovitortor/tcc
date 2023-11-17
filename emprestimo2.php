@@ -146,60 +146,38 @@ require_once("conexao.php");
                     <br><br>
 
                     <script>
-                        $(document).ready(function () {
+                           $(document).ready(function () {
                             $('#cadastrarEmprestimo').on('click', function (e) {
                                 e.preventDefault();
-
-
                                 const dataEmprestimo = new Date();
                                 const dia = (dataEmprestimo.getDate()).toString().padStart(2, '0');
                                 const mes = (dataEmprestimo.getMonth() + 1).toString().padStart(2, '0');
                                 const ano = dataEmprestimo.getFullYear();
-                                const dataEmprestimo = `${ano}-${mes}-${dia}`;
-                                const dataEmprestimoFormatada = `${dia}/${mes}/${ano}`;
-
+                                const dataFormatada = `${ano}-${mes}-${dia}`;
+                                const dataFormatada2 = `${dia}/${mes}/${ano}`;
                                 const statusEmprestimo = $('#selectbox').val();
-                                const idLeitor = $('#leitor').val();.
-
-
-                                const dataPrevistaDevolucao = new Date(dataEmprestimo);
-                                const dia = (dataEmprestimo.getDate() + 7).toString().padStart(2, '0');
-                                const mes = (dataEmprestimo.getMonth() + 1).toString().padStart(2, '0');
-                                const ano = dataEmprestimo.getFullYear();
-                                const dataPrevistaDevolucao= `${ano}-${mes}-${dia}`;
-                                const dataPrevistaDevolucaoFormatada= `${dia}-${mes}-${ano}`;
-
+                                const idLeitor = $('#leitor').val();
 
                                 $.ajax({
                                     url: 'ajemprestimo.php',
                                     type: 'POST',
                                     data: {
-                                        dataEmprestimo: dataEmprestimo,
+                                        dataEmprestimo: dataFormatada,
                                         statusEmprestimo: statusEmprestimo,
-                                        idLeitor: idLeitor,
-                                        dataPrevistaDevolucao: dataPrevistaDevolucao
-
-                                        console.log("Data" + idLeitor);
-
-                                   
+                                        idLeitor: idLeitor
                                     },
                                     success: function (response) {
                                         console.log(response);
-
-                                        $('#resultadoData').text('Data de empréstimo: ' + dataEmprestimoFormatada);
-                                        $('#resultadoDataDevolucao').text('Data prevista para devolução: ' + dataPrevistaDevolucaoFormatada);
-                      
+                                        $('#resultadoData').text('Data de empréstimo: ' + dataFormatada2);                   
                                     },                   
                                 });
                             });
-
-
                         });
 
                     </script>
 
                     <p id="resultadoData"></p>
-                    <p id="resultadoDataDevolucao"></p>
+                 
 
                     <button id="cadastrarEmprestimo" class="geekcb-btn" type="submit" name="cadastrar"
                         id="cadastrar">Realizar empréstimo</button>
