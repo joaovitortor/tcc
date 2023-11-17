@@ -23,7 +23,7 @@ if (isset($_POST['cadastrar'])) {
     }
     
     //3. preparar sql para inserir usando prepared statement
-    $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero, arquivo) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero','$arquivo')";
+    $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero, arquivo) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero','$nomeArquivo')";
 
     mysqli_query($conexao, $sql);
 

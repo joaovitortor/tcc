@@ -17,7 +17,7 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 }
 
 //2. Preparar a sql
-$sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao
+$sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
         FROM livro
         LEFT JOIN editora ON livro.idEditora = editora.id
         LEFT JOIN genero ON livro.idGenero = genero.id
