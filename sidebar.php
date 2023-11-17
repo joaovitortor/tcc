@@ -35,7 +35,7 @@
     </ul>
 </li>
 <li><a class="genero-btn">
-        <i class="fa-solid fa-wand-sparkles"></i><span class="link-name">Genero</span></a>
+        <i class="fa-solid fa-wand-sparkles"></i><span class="link-name">Gênero</span></a>
     <ul class="genero-show">
         <li><a href="cadastrarGenero.php" class="text">Cadastrar</a></li>
         <li><a href="listarGenero.php" class="text">Listar</a></li>
