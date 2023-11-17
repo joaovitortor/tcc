@@ -14,14 +14,8 @@ if (isset($_POST['cadastrar'])) {
     
     $arquivo = $_FILES['arquivo'];
     $arquivoNovo = explode('.',$arquivo['name']);
-
-    if($arquivoNovo[sizeof($arquivoNovo)-1] != 'jpg'){
-        die("Você não pode fazer upload deste tipo de arquivo");
-    }else{
-        move_uploaded_file($arquivo['tmp_name'], 'uploads/'.$arquivo['name']);
-    }
-
-
+    move_uploaded_file($arquivo['tmp_name'], 'uploads/'.$arquivo['name']);
+    
     //3. preparar sql para inserir usando prepared statement
     $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero, arquivo) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero','$arquivo')";
 

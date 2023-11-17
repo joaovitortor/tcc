@@ -150,7 +150,7 @@ $resultado = mysqli_query($conexao, $sql);
                             </div>
                             <div class="modal-body">
 
-                                <span><b>Nome: </b>
+                                <span style="text-align: left"><b>Nome: </b>
                                     <?php echo $linha['nome']; ?>
                                 </span><br>
                                 <span><b>Telefone: </b>
