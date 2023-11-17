@@ -7,7 +7,8 @@ if (isset($_POST['dataEmprestimo'], $_POST['statusEmprestimo'], $_POST['idLeitor
     $idLeitor = $_POST['idLeitor'];
 
 
-    $stmt = $conexao->prepare("INSERT INTO emprestimo (dataEmprestimo, statusEmprestimo, idLeitor) VALUES (?, ?, ?)");
+
+    $stmt = $conexao->prepare("INSERT INTO emprestimo (dataEmprestimo, statusEmprestimo, idLeitor) VALUES (?, ?, ?, )");
     $stmt->bind_param("ssi", $dataEmprestimo, $statusEmprestimo, $idLeitor);
 
     if ($stmt->execute()) {
