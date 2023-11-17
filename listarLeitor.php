@@ -160,7 +160,7 @@ $resultado = mysqli_query($conexao, $sql);
                                             class="botao">
                                             <i class="fa-solid fa-pen-to-square"></i></a>
 
-                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 8px;"
+                                        <button  data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 8px;"
                                              name="info" class="botao">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
