@@ -4,7 +4,7 @@ require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
 
-  
+
 
     mysqli_query($conexao, $sql);
 }
@@ -124,7 +124,7 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
 
-                   <!-- <input type="hideen" id="dataEmprestimo" name="dataEmprestimo"> -->
+                    <!-- <input type="hideen" id="dataEmprestimo" name="dataEmprestimo"> -->
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
@@ -153,14 +153,49 @@ if (isset($_POST['cadastrar'])) {
                     <br><br>
 
                     <script>
-                        const dataAtual = new Date();
-                        const dataFormatada = dataAtual.toLocaleDateString();
-                        const opcoesFormatacao = { day: 'numeric', month: '2-digit', year: 'numeric' };
-                        const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoesFormatacao);
-                    </script>
-                    
+                        $(document).ready(function () {
+                            $('#cadastrarEmprestimo').on('click', function (e) {
+                                e.preventDefault();
 
-                    <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
+
+                                const dataEmprestimo = new Date();
+                                const dia = (dataEmprestimo.getDate()).toString().padStart(2, '0');
+                                const mes = (dataEmprestimo.getMonth() + 1).toString().padStart(2, '0');
+                                const ano = dataEmprestimo.getFullYear();
+                                const dataFormatada = `${ano}-${mes}-${dia}`;
+                                const dataFormatada2 = `${dia}/${mes}/${ano}`;
+
+
+                                const statusEmprestimo = $('#selectbox').val();
+                                const idLeitor = $('#leitor').val();
+
+
+                                $.ajax({
+                                    url: 'ajemprestimo.php',
+                                    type: 'POST',
+                                    data: {
+                                        dataEmprestimo: dataFormatada,
+                                        statusEmprestimo: statusEmprestimo,
+                                        idLeitor: idLeitor
+                                    },
+                                    success: function (response) {
+                                        console.log(response);
+
+                                        $('#resultadoData').text('Data de empréstimo: ' + dataFormatada2);
+                                    },                   
+                                });
+                            });
+
+
+                        });
+
+                    </script>
+
+                    <p id="resultadoData"></p>
+
+                    <button id="cadastrarEmprestimo" class="geekcb-btn" type="submit" name="cadastrar"
+                        id="cadastrar">Realizar empréstimo</button>
+
                 </form>
 
 
@@ -201,14 +236,14 @@ if (isset($_POST['cadastrar'])) {
         });
     </script>
 
-<script>
-  const dataEmprestimo = new Date();
-                    const dia = (dataNascimento.getDate() + 1).toString().padStart(2, '0');
-                    const mes = (dataNascimento.getMonth() + 1).toString().padStart(2, '0');
-                    const ano = dataNascimento.getFullYear();
-                    const dataFormatada = `${dia}/${mes}/${ano}`;
+    <script>
+        const dataEmprestimo = new Date();
+        const dia = (dataNascimento.getDate() + 1).toString().padStart(2, '0');
+        const mes = (dataNascimento.getMonth() + 1).toString().padStart(2, '0');
+        const ano = dataNascimento.getFullYear();
+        const dataFormatada = `${dia}/${mes}/${ano}`;
 
-</script>
+    </script>
 
 
 </body>
