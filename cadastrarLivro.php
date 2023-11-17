@@ -12,9 +12,15 @@ if (isset($_POST['cadastrar'])) {
     $idEditora = $_POST['idEditora'];
     $idGenero = $_POST['idGenero'];
     
-    $arquivo = $_FILES['arquivo'];
-    $arquivoNovo = explode('.',$arquivo['name']);
-    move_uploaded_file($arquivo['tmp_name'], 'uploads/'.$arquivo['name']);
+    $diretorio = "uploads/";
+    $arquivoDestino = $diretorio . $_FILES['arquivo']['name'];
+
+    $nomeArquivo = "";
+    if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $arquivoDestino)) {
+        $nomeArquivo = $_FILES['arquivo']['name'];
+    } else {
+        echo "ERRO: Arquivo não enviado";
+    }
     
     //3. preparar sql para inserir usando prepared statement
     $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero, arquivo) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero','$arquivo')";
