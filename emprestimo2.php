@@ -155,29 +155,39 @@ require_once("conexao.php");
                                 const dia = (dataEmprestimo.getDate()).toString().padStart(2, '0');
                                 const mes = (dataEmprestimo.getMonth() + 1).toString().padStart(2, '0');
                                 const ano = dataEmprestimo.getFullYear();
-                                const dataFormatada = `${ano}-${mes}-${dia}`;
-                                const dataFormatada2 = `${dia}/${mes}/${ano}`;
-
-
-                              
+                                const dataEmprestimo = `${ano}-${mes}-${dia}`;
+                                const dataEmprestimoFormatada = `${dia}/${mes}/${ano}`;
 
                                 const statusEmprestimo = $('#selectbox').val();
-                                const idLeitor = $('#leitor').val();
+                                const idLeitor = $('#leitor').val();.
+
+
+                                const dataPrevistaDevolucao = new Date(dataEmprestimo);
+                                const dia = (dataEmprestimo.getDate() + 7).toString().padStart(2, '0');
+                                const mes = (dataEmprestimo.getMonth() + 1).toString().padStart(2, '0');
+                                const ano = dataEmprestimo.getFullYear();
+                                const dataPrevistaDevolucao= `${ano}-${mes}-${dia}`;
+                                const dataPrevistaDevolucaoFormatada= `${dia}-${mes}-${ano}`;
 
 
                                 $.ajax({
                                     url: 'ajemprestimo.php',
                                     type: 'POST',
                                     data: {
-                                        dataEmprestimo: dataFormatada,
+                                        dataEmprestimo: dataEmprestimo,
                                         statusEmprestimo: statusEmprestimo,
-                                        idLeitor: idLeitor
+                                        idLeitor: idLeitor,
+                                        dataPrevistaDevolucao: dataPrevistaDevolucao
+
+                                        console.log("Data" + idLeitor);
+
                                    
                                     },
                                     success: function (response) {
                                         console.log(response);
 
-                                        $('#resultadoData').text('Data de empréstimo: ' + dataFormatada2);
+                                        $('#resultadoData').text('Data de empréstimo: ' + dataEmprestimoFormatada);
+                                        $('#resultadoDataDevolucao').text('Data prevista para devolução: ' + dataPrevistaDevolucaoFormatada);
                       
                                     },                   
                                 });
