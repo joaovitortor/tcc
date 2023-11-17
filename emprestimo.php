@@ -1,5 +1,4 @@
 <?php
-//1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
@@ -8,10 +7,20 @@ if (isset($_POST['cadastrar'])) {
     $dataDevolucao = $_POST['dataDevolucao'];
     $idLeitor = $_POST['leitor'];
 
-    //dataAtual é inserida automática pelo BD
     $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataDevolucao','$idLeitor')";
+   
     mysqli_query($conexao, $sql);
+
+    $idEmprestimo = mysqli_insert_id($conexao);
+
+    if(isset($_POST['livro']) && is_array($_POST['livro'])) {
+        foreach ($_POST['livro'] as $idLivro) {
+            $sql2 = "INSERT INTO itensdeemprestimo (idEmprestimo, idLivro) VALUES ('$idEmprestimo','$idLivro')";
+            mysqli_query($conexao, $sql2);
+        }
+    }
 }
+
 
 
 ?>
@@ -127,11 +136,7 @@ if (isset($_POST['cadastrar'])) {
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
-                    <?php
-                    $dataAtual = date("Y-m-d"); 
-                    $dataDeDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
-                    ?>
-                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDeDevolucao ?>">
+               
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
@@ -140,7 +145,7 @@ if (isset($_POST['cadastrar'])) {
                         <option value="Finalizado">Finalizado</option>
                     </select>
 
-                    <label for="leitor" class="titulo" style="font-size:1.1rem; text-align: left">Selecione o leitor:
+                    <label for="leitor" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o leitor:
                     </label>
                     <select class="selectleitor" name="leitor" id="leitor">
                         <option class="fonte-status" disabled="disabled" placeholder="Selecione o leitor"></option>
@@ -157,37 +162,38 @@ if (isset($_POST['cadastrar'])) {
                         ?>
 
                     </select>
-                    <br><br>
-                    <p class="titulo" style="font-size:1.1rem; text-align: left" id="dataAtual"></p>
-                    <script>
+                        <br><br>
+                    <label for="livro" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o(s) livros para empréstimo:
+                    </label>
+                    <select class="selectleitor" name="livro[]" id="livro" multiple>
+                        <option class="fonte-status" disabled="disabled" placeholder="Selecione o livro"></option>
+                        <?php
+                        $sql = "select * from livro order by titulo";
+                        $resultado = mysqli_query($conexao, $sql);
 
-                        var dataAtual = new Date();
+                        while ($linha = mysqli_fetch_array($resultado)):
+                            $idLivro = $linha['id'];
+                            $titulo = $linha['titulo'];
+                            $isbn = $linha['isbn'];
+                            $edicao = $linha['edicao'];
 
-                        var dia = dataAtual.getDate();
-                        var mes = dataAtual.getMonth() + 1;
-                        var ano = dataAtual.getFullYear();
 
-                        var dataFormatada = (dia < 10 ? '0' : '') + dia + '/' + (mes < 10 ? '0' : '') + mes + '/' + ano % 100;
+                            echo "<option value='{$idLivro}'>{$titulo} - Ed. {$edicao} - ISBN: {$isbn} </option>";
+                        endwhile;
 
-                        document.getElementById("dataAtual").innerHTML = "Data do empréstimo: " + dataFormatada;
+                        ?>
 
-                    </script>
-                    <p class="titulo" style="font-size:1.1rem; text-align: left" id="dataDevolucao"></p>
-                    <script>
-
-                        var dataDevolucao = new Date(dataAtual);
-                        dataDevolucao.setDate(dataDevolucao.getDate() + 7);
-
-                        var diaDevolucao = dataDevolucao.getDate();
-                        var mesDevolucao = dataDevolucao.getMonth() + 1;
-                        var anoDevolucao = dataDevolucao.getFullYear();
-
-                        var dataDevolucaoFormatada = (diaDevolucao < 10 ? '0' : '') + diaDevolucao + '/' + (mesDevolucao < 10 ? '0' : '') + mesDevolucao + '/' + anoDevolucao % 100;
-
-                        document.getElementById("dataDevolucao").innerHTML = "Data prevista para devolução: " + dataDevolucaoFormatada;
-
-                    </script>
-
+                    </select>
+                    <br><br> <p class="titulo" style="text-align: left; font-size: 1.3rem">
+                    <?php
+                    $dataAtual = date("Y-m-d");
+                    echo "Data do empréstimo: " . $dataFormatada = date("d/m/Y", strtotime($dataAtual));?></p>
+                    <p class="titulo" style="text-align: left; font-size: 1.3rem">
+                   <?php $dataDeDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
+                    echo  "Data prevista para devolução: " . $dataDeDevolucaoFormatada =  date('d/m/Y', strtotime("+7 days",strtotime($dataAtual))); 
+                    ?> 
+                    </p>
+                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDeDevolucao ?>">
                     <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
                 </form>
 
@@ -226,6 +232,9 @@ if (isset($_POST['cadastrar'])) {
     <script>
         $(document).ready(function () {
             $('#leitor').select2();
+        });
+        $(document).ready(function () {
+            $('#livro').select2();
         });
     </script>
 
