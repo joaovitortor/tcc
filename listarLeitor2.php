@@ -136,103 +136,119 @@ $resultado = mysqli_query($conexao, $sql);
                                 <td scope="col"><b>Ações</b></td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                                <tr>
-                                    <td>
-                                        <?= $linha['id'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $linha['status'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $linha['nome'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $linha['telefone'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $linha['email'] ?>
-                                    </td>
-                                    <td>
-
-                                        <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>"
-                                            class="botao">
-                                            <i class="fa-solid fa-pen-to-square"></i></a>
-
-                                        <button onclick="openModal(<?= $linha['id'] ?>)" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" style="margin-right: 8px;" name="info"
-                                            class="botao">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-
-                                        <a href="listarLeitor.php?id=<?= $linha['id'] ?>" class="botao"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                                            <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
-                                    </td>
-                                </tr>
-                                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário
-                                                </h2>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form method="post">
-                                                <div class="modal-body">
-                                                    <input type="hidden" id="idUsuario" name="idUsuario"
-                                                        value="<?= $linha['id'] ?>">
-                                                    <label for="">Para excluir o Leitor
-                                                        <?= $linha['nome'] ?>, pressione abaixo:
-                                                    </label>
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="flexCheckIndeterminate" name="check">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Fechar</button>
-                                                    <button type="submit" name="excluir" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Excluir Leitor</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </center>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <span><b>Nome: </b><span id="modalNome"></span></span> <br>
-                        <span><b>Telefone: </b><span id="modalTelefone"></span></span> <br>
-                        <span><b>Email: </b><span id="modalEmail"></span></span><br>
-                        <span><b>Endereco: </b><span id="modalEndereco"></span></span><br>
-                        <span><b>Data de Nascimento: </b><span id="modalDn"></span></span><br>
-                        <span><b>CPF: </b><span id="modalCpf"></span></span><br>
-                        <span id="modalNomeResp"></span>
-                        <span id="modalCpfResp"></span>
-                        <span id="modalTelResp"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+        <tbody>
+            <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário
+                                </h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <span style="text-align: left"><b>Nome: </b>
+                                    <?php echo $linha['nome']; ?>
+                                </span><br>
+                                <span><b>Telefone: </b>
+                                    <?php echo $linha['telefone']; ?>
+                                </span> <br>
+                                <span><b>Email: </b>
+                                    <?php echo $linha['email']; ?>
+                                </span><br>
+                                <span><b>Data de Nascimento: </b><span id="modalDn"></span></span><br>
+                                <span><b>Endereco: </b>
+                                    <?php echo $linha['endereco']; ?>
+                                </span><br>
+                                <span><b>Data de Nascimento: </b>
+                                    <?php echo $linha['dn']; ?>
+                                </span><br>
+                                <span><b>CPF: </b>
+                                    <?php echo $linha['cpf']; ?>
+                                </span><br>
+                                <span id="modalNomeResp"></span>
+                                <span id="modalCpfResp"></span>
+                                <span id="modalTelResp"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <center>
+                    <tr>
+                        <td>
+                            <?= $linha['id'] ?>
+                        </td>
+                        <td>
+                            <?= $linha['status'] ?>
+                        </td>
+                        <td>
+                            <?= $linha['nome'] ?>
+                        </td>
+                        <td>
+                            <?= $linha['telefone'] ?>
+                        </td>
+                        <td>
+                            <?= $linha['email'] ?>
+                        </td>
+                        <td>
+
+                            <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>" class="botao">
+                                <i class="fa-solid fa-pen-to-square"></i></a>
+
+                            <button onclick="openModal(<?= $linha['id'] ?>)" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" style="margin-right: 8px;" name="info" class="botao">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                            <a href="listarLeitor.php?id=<?= $linha['id'] ?>" class="botao" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal1">
+                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário
+                                    </h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="post">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="idUsuario" name="idUsuario" value="<?= $linha['id'] ?>">
+                                        <label for="">Para excluir o Leitor
+                                            <?= $linha['nome'] ?>, pressione abaixo:
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate"
+                                            name="check">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <button type="submit" name="excluir" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Excluir Leitor</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+        </tbody>
+        </table>
         </div>
+        </div>
+        </center>
+
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

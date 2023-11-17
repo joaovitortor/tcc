@@ -160,9 +160,8 @@ $resultado = mysqli_query($conexao, $sql);
                                             class="botao">
                                             <i class="fa-solid fa-pen-to-square"></i></a>
 
-                                        <button onclick="openModal(<?= $linha['id'] ?>)" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" style="margin-right: 8px;" name="info"
-                                            class="botao">
+                                        <button  data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 8px;"
+                                             name="info" class="botao">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
 
@@ -202,7 +201,7 @@ $resultado = mysqli_query($conexao, $sql);
                                         </div>
                                     </div>
                                 </div>
-                            <?php } ?>
+                           
                         </tbody>
                     </table>
                 </div>
@@ -216,23 +215,23 @@ $resultado = mysqli_query($conexao, $sql);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <span><b>Nome: </b><span id="modalNome"></span></span> <br>
-                        <span><b>Telefone: </b><span id="modalTelefone"></span></span> <br>
-                        <span><b>Email: </b><span id="modalEmail"></span></span><br>
-                        <span><b>Endereco: </b><span id="modalEndereco"></span></span><br>
-                        <span><b>Data de Nascimento: </b><span id="modalDn"></span></span><br>
-                        <span><b>CPF: </b><span id="modalCpf"></span></span><br>
+                        <span><b>Nome: </b> <?php echo $linha['nome']; ?> </span><br>
+                        <span><b>Telefone: </b> <?php echo $linha['telefone']; ?> </span> <br>
+                        <span><b>Email: </b> <?php echo $linha['email']; ?> </span><br>
+                        <span><b>Endereco: </b> <?php echo $linha['endereco']; ?> </span><br>
+                        <span><b>Data de Nascimento: </b> <?php echo $linha['dn']; ?> </span><br>
+                        <span><b>CPF: </b> <?php echo $linha['cpf']; ?> </span><br>
                         <span id="modalNomeResp"></span>
                         <span id="modalCpfResp"></span>
                         <span id="modalTelResp"></span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
+        <?php } ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
