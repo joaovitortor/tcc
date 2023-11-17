@@ -1,5 +1,5 @@
 <?php// Converta as datas para objetos DateTime
-    $dataDevolvidoObj = new DateTime($dataDevolvido);
+    /*/$dataDevolvidoObj = new DateTime($dataDevolvido);
     $dataDevolucaoPrevistaObj = new DateTime($dataDevolucaoPrevista);
 
     // Calcule a diferença em dias
@@ -26,4 +26,4 @@
                             name="dataDevolvido">
                     </div>
     </body>
-    </html>
+    </html> */ ?>

@@ -98,7 +98,7 @@ $resultado = mysqli_query($conexao, $sql);
             </div>
         </div>
         <br><br><br>
-        <h1 class="titulo">Listagem de Leitores <a href="cadastrarLeitor.php" class="botao">
+        <h1 class="titulo text">Listagem de Leitores <a href="cadastrarLeitor.php" class="botao">
                 <i class="fa-solid fa-plus"></i>
             </a></h1>
 
@@ -107,7 +107,7 @@ $resultado = mysqli_query($conexao, $sql);
 
         <center>
             <form method="post">
-                <label name="nome" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+                <label name="nome" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
                 <div class="input-button-container">
                     <input name="nome" type="text" class="formcampo">
                     <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
@@ -134,47 +134,6 @@ $resultado = mysqli_query($conexao, $sql);
         </center>
         <tbody>
             <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário
-                                </h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                <span style="text-align: left"><b>Nome: </b>
-                                    <?php echo $linha['nome']; ?>
-                                </span><br>
-                                <span><b>Telefone: </b>
-                                    <?php echo $linha['telefone']; ?>
-                                </span> <br>
-                                <span><b>Email: </b>
-                                    <?php echo $linha['email']; ?>
-                                </span><br>
-                                <span><b>Data de Nascimento: </b><span id="modalDn"></span></span><br>
-                                <span><b>Endereco: </b>
-                                    <?php echo $linha['endereco']; ?>
-                                </span><br>
-                                <span><b>Data de Nascimento: </b>
-                                    <?php echo $linha['dn']; ?>
-                                </span><br>
-                                <span><b>CPF: </b>
-                                    <?php echo $linha['cpf']; ?>
-                                </span><br>
-                                <span id="modalNomeResp"></span>
-                                <span id="modalCpfResp"></span>
-                                <span id="modalTelResp"></span>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <center>
                     <tr>
                         <td>
@@ -197,19 +156,20 @@ $resultado = mysqli_query($conexao, $sql);
                             <a style="margin-right: 8px;" href="alterarLeitor.php? id=<?= $linha['id'] ?>" class="botao">
                                 <i class="fa-solid fa-pen-to-square"></i></a>
 
-                            <button onclick="openModal(<?= $linha['id'] ?>)" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal" style="margin-right: 8px;" name="info" class="botao">
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModal_<?= $linha['id'] ?>"
+                                href="listarLeitor.php?id=<?= $linha['id'] ?>" style="margin-right: 8px;" name="info"
+                                class="botao">
                                 <i class="fa-solid fa-eye"></i>
-                            </button>
+                            </a>
 
                             <a href="listarLeitor.php?id=<?= $linha['id'] ?>" class="botao" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal1">
+                                data-bs-target="#exampleModal1_<?= $linha['id'] ?>">
                                 <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
                         </td>
                     </tr>
-                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="exampleModal1_<?= $linha['id'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -237,12 +197,58 @@ $resultado = mysqli_query($conexao, $sql);
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                </center>
+                <?php $dateObj = DateTime::createFromFormat('Y-m-d', $linha['dn']);
+
+                // Formate a data para o formato 'dmy' e imprima
+                $dataDmy = $dateObj->format('d/m/Y'); ?>
+                <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="exampleModalLabel">Informações do Usuário
+                                </h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span style="text-align: left"><b>Nome: </b>
+                                    <?php echo $linha['nome']; ?>
+                                </span><br>
+                                <span><b>Telefone: </b>
+                                    <?php echo $linha['telefone']; ?>
+                                </span> <br>
+                                <span><b>Email: </b>
+                                    <?php echo $linha['email']; ?>
+                                </span><br>
+                                <span><b>Endereco: </b>
+                                    <?php echo $linha['endereco']; ?>
+                                </span><br>
+                                <span><b>Data de Nascimento: </b>
+                                    <?php
+                                    echo $dataDmy; ?>
+                                </span><br>
+                                <span><b>CPF: </b>
+                                    <?php echo $linha['cpf']; ?>
+                                </span><br>
+                                <?php if (!empty($linha['nomeResp'])) {
+                                    echo "<span><b>Nome do Responsável: </b>" . $linha['nomeResp'] . " </span><br>
+                                        <span><b>Telefone do Responsável: </b>" . $linha['telResp'] . " </span><br>
+                                        <span><b>CPF do Responsável: </b>" . $linha['cpfResp'] . " </span><br>";
+                                } ?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </tbody>
         </table>
         </div>
         </div>
-        </center>
+
 
     </section>
     <script>
@@ -273,73 +279,6 @@ $resultado = mysqli_query($conexao, $sql);
     </script>
     <script src="js/script.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
-    <script>
-        const modalContent = document.querySelector('.modal-content'); // Seletor para o conteúdo do modal
-        const modal = document.querySelector('.modal.fade'); // Seletor para o modal completo
-
-        function openModal(userId) {
-            const modal = document.querySelector('.modal.fade'); // Seletor para o modal completo
-
-            // Faça uma solicitação AJAX para buscar os dados do usuário com base no userId
-            $.ajax({
-                type: 'GET',
-                url: 'buscar_dados_usuario.php',
-                data: { id: userId },
-                dataType: 'json',
-                success: function (data) {
-                    // Preencha os campos do modal com os dados do usuário
-                    document.getElementById('modalNome').textContent = data.nome;
-                    document.getElementById('modalTelefone').textContent = data.telefone;
-                    document.getElementById('modalEmail').textContent = data.email;
-                    document.getElementById('modalEndereco').textContent = data.endereco;
-                    document.getElementById('modalDn').textContent = data.dn;
-                    document.getElementById('modalCpf').textContent = data.cpf;
-                    document.getElementById('modalNomeResp').textContent = data.nomeResp;
-                    document.getElementById('modalCpfResp').textContent = data.cpfResp;
-                    document.getElementById('modalTelResp').textContent = data.telResp;
-
-                    // Formate a data no formato "dd/mm/yyyy"
-                    const dataNascimento = new Date(data.dn);
-                    const dia = (dataNascimento.getDate() + 1).toString().padStart(2, '0');
-                    const mes = (dataNascimento.getMonth() + 1).toString().padStart(2, '0');
-                    const ano = dataNascimento.getFullYear();
-                    const dataFormatada = `${dia}/${mes}/${ano}`;
-
-                    const NomeResp = data.nomeResp;
-
-                    // Verifica se o campo nomeResp não está vazio
-                    if (data.nomeResp !== null) {
-                        const SpanNomeResp = "<span><b>Nome do Responsável: </b>" + data.nomeResp + "</span> <br>";
-                        const SpanCpfResp = "<span><b>Cpf do Responsável: </b>" + data.cpfResp + "</span> <br>";
-                        const SpanTelResp = "<span><b>Telefone do Responsável: </b>" + data.telResp + "</span> <br>";
-                        modalNomeResp.innerHTML = SpanNomeResp;
-                        modalCpfResp.innerHTML = SpanCpfResp;
-                        modalTelResp.innerHTML = SpanTelResp;
-                    } else {
-                        modalNomeResp.innerHTML = ""; // Limpa o conteúdo se nomeResp estiver vazio
-                        modalCpfResp.innerHTML = "";
-                        modalTelResp.innerHTML = "";
-                    }
-
-
-                    modalDn.textContent = dataFormatada;
-
-
-                    modal.style.display = 'block'; // Defina o estilo de exibição como 'block' para mostrar o modal
-                },
-                error: function () {
-                    alert('Falha ao buscar os dados do usuário.');
-                }
-            });
-        }
-
-
-        function closeModal() {
-            const modal = document.querySelector('.modal-container');
-            modal.classList.remove('active');
-            modal.style.display = 'none';
-        }
-    </script>
 </body>
 
 </html>
