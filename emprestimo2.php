@@ -2,13 +2,6 @@
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
 
-if (isset($_POST['cadastrar'])) {
-
-
-
-    mysqli_query($conexao, $sql);
-}
-
 
 ?>
 
@@ -166,6 +159,8 @@ if (isset($_POST['cadastrar'])) {
                                 const dataFormatada2 = `${dia}/${mes}/${ano}`;
 
 
+                              
+
                                 const statusEmprestimo = $('#selectbox').val();
                                 const idLeitor = $('#leitor').val();
 
@@ -177,11 +172,13 @@ if (isset($_POST['cadastrar'])) {
                                         dataEmprestimo: dataFormatada,
                                         statusEmprestimo: statusEmprestimo,
                                         idLeitor: idLeitor
+                                   
                                     },
                                     success: function (response) {
                                         console.log(response);
 
                                         $('#resultadoData').text('Data de empréstimo: ' + dataFormatada2);
+                      
                                     },                   
                                 });
                             });
@@ -192,6 +189,7 @@ if (isset($_POST['cadastrar'])) {
                     </script>
 
                     <p id="resultadoData"></p>
+                    <p id="resultadoDataDevolucao"></p>
 
                     <button id="cadastrarEmprestimo" class="geekcb-btn" type="submit" name="cadastrar"
                         id="cadastrar">Realizar empréstimo</button>

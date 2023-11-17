@@ -6,6 +6,7 @@ if (isset($_POST['dataEmprestimo'], $_POST['statusEmprestimo'], $_POST['idLeitor
     $statusEmprestimo = $_POST['statusEmprestimo'];
     $idLeitor = $_POST['idLeitor'];
 
+
     $stmt = $conexao->prepare("INSERT INTO emprestimo (dataEmprestimo, statusEmprestimo, idLeitor) VALUES (?, ?, ?)");
     $stmt->bind_param("ssi", $dataEmprestimo, $statusEmprestimo, $idLeitor);
 
