@@ -266,6 +266,7 @@
     </div>
   </div>
 </div>
+<img alt="">
 <script>
 $('.buy').click(function(){
   $('.bottom').addClass("clicked");

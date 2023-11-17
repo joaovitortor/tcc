@@ -65,6 +65,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <td scope="col"><b>Página</b></td>
                         <td scope="col"><b>ISBN</b></td>
                         <td scope="col"><b>Edição</b></td>
+                        <td scope="col"><b>Capa</b></td>
                         <td scope="col"><b>Ações</b></td>
                     </tr>
                 </thead>
@@ -96,8 +97,12 @@ $resultado = mysqli_query($conexao, $sql);
                                 <?= $linha['edicao'] ?>
                             </td>
                             <td>
+                                <img src="<?php echo "uploads/" . $linha['arquivo'] ?>" alt="">
+                                
+                            </td>
+                            <td>
 
-                                <a style="margin-right: 8px;" href="alterarAutor.php? id=<?= $linha['id'] ?>" class="botao">
+                                <a style="margin-right: 8px;" href="alterarLivro.php? id=<?= $linha['id'] ?>" class="botao">
                                     <i class="fa-solid fa-pen-to-square"></i></a>
 
 
