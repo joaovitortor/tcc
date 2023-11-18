@@ -65,7 +65,6 @@ $resultado = mysqli_query($conexao, $sql);
                         <td scope="col"><b>Página</b></td>
                         <td scope="col"><b>ISBN</b></td>
                         <td scope="col"><b>Edição</b></td>
-                        <td scope="col"><b>Capa</b></td>
                         <td scope="col"><b>Ações</b></td>
                     </tr>
                 </thead>
@@ -96,15 +95,16 @@ $resultado = mysqli_query($conexao, $sql);
                             <td>
                                 <?= $linha['edicao'] ?>
                             </td>
-                            <td>
-                                <img src="<?php echo "uploads/" . $linha['arquivo'] ?>" alt="">
-                                
-                            </td>
+
                             <td>
 
                                 <a style="margin-right: 8px;" href="alterarLivro.php? id=<?= $linha['id'] ?>" class="botao">
                                     <i class="fa-solid fa-pen-to-square"></i></a>
 
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal_<?= $linha['id'] ?>"
+                                    style="margin-right: 8px;" name="info" class="botao">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
 
                                 <a href="listarAutores.php? id=<?= $linha['id'] ?>" class="botao"
                                     onclick="return confirm('Deseja mesmo excluir o cadastro?')">
@@ -112,7 +112,27 @@ $resultado = mysqli_query($conexao, $sql);
 
                             </td>
                         </tr>
-
+                        <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5" id="exampleModalLabel">
+                                            <?php echo "Livro " . $linha['titulo']; ?>
+                                        </h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="<?php echo "uploads/" . $linha['arquivo'] ?>" alt="">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <?php } ?>
                 </tbody>
             </table>
@@ -148,6 +168,7 @@ $resultado = mysqli_query($conexao, $sql);
     });
 </script>
 <script src="js/script.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
 </body>
 
 </html>
