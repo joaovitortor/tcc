@@ -49,9 +49,7 @@ $resultado = mysqli_query($conexao, $sql);
         <br><br>
     </form>
 </center>
-<?php 
-$MostraLivro = '<img src="$nomeArquivo" alt="">';
-?>
+
 <center>
     <div class="card cardlistar">
         <div class="card-body cardlistar2">
