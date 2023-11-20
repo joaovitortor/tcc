@@ -176,8 +176,7 @@ if (isset($_POST['cadastrar'])) {
                             $titulo = $linha['titulo'];
                             $isbn = $linha['isbn'];
                             $edicao = $linha['edicao'];
-                            $nomeArquivo =  "uploads/" . $linha['arquivo'];
-                            $MostraLivro = "<img src='<?php echo $nomeArquivo ?> '>";
+                            $nomeArquivo =  "uploads/" . $linha['arquivo'];                        
                             
                             echo "<option value='{$idLivro}'>{$MostraLivro} - {$titulo} - Ed. {$edicao} - ISBN: {$isbn} </option>";
                         endwhile;
