@@ -1,92 +1,104 @@
-<?php require_once("navbar.php"); ?>
+<?php
+//1. Conecta no banco de dados (IP, usuario, senha, nome do banco)
+//require_once("verificaautenticacao.php");
+require_once("conexao.php");
 
-<section class="home-section">
+// Excluir
+if (isset($_POST['excluir'])) {
+    if (isset($_POST['check'])) { // Verifica se o botão excluir foi clicado
+        $idUsuario = $_POST['idUsuario'];
+        $sql = "delete from leitor where id = " . $idUsuario;
+        mysqli_query($conexao, $sql);
+        $mensagem = "Exclusão realizada com sucesso.";
+    }
+}
 
-    <div class="dash-content">
-        <div class="overview">
-            <div class="title">
-                <i class="uil uil-tachometer-fast-alt"></i>
-                <span class="text">A</span>
-            </div>
 
-            <div class="boxes">
-                <div class="box box1">
-                    <i class="uil uil-thumbs-up"></i>
-                    <span class="text">Total Likes</span>
-                    <span class="number">50,120</span>
-                </div>
-                <div class="box box2">
-                    <i class="uil uil-comments"></i>
-                    <span class="text">Comments</span>
-                    <span class="number">20,120</span>
-                </div>
-                <div class="box box3">
-                    <i class="uil uil-share"></i>
-                    <span class="text">Total Share</span>
-                    <span class="number">10,120</span>
-                </div>
-            </div>
+$V_WHERE = "";
+if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
+    $V_WHERE = " and nome like '%" . $_POST['nome'] . "%' ";
+}
+
+//2. Preparar a sql
+$sql = "select * from leitor
+where 1 = 1" . $V_WHERE;
+
+//3. Executa a SQL
+$resultado = mysqli_query($conexao, $sql);
+
+?>
+
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <!--muda a fonte-->
+    <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
+
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Administrador Bibliotech</title>
+</head>
+
+<body>
+
+    <div style="align-items: right" class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user"></i>|
         </div>
+    </div>
+    <br><br><br>
+    <h1 class="titulo text">Bibliotech<a href="cadastrarLeitor.php" class="botao">
+            <i class="fa-solid fa-plus"></i>
+        </a></h1>
+    <?php if (isset($_GET['mensagem'])) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $_GET['mensagem'] ?>
+        </div>
+    <?php } ?>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="exampleModalLabel">Login</h2>
+                </div>
+                <form action="autenticacao.php" method="post">
+                    <div class="modal-body">
 
-        <div class="activity">
-            <div class="title">
-                <i class="uil uil-clock-three"></i>
-                <span class="text">Recent Activity</span>
-            </div>
-
-            <div class="recent-orders">
-                <h2 class="text">Pedidos Recentes</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome do Produto</th>
-                            <th>Número do Produto</th>
-                            <th>Método de Pagamento</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Blusa Listrada</td>
-                            <td>59234</td>
-                            <td>Pix</td>
-                            <td class="warning">Pendente</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Blusa Listrada</td>
-                            <td>59234</td>
-                            <td>Pix</td>
-                            <td class="warning">Pendente</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Blusa Listrada</td>
-                            <td>59234</td>
-                            <td>Pix</td>
-                            <td class="warning">Pendente</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Blusa Listrada</td>
-                            <td>59234</td>
-                            <td>Pix</td>
-                            <td class="warning">Pendente</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Blusa Listrada</td>
-                            <td>59234</td>
-                            <td>Pix</td>
-                            <td class="warning">Pendente</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input name="email" type="text" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input name="senha" type="password" class="form-control" id="senha">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button name="entrar" type="submit" class="btn btn-primary">Entrar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    </div>
+    <script src="js/script.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+</body>
 
-    <?php require_once("rodape.php");
+</html>
