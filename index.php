@@ -82,16 +82,16 @@ $resultado = mysqli_query($conexao, $sql);
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input name="email" type="text" class="form-control" id="email">
+                            <input class="geekcb-field"  placeholder="E-mail" required type="text" name="email" id="email">
                         </div>
                         <div class="mb-3">
                             <label for="senha" class="form-label">Senha</label>
-                            <input name="senha" type="password" class="form-control" id="senha">
+                            <input class="geekcb-field"  placeholder="senha" required type="password" name="senha" id="senha">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button name="entrar" type="submit" class="btn btn-primary">Entrar</button>
+                        <button class="geekcb-btn" type="button" data-bs-dismiss="modal">Fechar</button>
+                        <button class="geekcb-btn" type="submit" name="entrar">Entrar</button>
                     </div>
                 </form>
             </div>
