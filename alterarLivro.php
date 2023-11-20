@@ -121,14 +121,14 @@ $linha = mysqli_fetch_array($resultado)
 
                 <form method="post" class="container">
                     <?php
-                    $status = isset($_POST['idEditora']) ? $_POST['idEditora'] : "";
-                    $status = isset($_POST['idGenero']) ? $_POST['idGenero'] : "";
-                    $status = isset($_POST['statusLivro']) ? $_POST['statusLivro'] : "";
+                    $statusLivro = isset($_POST['statusLivro']) ? $_POST['statusLivro'] : "";
+                    $idGenero = isset($_POST['idGenero']) ? $_POST['idGenero'] : "";
+                    $idEditora = isset($_POST['idEditora']) ? $_POST['idEditora'] : "";
                     $nome = isset($_POST['titulo']) ? $_POST['titulo'] : "";
-                    $telefone = isset($_POST['pag']) ? $_POST['pag'] : "";
-                    $endereco = isset($_POST['isbn']) ? $_POST['isbn'] : "";
-                    $dn = isset($_POST['edicao']) ? $_POST['edicao'] : "";
-                    $cpf = isset($_POST['arquivo']) ? $_POST['arquivo'] : "";
+                    $pag = isset($_POST['pag']) ? $_POST['pag'] : "";
+                    $isbn = isset($_POST['isbn']) ? $_POST['isbn'] : "";
+                    $edicao = isset($_POST['edicao']) ? $_POST['edicao'] : "";
+                    $arquivo = isset($_POST['arquivo']) ? $_POST['arquivo'] : "";
                     ?>
                 </form>
 
@@ -138,7 +138,7 @@ $linha = mysqli_fetch_array($resultado)
                     <h1 class="titulo">Alterar Livro</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
-                            <select class="geekcb-field" value="<?= $linha['statusLeitor'] ?>" name="statusLivro"
+                            <select class="geekcb-field" value="<?= $linha['statusLivro'] ?>" name="statusLivro"
                                 id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" selected="selected" disabled="disabled"
                                     placeholder="Status">Status</option>
