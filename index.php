@@ -66,26 +66,32 @@ $resultado = mysqli_query($conexao, $sql);
     <h1 class="titulo text">Bibliotech<a href="cadastrarLeitor.php" class="botao">
             <i class="fa-solid fa-plus"></i>
         </a></h1>
-
+    <?php if (isset($_GET['mensagem'])) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $_GET['mensagem'] ?>
+        </div>
+    <?php } ?>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="exampleModalLabel">Login</h2>
                 </div>
-                <form method="post">
+                <form action="autenticacao.php" method="post">
                     <div class="modal-body">
-                        <input type="hidden" id="idUsuario" name="idUsuario" value="<?= $linha['id'] ?>">
-                        <label for="">Para excluir o Leitor
-                            <?= $linha['nome'] ?>, pressione abaixo:
-                        </label>
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate"
-                            name="check">
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input name="email" type="text" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input name="senha" type="password" class="form-control" id="senha">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" name="excluir" class="btn btn-danger" data-bs-dismiss="modal">Excluir
-                            Leitor</button>
+                        <button name="entrar" type="submit" class="btn btn-primary">Entrar</button>
                     </div>
                 </form>
             </div>
