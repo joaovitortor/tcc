@@ -14,6 +14,30 @@ if (isset($_POST['cadastrar'])) {
     $senha = $_POST['senha'];
     echo $status, $nome, $telefone, $endereco, $cpf, $dn, $email, $senha;
 
+
+
+
+    $cpfNumero = preg_replace('/[^0-9]/is', '', $cpf);
+    // Verifica se foi informado todos os digitos corretamente
+    if (strlen($cpfNumero) != 11) {
+        return false;
+    }
+
+    // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+    if (preg_match('/(\d)\1{10}/', $cpfNumero)) {
+        return false;
+    }
+
+    // Faz o calculo para validar o CPF
+    for ($t = 9; $t < 11; $t++) {
+        for ($d = 0, $c = 0; $c < $t; $c++) {
+            $d += $cpfNumero[$c] * (($t + 1) - $c);
+        }
+        $d = ((10 * $d) % 11) % 10;
+        if ($cpfNumero[$c] != $d) {
+            return false;
+        }
+    }
     //3. preparar sql para inserir
     $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
     values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
@@ -30,7 +54,7 @@ if (isset($_POST['cadastrar'])) {
     $idade = $diferenca->y;
 
     //4. executar sql no bd
-    
+    mysqli_query($conexao, $sql);
 
     //5.mostrar uma mensagem ao usuário
     $mensagem = "Cadastro realizado com sucesso!";
@@ -40,37 +64,7 @@ if (isset($_POST['cadastrar'])) {
         header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
         exit;
     }
-    $cpfNumero = preg_replace('/[^0-9]/', '', $cpf);
-    function validaCPF($cpf) {
-        if (strlen($cpfNumero) != 11) {
-            return "O CPF deve conter 11 Dígitos!";
-        }
-        else if ($cpfNumero == '00000000000' || 
-            $cpfNumero == '11111111111' || 
-            $cpfNumero == '22222222222' || 
-            $cpfNumero == '33333333333' || 
-            $cpfNumero == '44444444444' || 
-            $cpfNumero == '55555555555' || 
-            $cpfNumero == '66666666666' || 
-            $cpfNumero == '77777777777' || 
-            $cpfNumero == '88888888888' || 
-            $cpfNumero == '99999999999') {
-            return "CPF Inválido - Sequência Numérica Repetida!";
-         } else {   
-            for ($t = 9; $t < 11; $t++) {
-                for ($d = 0, $c = 0; $c < $t; $c++) {
-                    $d += $cpf[$c] * (($t + 1) - $c);
-                }
-                $d = ((10 * $d) % 11) % 10;
-                if ($cpf[$c] != $d) {
-                    return "Inválido!";
-                    header("location: https://www.youtube.com/watch?v=6o7bCAZSxsg");
-                }
-            }
-            return "Válido!";
-            mysqli_query($conexao, $sql);
-        }
-    }
+
 }
 
 
