@@ -10,10 +10,9 @@ if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $mensagem = "Exclusão realizada com sucesso.";
 }
 
-
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
-    $V_WHERE = " and titulo like '%" . $_POST['titulo'] . "%' ";
+    $V_WHERE = " and leitor.nome like '% "  . $_POST['pesquisa'] . "%' ";
 }
 
 //2. Preparar a sql
@@ -39,9 +38,9 @@ $resultado = mysqli_query($conexao, $sql);
 
 <center>
 <form method="post">
-        <label name="titulo" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+        <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
         <div class="input-button-container">
-            <input name="titulo" type="text" class="formcampo">
+            <input name="pesquisa" type="text" class="formcampo">
             <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
             <a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
         </div>

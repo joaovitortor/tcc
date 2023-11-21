@@ -1,36 +1,44 @@
 <?php
+//1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
+$corpo = "";
+if (isset($_POST['salvar'])) {
+  //2. Receber os dados para inserir no BD
 
-if (isset($_POST['cadastrar'])) {
+  $idLeitor = $_POST['leitor'];
+  $statusEmprestimo = $_POST['statusEmprestimo'];
+  $dataEmprestimo = $_POST['dataEmprestimo'];
+  $dataPrevistaDevolucao = $_POST['dataPrevistaDevolucao'];
 
-    $statusEmprestimo = $_POST['statusEmprestimo'];
-    $dataDevolucao = $_POST['dataDevolucao'];
-    $idLeitor = $_POST['leitor'];
 
-    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataDevolucao','$idLeitor')";
-   
-    $idEmprestimo = mysqli_insert_id($conexao);
-    
-    mysqli_query($conexao, $sql);
+  //3. Preparar a SQL
+  $sql = "UPDATE emprestimo
+    set statusEmprestimo= '$statusEmprestimo',
+    idLeitor = '$idLeitor'
+    where id = $id";
 
-    
-
-    if(isset($_POST['livro']) && is_array($_POST['livro'])) {
-        foreach ($_POST['livro'] as $idLivro) {
-            $sql2 = "INSERT INTO itensdeemprestimo (idEmprestimo, idLivro) VALUES ('$idEmprestimo','$idLivro')";
-            
-            mysqli_query($conexao, $sql2);
-        }
-    }
-
-    $sql3 ="UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
-    mysqli_query($conexao, $sql3);
+  //4. Executar a SQL
+  mysqli_query($conexao, $sql);
 }
 
+if(isset($_POST['livro[]']) && is_array($_POST['livro[]'])) {
+    foreach ($_POST['livro[]'] as $idLivro) {
+        $sql2 = "UPDATE itensdeemprestimo SET idLivro = '$idLivro' WHERE id = " .  $_GET['id'];
+        
+        mysqli_query($conexao, $sql2);
+    }
+}
 
+if (isset($_POST['salvar'])) {
+    header("Location: listarEmprestimo.php");
+    exit;
+}
 
-?>
-
+//Busca usuário selecionado pelo "usuarioListar.php"
+$sql = "SELECT * FROM emprestimo WHERE id = " . $_GET['id'];
+$resultado = mysqli_query($conexao, $sql);
+$linha = mysqli_fetch_array($resultado);
+  ?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -44,15 +52,16 @@ if (isset($_POST['cadastrar'])) {
     <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -72,38 +81,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="cadastrarLeitor.php">
-                        <i class="uil uil-estate"></i>
-                        <span class="link-name">Leitor</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-files-landscapes"></i>
-                        <span class="link-name">Livro</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-chart"></i>
-                        <span class="link-name">Exemplar</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-thumbs-up"></i>
-                        <span class="link-name">Autor</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Gênero</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Editora</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-comments"></i>
-                        <span class="link-name">Responsável</span>
-                    </a></li>
-                <li><a href="#">
-                        <i class="uil uil-share"></i>
-                        <span class="link-name">Administrador</span>
-                    </a></li>
+            <?php require_once('sidebar.php')  ?>
             </ul>
 
             <ul class="logout-mode">
@@ -137,23 +115,36 @@ if (isset($_POST['cadastrar'])) {
                     <input type="text" placeholder="Search here...">
                 </div>
 
-
+                <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
-                    <h1 class="titulo">Empréstimo</h1>
-               
+                <form method="post" class="container">
+                    <?php
+                    $statusEmprestimo = isset($_POST['statusEmprestimo']) ? $_POST['statusEmprestimo'] : "";
+                    $idLeitor = isset($_POST['leitor']) ? $_POST['leitor'] : "";
+                    $idLivro = isset($_POST['livro[]']) ? $_POST['livro[]'] : "";
+                    $idLivro = isset($_POST['statusEmprestimo']) ? $_POST['statusEmprestimo'] : "";
+                    $dataEmprestimo = isset($_POST['dataEmprestimo']) ? $_POST['dataEmprestimo'] : "";
+                    $dataPrevistaDevolucao = isset($_POST['dataPrevistaDevolucao']) ? $_POST['dataPrevistaDevolucao'] : "";
+                    ?>
+
+                </form>
+
+                <form method="post" class="geekcb-form-contact">
+                <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+
+                    <h1 class="titulo">Alterar/Finalizar empréstimo</h1>
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
-                        <option value="Em andamento">Em andamento</option>
-                        <option value="Finalizado">Finalizado</option>
-                    </select>
+                                <option class="fonte-status" value="<?= $linha['statusEmprestimo']?>" selected="selected" disabled="disabled"
+                                    placeholder="Status">Status</option>
+                                <option value="Em andamento">Em andamento</option>
+                                <option value="Finalizado">Finalizado</option>
+                            </select>
 
-                    <label for="leitor" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o leitor:
+                            <label for="leitor" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o leitor:
                     </label>
-                    <select class="selectleitor" name="leitor" id="leitor">
+                    <select class="selectleitor" name="idLeitor" id="idLeitor">
                         <option class="fonte-status" disabled="disabled" placeholder="Selecione o leitor"></option>
                         <?php
                         $sql = "select * from leitor order by nome";
@@ -190,20 +181,14 @@ if (isset($_POST['cadastrar'])) {
                         ?>
 
                     </select>
-                    <br><br> <p class="titulo" style="text-align: left; font-size: 1.3rem">
-                    <?php
-                    $dataAtual = date("Y-m-d");
-                    echo "Data do empréstimo: " . $dataFormatada = date("d/m/Y", strtotime($dataAtual));?></p>
-                    <p class="titulo" style="text-align: left; font-size: 1.3rem">
-                   <?php $dataDeDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
-                    echo  "Data prevista para devolução: " . $dataDeDevolucaoFormatada =  date('d/m/Y', strtotime("+7 days",strtotime($dataAtual))); 
-                    ?> 
-                    </p>
-                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDeDevolucao ?>">
-                    <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
+                    <br><br> 
+                    
+                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDevolucao ?>">
+                    
+
+                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                    <button class="geekcb-btn" type="submit" name="renovar">Renovar livro</button>
                 </form>
-
-
             </div>
         </div>
         </div>
@@ -235,6 +220,7 @@ if (isset($_POST['cadastrar'])) {
         });
     </script>
     <script src="js/script.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#leitor').select2();
@@ -243,12 +229,10 @@ if (isset($_POST['cadastrar'])) {
             $('#livro').select2();
         });
     </script>
-
-<script>
-  
-</script>
-
-
 </body>
 
 </html>
+
+
+
+
