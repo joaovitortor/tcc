@@ -14,18 +14,16 @@ if (isset($_POST['cadastrar'])) {
     $senha = $_POST['senha'];
     echo $status, $nome, $telefone, $endereco, $cpf, $dn, $email, $senha;
 
-
-
-
     $cpfNumero = preg_replace('/[^0-9]/is', '', $cpf);
     // Verifica se foi informado todos os digitos corretamente
     if (strlen($cpfNumero) != 11) {
-        return false;
+        echo "rg invalido";
+        header("Location: https://youtu.be/qAsHVwl-MU4?si=8GHjx032ZnZLWUc8");
     }
 
     // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
     if (preg_match('/(\d)\1{10}/', $cpfNumero)) {
-        return false;
+        header("Location: https://youtu.be/qAsHVwl-MU4?si=8GHjx032ZnZLWUc8");
     }
 
     // Faz o calculo para validar o CPF
@@ -35,7 +33,7 @@ if (isset($_POST['cadastrar'])) {
         }
         $d = ((10 * $d) % 11) % 10;
         if ($cpfNumero[$c] != $d) {
-            return false;
+            header("Location: https://youtu.be/qAsHVwl-MU4?si=8GHjx032ZnZLWUc8");
         }
     }
     //3. preparar sql para inserir
