@@ -13,6 +13,9 @@ if (isset($_POST['cadastrar'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
+   $cpfNumeros = preg_replace("/[^0-9]/","", $cpf);
+   echo $cpfNumeros; 
+
     //3. preparar sql para inserir
     $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
 values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
