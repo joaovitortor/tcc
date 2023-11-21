@@ -105,7 +105,7 @@ $resultado = mysqli_query($conexao, $sql);
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
 
-                                <a href="listarAutores.php? id=<?= $linha['id'] ?>" class="botao"
+                                <a href="listarLivros.php? id=<?= $linha['id'] ?>" class="botao"
                                     onclick="return confirm('Deseja mesmo excluir o cadastro?')">
                                     <i class="fa-sharp fa-solid fa-trash"></i> </a>
 

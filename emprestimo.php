@@ -2,33 +2,26 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-
     $statusEmprestimo = $_POST['statusEmprestimo'];
-    $dataDevolucao = $_POST['dataDevolucao'];
+    $dataPrevistaDevolucao = $_POST['dataPrevistaDevolucao'];
     $idLeitor = $_POST['leitor'];
 
-    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataDevolucao','$idLeitor')";
+    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataPrevistaDevolucao','$idLeitor')";
    
-    $idEmprestimo = mysqli_insert_id($conexao);
-    
     mysqli_query($conexao, $sql);
-
     
+    $idEmprestimo = mysqli_insert_id($conexao);
 
     if(isset($_POST['livro']) && is_array($_POST['livro'])) {
         foreach ($_POST['livro'] as $idLivro) {
-            $sql2 = "INSERT INTO itensdeemprestimo (idEmprestimo, idLivro) VALUES ('$idEmprestimo','$idLivro')";
-            
+            $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro) VALUES ('$idEmprestimo','$idLivro')";
             mysqli_query($conexao, $sql2);
+          
+            $sql3 ="UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
+            mysqli_query($conexao, $sql3);
         }
     }
-
-    $sql3 ="UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
-    mysqli_query($conexao, $sql3);
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -195,11 +188,11 @@ if (isset($_POST['cadastrar'])) {
                     $dataAtual = date("Y-m-d");
                     echo "Data do empréstimo: " . $dataFormatada = date("d/m/Y", strtotime($dataAtual));?></p>
                     <p class="titulo" style="text-align: left; font-size: 1.3rem">
-                   <?php $dataDeDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
-                    echo  "Data prevista para devolução: " . $dataDeDevolucaoFormatada =  date('d/m/Y', strtotime("+7 days",strtotime($dataAtual))); 
+                   <?php $dataPrevistaDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
+                    echo  "Data prevista para devolução: " . $dataPrevistaDevolucaoFormatada =  date('d/m/Y', strtotime("+7 days",strtotime($dataAtual))); 
                     ?> 
                     </p>
-                    <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDeDevolucao ?>">
+                    <input type="hidden" name="dataPrevistaDevolucao" id="dataPrevistaDevolucaoInput" value="<?= $dataPrevistaDevolucao ?>">
                     <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
                 </form>
 

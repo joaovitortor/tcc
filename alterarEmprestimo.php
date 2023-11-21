@@ -8,13 +8,19 @@ if (isset($_POST['salvar'])) {
   $idLeitor = $_POST['leitor'];
   $statusEmprestimo = $_POST['statusEmprestimo'];
   $dataEmprestimo = $_POST['dataEmprestimo'];
-  $dataPrevistaDevolucao = $_POST['dataPrevistaDevolucao'];
+  $dataDevolucao = $_POST['dataDevolucao'];
+  $dataPrevistaDevolucao = $_GET['dataPrevistaDevolucao'];
+  $hoje = date("Y-m-d");
+
+$datadehoje = date_create();
+$resultado = date_diff($hoje, $dataPrevistaDevolucao);
+echo date_interval_format($resultado, '%a');
+
 
 
   //3. Preparar a SQL
   $sql = "UPDATE emprestimo
-    set statusEmprestimo= '$statusEmprestimo',
-    idLeitor = '$idLeitor'
+    set dataDevolucao = '$dataDevolucao',
     where id = $id";
 
   //4. Executar a SQL
@@ -119,12 +125,7 @@ $linha = mysqli_fetch_array($resultado);
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
-                    <?php
-                    $statusEmprestimo = isset($_POST['statusEmprestimo']) ? $_POST['statusEmprestimo'] : "";
-                    $idLeitor = isset($_POST['leitor']) ? $_POST['leitor'] : "";
-                    $idLivro = isset($_POST['livro[]']) ? $_POST['livro[]'] : "";
-                    $idLivro = isset($_POST['statusEmprestimo']) ? $_POST['statusEmprestimo'] : "";
-                    $dataEmprestimo = isset($_POST['dataEmprestimo']) ? $_POST['dataEmprestimo'] : "";
+                    <?php                   
                     $dataPrevistaDevolucao = isset($_POST['dataPrevistaDevolucao']) ? $_POST['dataPrevistaDevolucao'] : "";
                     ?>
 
@@ -132,33 +133,17 @@ $linha = mysqli_fetch_array($resultado);
 
                 <form method="post" class="geekcb-form-contact">
                 <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                <input type="hidden" name="dataPrevistaDevolucao" id="dataPrevistaDevolucaoInput" value="<?= $dataPrevistaDevolucao ?>">
 
-                    <h1 class="titulo">Alterar/Finalizar empréstimo</h1>
+                    <h1 class="titulo">Finalizar empréstimo</h1>
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="<?= $linha['statusEmprestimo']?>" selected="selected" disabled="disabled"
+                                <option class="fonte-status" value="<?= $linha['statusEmprestimo']?>" disabled="disabled"
                                     placeholder="Status">Status</option>
                                 <option value="Em andamento">Em andamento</option>
-                                <option value="Finalizado">Finalizado</option>
+                                <option selected="selected" value="Finalizado">Finalizado</option>
                             </select>
-
-                            <label for="leitor" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o leitor:
-                    </label>
-                    <select class="selectleitor" name="idLeitor" id="idLeitor">
-                        <option class="fonte-status" disabled="disabled" placeholder="Selecione o leitor"></option>
-                        <?php
-                        $sql = "select * from leitor order by nome";
-                        $resultado = mysqli_query($conexao, $sql);
-
-                        while ($linha = mysqli_fetch_array($resultado)):
-                            $idLeitor = $linha['id'];
-                            $nome = $linha['nome'];
-
-                            echo "<option value='{$idLeitor}'>{$nome}</option>";
-                        endwhile;
-                        ?>
-
-                    </select>
+                           
                         <br><br>
                     <label for="livro" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o(s) livros para empréstimo:
                     </label>
