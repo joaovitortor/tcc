@@ -31,7 +31,7 @@ if(isset($_POST['livro[]']) && is_array($_POST['livro[]'])) {
     foreach ($_POST['livro[]'] as $idLivro) {
         $sql2 = "UPDATE itensdeemprestimo SET idLivro = '$idLivro' WHERE id = " .  $_GET['id'];
         
-        mysqli_query($conexao, $sql2);
+        mysqli_query($conexao, $sql2); 
     }
 }
 
