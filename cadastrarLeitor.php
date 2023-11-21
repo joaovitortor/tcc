@@ -16,7 +16,7 @@ if (isset($_POST['cadastrar'])) {
 
     //3. preparar sql para inserir
     $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
-values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
+    values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
 
     // Criar objetos DateTime para a data de nascimento e a data atual
@@ -40,20 +40,21 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
         header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
         exit;
     }
+    $cpfNumero = preg_replace('/[^0-9]/', '', $cpf);
     function validaCPF($cpf) {
-        if (strlen($cpf) != 11) {
+        if (strlen($cpfNumero) != 11) {
             return "O CPF deve conter 11 Dígitos!";
         }
-        else if ($cpf == '00000000000' || 
-            $cpf == '11111111111' || 
-            $cpf == '22222222222' || 
-            $cpf == '33333333333' || 
-            $cpf == '44444444444' || 
-            $cpf == '55555555555' || 
-            $cpf == '66666666666' || 
-            $cpf == '77777777777' || 
-            $cpf == '88888888888' || 
-            $cpf == '99999999999') {
+        else if ($cpfNumero == '00000000000' || 
+            $cpfNumero == '11111111111' || 
+            $cpfNumero == '22222222222' || 
+            $cpfNumero == '33333333333' || 
+            $cpfNumero == '44444444444' || 
+            $cpfNumero == '55555555555' || 
+            $cpfNumero == '66666666666' || 
+            $cpfNumero == '77777777777' || 
+            $cpfNumero == '88888888888' || 
+            $cpfNumero == '99999999999') {
             return "CPF Inválido - Sequência Numérica Repetida!";
          } else {   
             for ($t = 9; $t < 11; $t++) {
@@ -63,7 +64,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                 $d = ((10 * $d) % 11) % 10;
                 if ($cpf[$c] != $d) {
                     return "Inválido!";
-                    header("location: cadastrarLeitor.php");
+                    header("location: https://www.youtube.com/watch?v=6o7bCAZSxsg");
                 }
             }
             return "Válido!";
