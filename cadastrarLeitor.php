@@ -12,18 +12,14 @@ if (isset($_POST['cadastrar'])) {
     $dn = $_POST['dn'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-    echo $status, $nome, $telefone, $endereco, $cpf, $dn, $email, $senha;
-
+    $cpfInvalido = "";
     $cpfNumero = preg_replace('/[^0-9]/is', '', $cpf);
     // Verifica se foi informado todos os digitos corretamente
     if (strlen($cpfNumero) != 11) {
-        echo "rg invalido";
-        header("Location: https://youtu.be/qAsHVwl-MU4?si=8GHjx032ZnZLWUc8");
-    }
-
-    // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
-    if (preg_match('/(\d)\1{10}/', $cpfNumero)) {
-        header("Location: https://youtu.be/qAsHVwl-MU4?si=8GHjx032ZnZLWUc8");
+        $cpfInvalido = '<span class="span-required">Cpf Inválido</span>';
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+    } elseif (preg_match('/(\d)\1{10}/', $cpfNumero)) {
+        $cpfInvalido = '<span class="span-required">Cpf Inválido</span>';
     }
 
     // Faz o calculo para validar o CPF
@@ -33,37 +29,38 @@ if (isset($_POST['cadastrar'])) {
         }
         $d = ((10 * $d) % 11) % 10;
         if ($cpfNumero[$c] != $d) {
-            header("Location: https://youtu.be/qAsHVwl-MU4?si=8GHjx032ZnZLWUc8");
-        }
-    }
-    //3. preparar sql para inserir
-    $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
+            $cpfInvalido = '<span class="span-required">Cpf Inválido</span>';
+        } else {
+            //3. preparar sql para inserir
+            $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
     values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
 
-    // Criar objetos DateTime para a data de nascimento e a data atual
-    $dataNascimentoObj = new DateTime($dn);
-    $dataAtualObj = new DateTime();
+            // Criar objetos DateTime para a data de nascimento e a data atual
+            $dataNascimentoObj = new DateTime($dn);
+            $dataAtualObj = new DateTime();
 
-    // Calcular a diferença entre as datas
-    $diferenca = $dataNascimentoObj->diff($dataAtualObj);
+            // Calcular a diferença entre as datas
+            $diferenca = $dataNascimentoObj->diff($dataAtualObj);
 
-    // Obter a idade em anos
-    $idade = $diferenca->y;
+            // Obter a idade em anos
+            $idade = $diferenca->y;
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+            //4. executar sql no bd
+            mysqli_query($conexao, $sql);
 
-    //5.mostrar uma mensagem ao usuário
-    $mensagem = "Cadastro realizado com sucesso!";
+            //5.mostrar uma mensagem ao usuário
+            $mensagem = "Cadastro realizado com sucesso!";
 
-    if ($idade < 18) {
-        $idUsuario = mysqli_insert_id($conexao);
-        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
-        exit;
+            if ($idade < 18) {
+                $idUsuario = mysqli_insert_id($conexao);
+                header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+                exit;
+            }
+        }
     }
-
 }
+
 
 
 ?>
@@ -141,7 +138,18 @@ if (isset($_POST['cadastrar'])) {
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form onsubmit="validaCPF($cpf)" method="post" class="geekcb-form-contact" id="leitorForm">
+                <form method="post" class="container">
+                    <?php
+                    $status = isset($_POST['status']) ? $_POST['status'] : "";
+                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
+                    $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : "";
+                    $endereco = isset($_POST['endereco']) ? $_POST['endereco'] : "";
+                    $dn = isset($_POST['dn']) ? $_POST['dn'] : "";
+                    $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : "";
+                    $email = isset($_POST['email']) ? $_POST['email'] : "";
+                    ?>
+                </form>
+                <form method="post" class="geekcb-form-contact" id="leitorForm">
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
@@ -154,34 +162,40 @@ if (isset($_POST['cadastrar'])) {
                             </select>
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" id="dn" placeholder="Data de Nascimento" required type="date"
-                                name="dn">
+                            <input class="geekcb-field" value="<?= $dn ?>" id="dn" placeholder="Data de Nascimento"
+                                required type="date" name="dn">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="Nome" required type="texto" name="nome">
+                            <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
+                                name="nome">
                         </div>
 
                         <div class="form-column">
-                            <input class="geekcb-field" id="telefone" name="telefone" placeholder="Telefone" required
-                                type="texto" name="telefone">
+                            <input class="geekcb-field" value="<?= $telefone ?>" id="telefone" name="telefone"
+                                placeholder="Telefone" required type="texto" name="telefone">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" id="cpf" placeholder="Cpf" required type="texto" name="cpf">
+                            <input class="geekcb-field" value="<?= $cpf ?>" id="cpf" placeholder="Cpf" required
+                                type="texto" name="cpf">
+                            <?php echo $cpfInvalido; ?>
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" placeholder="Endereço" required type="texto" name="endereco">
+                            <input class="geekcb-field" value="<?= $endereco ?>" placeholder="Endereço" required
+                                type="texto" name="endereco">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="E-mail" required type="email" name="email">
+                            <input class="geekcb-field" value="<?= $email ?>" placeholder="E-mail" required type="email"
+                                name="email">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
+                            <input class="geekcb-field" value="<?= $senha ?>" placeholder="Senha" required
+                                type="password" name="senha">
                         </div>
                     </div>
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>

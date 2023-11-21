@@ -140,7 +140,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                     <div class="form-row">
                         <div class="form-column esquerda">
                             <input class="geekcb-field required" oninput="nameValidate()" placeholder="Nome" required type="texto" name="nome">
-                            <span class="span-required">Nome precisa de 3 caracteres</span>
+                            
                         </div>
 
                         <div class="form-column">
