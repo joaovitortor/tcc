@@ -16,10 +16,10 @@ if (isset($_POST['cadastrar'])) {
     $cpfNumero = preg_replace('/[^0-9]/is', '', $cpf);
     // Verifica se foi informado todos os digitos corretamente
     if (strlen($cpfNumero) != 11) {
-        $cpfInvalido = '<span class="span-required">Cpf Inválido</span>';
+        $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
         // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
     } elseif (preg_match('/(\d)\1{10}/', $cpfNumero)) {
-        $cpfInvalido = '<span class="span-required">Cpf Inválido</span>';
+        $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
     }
 
     // Faz o calculo para validar o CPF
@@ -29,13 +29,12 @@ if (isset($_POST['cadastrar'])) {
         }
         $d = ((10 * $d) % 11) % 10;
         if ($cpfNumero[$c] != $d) {
-            $cpfInvalido = '<span class="span-required">Cpf Inválido</span>';
-        } else {
+            $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
+        } } else {
             //3. preparar sql para inserir
             $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
-    values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
-
-
+            values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
+            
             // Criar objetos DateTime para a data de nascimento e a data atual
             $dataNascimentoObj = new DateTime($dn);
             $dataAtualObj = new DateTime();
@@ -58,7 +57,7 @@ if (isset($_POST['cadastrar'])) {
                 exit;
             }
         }
-    }
+    
 }
 
 
