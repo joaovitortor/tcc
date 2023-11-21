@@ -12,9 +12,7 @@ if (isset($_POST['cadastrar'])) {
     $dn = $_POST['dn'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-
-   $cpfNumeros = preg_replace("/[^0-9]/","", $cpf);
-   echo $cpfNumeros; 
+    echo $status, $nome, $telefone, $endereco, $cpf, $dn, $email, $senha;
 
     //3. preparar sql para inserir
     $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
@@ -32,7 +30,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
     $idade = $diferenca->y;
 
     //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    
 
     //5.mostrar uma mensagem ao usuário
     $mensagem = "Cadastro realizado com sucesso!";
@@ -42,7 +40,36 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
         header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
         exit;
     }
-
+    function validaCPF($cpf) {
+        if (strlen($cpf) != 11) {
+            return "O CPF deve conter 11 Dígitos!";
+        }
+        else if ($cpf == '00000000000' || 
+            $cpf == '11111111111' || 
+            $cpf == '22222222222' || 
+            $cpf == '33333333333' || 
+            $cpf == '44444444444' || 
+            $cpf == '55555555555' || 
+            $cpf == '66666666666' || 
+            $cpf == '77777777777' || 
+            $cpf == '88888888888' || 
+            $cpf == '99999999999') {
+            return "CPF Inválido - Sequência Numérica Repetida!";
+         } else {   
+            for ($t = 9; $t < 11; $t++) {
+                for ($d = 0, $c = 0; $c < $t; $c++) {
+                    $d += $cpf[$c] * (($t + 1) - $c);
+                }
+                $d = ((10 * $d) % 11) % 10;
+                if ($cpf[$c] != $d) {
+                    return "Inválido!";
+                    header("location: cadastrarLeitor.php");
+                }
+            }
+            return "Válido!";
+            mysqli_query($conexao, $sql);
+        }
+    }
 }
 
 
@@ -84,7 +111,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -121,7 +148,7 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact" id="leitorForm">
+                <form onsubmit="validaCPF($cpf)" method="post" class="geekcb-form-contact" id="leitorForm">
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
@@ -164,7 +191,6 @@ values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$
                             <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
-
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
 
