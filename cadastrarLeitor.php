@@ -1,7 +1,7 @@
 <?php
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
-
+$cpfInvalido = "";
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
@@ -12,15 +12,10 @@ if (isset($_POST['cadastrar'])) {
     $dn = $_POST['dn'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-    $cpfInvalido = "";
+    $cpfBoolean = "";
+
     $cpfNumero = preg_replace('/[^0-9]/is', '', $cpf);
     // Verifica se foi informado todos os digitos corretamente
-    if (strlen($cpfNumero) != 11) {
-        $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
-        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
-    } elseif (preg_match('/(\d)\1{10}/', $cpfNumero)) {
-        $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
-    }
 
     // Faz o calculo para validar o CPF
     for ($t = 9; $t < 11; $t++) {
@@ -30,11 +25,20 @@ if (isset($_POST['cadastrar'])) {
         $d = ((10 * $d) % 11) % 10;
         if ($cpfNumero[$c] != $d) {
             $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
-        } } else {
+            $cpfBoolean = false;
+        } elseif (strlen($cpfNumero) != 11) {
+            $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
+            $cpfBoolean = false;
+            // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+        } elseif (preg_match('/(\d)\1{10}/', $cpfNumero)) {
+            $cpfInvalido = '<span style="margin-top: -28pt; color: red">Cpf Inválido</span>';
+            $cpfBoolean = false;
+        } else {
+            $cpfBoolean = true;
             //3. preparar sql para inserir
             $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
             values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
-            
+
             // Criar objetos DateTime para a data de nascimento e a data atual
             $dataNascimentoObj = new DateTime($dn);
             $dataAtualObj = new DateTime();
@@ -51,16 +55,15 @@ if (isset($_POST['cadastrar'])) {
             //5.mostrar uma mensagem ao usuário
             $mensagem = "Cadastro realizado com sucesso!";
 
-            if ($idade < 18) {
-                $idUsuario = mysqli_insert_id($conexao);
-                header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
-                exit;
-            }
+
         }
-    
+    }
+    if ($idade < 18 and $cpfBoolean) {
+        $idUsuario = mysqli_insert_id($conexao);
+        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+        exit;
+    }
 }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -193,7 +196,7 @@ if (isset($_POST['cadastrar'])) {
                                 name="email">
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" value="<?= $senha ?>" placeholder="Senha" required
+                            <input class="geekcb-field" placeholder="Senha" required
                                 type="password" name="senha">
                         </div>
                     </div>
