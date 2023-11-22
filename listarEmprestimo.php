@@ -16,7 +16,7 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 }
 
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta, dataDevolucao
+$sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
         FROM emprestimo 
         LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
         WHERE 1 = 1 AND statusEmprestimo = 'Em andamento'" . $V_WHERE;
