@@ -15,11 +15,14 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " and leitor.nome like '% "  . $_POST['pesquisa'] . "%' ";
 }
 
+$idEmprestimo = $_GET['idEmprestimo'];
+
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
-        FROM emprestimo 
-        LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
-        WHERE 1 = 1 AND statusEmprestimo = 'Em andamento'" . $V_WHERE;
+$sql = "SELECT emprestimo.id as idEmprestimo, livro.nome as idLivro, statusItem, dataDevolvido
+        FROM itensDeEmprestimo 
+        INNER JOIN leitor ON itensDeEmprestimo.idLeitor = leitor.id     
+        LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
+        WHERE idEmprestimo = $idEmprestimo" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -29,7 +32,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
 <br><br><br>
-<h1 class="titulo">Listagem de empréstimos ativos<a href="emprestimo.php" class="botao">
+<h1 class="titulo">Itens de Empréstimo<a href="emprestimo.php" class="botao">
         <i class="fa-solid fa-plus"></i>
     </a></h1>
 
@@ -38,6 +41,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <center>
 <form method="post">
+<input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
         <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
         <div class="input-button-container">
             <input name="pesquisa" type="text" class="formcampo">
@@ -54,13 +58,11 @@ $resultado = mysqli_query($conexao, $sql);
             <table class="table">
                 <thead>
                     <tr>
-                        <td scope="col"><b>ID</b></td>
+                        <td scope="col"><b>ID do Empréstimo</b></td>
+                        <td scope="col"><b>Item</b></td>
                         <td scope="col"><b>Status</b></td>
-                        <td scope="col"><b>Leitor</b></td>
-                        <td scope="col"><b>Data do Emp.</b></td>
-                        <td scope="col"><b>Data prevista dev.</b></td>
-                        <td scope="col"><b>Livros</b></td>
-                        <td scope="col"><b>Ações</b></td>
+                        <td scope="col"><b>Data devolvido</b></td>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -70,33 +72,13 @@ $resultado = mysqli_query($conexao, $sql);
                                 <?= $linha['id'] ?>
                             </td>
                             <td>
-                                <?= $linha['statusEmprestimo'] ?>
+                                <?= $linha['idLivro'] ?>
                             </td>
                             <td>
-                                <?= $linha['nomeLeitor'] ?>
+                                <?= $linha['statusItem'] ?>
                             </td>
                             <td>
-                                <?= date("d/m/Y", strtotime($linha['dataEmprestimo'])); ?>
-                            </td>
-                            <td>
-                                <?= date("d/m/Y", strtotime($linha['dataPrevistaDevolucao'])) ?>
-                            </td>
-                            <td>
-                                <?php
-                                $idEmprestimo = $linha['id'];
-                                $sqlLivros = "SELECT livro.titulo FROM itensdeemprestimo
-                                            JOIN livro ON itensdeemprestimo.idLivro = livro.id
-                                            WHERE itensdeemprestimo.idEmprestimo = $idEmprestimo";
-
-                                $resultadoLivros = mysqli_query($conexao, $sqlLivros);
-
-                                $titulosLivros = array();
-                                while ($linhaLivro = mysqli_fetch_array($resultadoLivros)) {
-                                    $titulosLivros[] = $linhaLivro['titulo'];
-                                }
-
-                                echo implode(', ', $titulosLivros);
-                                ?>
+                                <?= date("d/m/Y", strtotime($linha['dataDevolvido'])); ?>
                             </td>
 
                             <td>
