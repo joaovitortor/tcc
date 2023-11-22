@@ -1,6 +1,7 @@
 <?php
 
 require_once("conexao.php");
+$cpfInvalido = "";
 
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
@@ -9,12 +10,58 @@ if (isset($_POST['cadastrar'])) {
     $telResp = $_POST['telResp'];
     $cpfResp = $_POST['cpfResp'];
     
+    function validarCPFResp($cpfResp)
+    {
+        // Remove caracteres não numéricos
+        $cpfResp = preg_replace('/[^0-9]/', '', $cpfResp);
 
-    // Montar a consulta SQL de atualização
-    $sql = "UPDATE leitor SET nomeResp = '$nomeResp', telResp = '$telResp', cpfResp = '$cpfResp' WHERE id = $idUsuario";
-    mysqli_query($conexao, $sql);
+        // Verifica se o CPF possui 11 dígitos
+        if (strlen($cpfResp) != 11) {
+            return false;
+        }
 
-    header("Location: cadastrarLeitor.php");
+        // Verifica se todos os dígitos são iguais
+        if (preg_match('/(\d)\1{10}/', $cpfResp)) {
+            return false;
+        }
+
+        // Calcula o primeiro dígito verificador
+        $soma = 0;
+        for ($i = 0; $i < 9; $i++) {
+            $soma += $cpfResp[$i] * (10 - $i);
+        }
+        $resto = $soma % 11;
+        $digito1 = ($resto < 2) ? 0 : 11 - $resto;
+
+        // Calcula o segundo dígito verificador
+        $soma = 0;
+        for ($i = 0; $i < 10; $i++) {
+            $soma += $cpfResp[$i] * (11 - $i);
+        }
+        $resto = $soma % 11;
+        $digito2 = ($resto < 2) ? 0 : 11 - $resto;
+
+        // Verifica se os dígitos verificadores estão corretos
+        if ($cpfResp[9] == $digito1 && $cpfResp[10] == $digito2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    if (validarCPFResp($cpfResp)) {
+        // Montar a consulta SQL de atualização
+        $sql = "UPDATE leitor SET nomeResp = '$nomeResp', telResp = '$telResp', cpfResp = '$cpfResp' WHERE id = $idUsuario";
+        mysqli_query($conexao, $sql);
+        $cpfInvalido = "";
+
+        header("Location: cadastrarLeitor.php");
+    } elseif (!validarCPFResp($cpfResp)) {
+        $cpfInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Cpf Inválido</span>';
+        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+    }
+
+    
 
 }
 ?>
@@ -98,6 +145,7 @@ if (isset($_POST['cadastrar'])) {
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
                     $nome = isset($_POST['nomeResp']) ? $_POST['nomeResp'] : "";
+                    $idUsuario = isset($_POST['idUsuario']) ? $_POST['id_usuario']: "";
                     ?>
 
                 </form>
@@ -109,6 +157,7 @@ if (isset($_POST['cadastrar'])) {
 
                     <input class="geekcb-field"  placeholder="Nome do responsável" required type="texto" name="nomeResp">
                     <input class="geekcb-field" id="cpf" placeholder="CPF do responsável" required type="texto" name="cpfResp">
+                    <?php echo $cpfInvalido;?>
                     <input class="geekcb-field" id="telefone" placeholder="Telefone do responsável" required type="texto" name="telResp">
                         
 
