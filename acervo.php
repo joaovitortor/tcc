@@ -1,3 +1,18 @@
+<?php
+require_once("conexao.php");
+
+
+$sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
+        FROM livro
+        LEFT JOIN editora ON livro.idEditora = editora.id
+        LEFT JOIN genero ON livro.idGenero = genero.id";
+
+
+//3. Executa a SQL
+$resultado = mysqli_query($conexao, $sql);
+?>
+
+
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -74,68 +89,67 @@
             </div>
         </div>
 
-        <div class="wrapperAcervo">
-            <div class="containerAcervo">
-                <div class="topAcervo"></div>
-                <div class="bottomAcervo">
-                    <div class="leftAcervo">
-                        <div class="detailsAcervo">
-                            <h1>Chair</h1>
-                            <p>£250</p>
+        <h1 class="titulo">Acervo</h1>
+        <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+
+
+            <div class="wrapperAcervo">
+
+                <div class="containerAcervo">
+                    <div style="background-image: url('uploads/<?= $linha['arquivo'] ?>')" class="topAcervo"></div>
+                    <div class="bottomAcervo">
+                        <div class="leftAcervo">
+                            <div class="detailsAcervo">
+                                <h5 style="width: 50%; margin-top: 5%; text-align:center">
+                                    <?= $linha['titulo'] ?>
+                                </h5>
+                            </div>
                         </div>
-                        <div class="buyAcervo"><i class="material-icons">add_shopping_cart</i></div>
                     </div>
-                    <div class="rightAcervo">
-                        <div class="doneAcervo"><i class="material-icons">done</i></div>
-                        <div class="detailsAcervo">
-                            <h1>Chair</h1>
-                            <p>Added to your cart</p>
-                        </div>
-                        <div class="removeAcervo"><i class="material-icons">clear</i></div>
+                </div>
+                <div class="insideAcervo">
+                    <div class="icon">+</div>
+                    <div class="contentsAcervo">
+                        <table>
+                            <tr>
+                                <?= $linha['id'] ?>
+                                <th>Height</th>
+                            </tr>
+                            <tr>
+                                <td>3000mm</td>
+                                <td>4000mm</td>
+                            </tr>
+                            <tr>
+                                <th>Something</th>
+                                <th>Something</th>
+                            </tr>
+                            <tr>
+                                <td>200mm</td>
+                                <td>200mm</td>
+                            </tr>
+                            <tr>
+                                <th>Something</th>
+                                <th>Something</th>
+                            </tr>
+                            <tr>
+                                <td>200mm</td>
+                                <td>200mm</td>
+                            </tr>
+                            <tr>
+                                <th>Something</th>
+                                <th>Something</th>
+                            </tr>
+                            <tr>
+                                <td>200mm</td>
+                                <td>200mm</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="insideAcervo">
-                <div class="icon">+</div>
-                <div class="contentsAcervo">
-                    <table>
-                        <tr>
-                            <th>Width</th>
-                            <th>Height</th>
-                        </tr>
-                        <tr>
-                            <td>3000mm</td>
-                            <td>4000mm</td>
-                        </tr>
-                        <tr>
-                            <th>Something</th>
-                            <th>Something</th>
-                        </tr>
-                        <tr>
-                            <td>200mm</td>
-                            <td>200mm</td>
-                        </tr>
-                        <tr>
-                            <th>Something</th>
-                            <th>Something</th>
-                        </tr>
-                        <tr>
-                            <td>200mm</td>
-                            <td>200mm</td>
-                        </tr>
-                        <tr>
-                            <th>Something</th>
-                            <th>Something</th>
-                        </tr>
-                        <tr>
-                            <td>200mm</td>
-                            <td>200mm</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
+
+
+        <?php } ?>
 
 
 
