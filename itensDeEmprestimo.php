@@ -62,7 +62,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <td scope="col"><b>Item</b></td>
                         <td scope="col"><b>Status</b></td>
                         <td scope="col"><b>Data devolvido</b></td>
-
+                        <td scope="col"><b>Ação</b></td>
                     </tr>
                 </thead>
                 <tbody>
