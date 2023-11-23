@@ -4,23 +4,23 @@
 require_once("conexao.php");
 
 // Excluir
-if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
+/*if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $sql = "delete from emprestimo where id = " . $_GET['id'];
     mysqli_query($conexao, $sql);
     $mensagem = "Exclusão realizada com sucesso.";
-}
+}*/
 
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
-    $V_WHERE = " and leitor.nome like '% "  . $_POST['pesquisa'] . "%' ";
+    $V_WHERE = " and leitor.nome like '% " . $_POST['pesquisa'] . "%' ";
 }
 
-$idEmprestimo = $_GET['idEmprestimo'];
+$idEmprestimo = $_GET['id'];
 
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id as idEmprestimo, livro.nome as idLivro, statusItem, dataDevolvido
+$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as idLivro, statusItem, dataDevolvido
         FROM itensDeEmprestimo 
-        INNER JOIN leitor ON itensDeEmprestimo.idLeitor = leitor.id     
+        INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
         WHERE idEmprestimo = $idEmprestimo" . $V_WHERE;
 
@@ -40,8 +40,8 @@ $resultado = mysqli_query($conexao, $sql);
 
 
 <center>
-<form method="post">
-<input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
+    <form method="post">
+        <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
         <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
         <div class="input-button-container">
             <input name="pesquisa" type="text" class="formcampo">
@@ -62,14 +62,14 @@ $resultado = mysqli_query($conexao, $sql);
                         <td scope="col"><b>Item</b></td>
                         <td scope="col"><b>Status</b></td>
                         <td scope="col"><b>Data devolvido</b></td>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
                         <tr>
                             <td>
-                                <?= $linha['id'] ?>
+                                <?= $linha['idEmprestimo'] ?>
                             </td>
                             <td>
                                 <?= $linha['idLivro'] ?>
@@ -82,16 +82,16 @@ $resultado = mysqli_query($conexao, $sql);
                             </td>
 
                             <td>
-                                <a style="margin-right: 8px;" href="alterarEmprestimo.php? id=<?= $linha['id'] ?>"
+                                <a style="margin-right: 8px;" href="alterarEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>"
                                     class="botao">
                                     <i class="fa-solid fa-pen-to-square"></i></a>
 
-                                    <a style="margin-right: 8px;" href="itensDeEmprestimo.php? id=<?= $linha['id'] ?>"
+                                <a style="margin-right: 8px;" href="itensDeEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>"
                                     class="botao">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
 
-                                <a href="listarEmprestimo.php? id=<?= $linha['id'] ?>" class="botao"
+                                <a href="listarEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>" class="botao"
                                     onclick="return confirm('Deseja mesmo excluir o cadastro?')">
                                     <i class="fa-sharp fa-solid fa-trash"></i> </a>
 
