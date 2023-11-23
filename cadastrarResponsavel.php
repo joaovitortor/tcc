@@ -1,15 +1,23 @@
 <?php
 
 require_once("conexao.php");
-$cpfInvalido = "";
+session_start(); // Inicia a sessão (certifique-se de chamá-la no início da página)
 
+$cpfInvalido = isset($_SESSION['cpfInvalido']) ? $_SESSION['cpfInvalido'] : "";
+unset($_SESSION['cpfInvalido']);
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $idUsuario = $_POST['id_usuario'];
     $nomeResp = $_POST['nomeResp'];
     $telResp = $_POST['telResp'];
     $cpfResp = $_POST['cpfResp'];
-    
+
+    $_SESSION['form_values'] = [
+        'nomeResp' => $nomeResp,
+        'cpfResp' => $cpfResp,
+        'telResp' => $telResp,
+        // Adicione mais campos conforme necessário
+    ];
     function validarCPFResp($cpfResp)
     {
         // Remove caracteres não numéricos
@@ -54,14 +62,16 @@ if (isset($_POST['cadastrar'])) {
         $sql = "UPDATE leitor SET nomeResp = '$nomeResp', telResp = '$telResp', cpfResp = '$cpfResp' WHERE id = $idUsuario";
         mysqli_query($conexao, $sql);
         $cpfInvalido = "";
-
         header("Location: cadastrarLeitor.php");
+
     } elseif (!validarCPFResp($cpfResp)) {
-        $cpfInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Cpf Inválido</span>';
-        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+        $cpfInvalido = '<span style="margin-top: -26pt; margin-bottom: 10pt; color: red; font-family: Fjalla One;">Cpf Inválido</span>';
+        session_start(); // Inicia a sessão
+        $_SESSION['cpfInvalido'] = $cpfInvalido;
+        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario&nomeResp=$nomeResp&cpfResp=$cpfResp&telResp=$telResp");
     }
 
-    
+
 
 }
 ?>
@@ -103,7 +113,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -139,33 +149,40 @@ if (isset($_POST['cadastrar'])) {
 
                 <!--<img src="images/profile.jpg" alt="">-->
             </div>
-            
+
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nomeResp']) ? $_POST['nomeResp'] : "";
-                    $idUsuario = isset($_POST['idUsuario']) ? $_POST['id_usuario']: "";
+                    $nomeResp = isset($_POST['nomeResp']) ? $_POST['nomeResp'] : "";
+                    $cpfResp = isset($_POST['cpfResp']) ? $_POST['cpfResp'] : "";
+                    $telResp = isset($_POST['telResp']) ? $_POST['telResp'] : "";
+                    $idUsuario = isset($_POST['idUsuario']) ? $_POST['id_usuario'] : "";
                     ?>
 
                 </form>
 
                 <form action="cadastrarResponsavel.php" method="post" class="geekcb-form-contact">
-                <input type="hidden" name="id_usuario" value="<?php echo $_GET['idusuario']; ?>">
-               
-                <h1 class="titulo">Cadastrar Responsável</h1>                 
+                    <input type="hidden" name="id_usuario" value="<?php echo $_GET['idusuario']; ?>">
 
-                    <input class="geekcb-field"  placeholder="Nome do responsável" required type="texto" name="nomeResp">
-                    <input class="geekcb-field" id="cpf" placeholder="CPF do responsável" required type="texto" name="cpfResp">
-                    <?php echo $cpfInvalido;?>
-                    <input class="geekcb-field" id="telefone" placeholder="Telefone do responsável" required type="texto" name="telResp">
-                        
+                    <h1 class="titulo">Cadastrar Responsável</h1>
+
+                    <input class="geekcb-field" placeholder="Nome do responsável" required value="<?=isset($_SESSION['form_values']['nomeResp']) ? $_SESSION['form_values']['nomeResp'] : ''; ?>"
+                        type="texto" name="nomeResp">
+                    <div class="form-column">
+                        <input class="geekcb-field" value="<?=isset($_SESSION['form_values']['cpfResp']) ? $_SESSION['form_values']['cpfResp'] : ''; ?>" id="cpf" placeholder="CPF do responsável"
+                            required type="texto" name="cpfResp">
+                        <?php echo $cpfInvalido; ?>
+                    </div>
+                    <input class="geekcb-field" value="<?=isset($_SESSION['form_values']['telResp']) ? $_SESSION['form_values']['telResp'] : ''; ?>" id="telefone"
+                        placeholder="Telefone do responsável" required type="texto" name="telResp">
+
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
             </div>
 
-            </div>
+        </div>
         </div>
         </div>
     </section>
