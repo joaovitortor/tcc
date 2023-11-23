@@ -1,15 +1,22 @@
 <?php
 require_once("conexao.php");
 
+$V_WHERE = "";
+if (isset($_POST['pesquisar'])) { // botao pesquisar
+    $V_WHERE = " AND livro.titulo LIKE '%{$_POST['pesquisa']}%' ";
+    
+}
 
 $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
         FROM livro
         LEFT JOIN editora ON livro.idEditora = editora.id
-        LEFT JOIN genero ON livro.idGenero = genero.id";
+        LEFT JOIN genero ON livro.idGenero = genero.id
+        WHERE 1 {$V_WHERE}";
 
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
+
 ?>
 
 
@@ -38,7 +45,7 @@ $resultado = mysqli_query($conexao, $sql);
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-    <title>Administrador Bibliotech</title>
+    <title>Acervo Bibliotech</title>
 </head>
 
 <body>
@@ -82,14 +89,25 @@ $resultado = mysqli_query($conexao, $sql);
             <div class="container-fluid">
                 <i class="uil uil-bars sidebar-toggle"></i>
 
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                
             </div>
         </div>
 
-        <h1 class="titulo">Acervo</h1>
+        <h1 class="titulo">Acervo</h1><br><br>
+        <center>
+<form method="post">
+        <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+        <div class="input-button-container">
+            <input name="pesquisa" type="text" class="formcampo">
+            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
+            <a href="acervo.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+        </div>
+        <br><br>
+    </form><br><br>
+</center>
+
+
+
         <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
 
 
@@ -105,67 +123,76 @@ $resultado = mysqli_query($conexao, $sql);
 
                                 </h5>
 
-                                <h6 style="width: 50%; margin-top: 5%">
-                                
-                                <?php
-                                $idLivro = $linha['id'];
-                                $sqlAutores = "SELECT autor.nome FROM livroautor
-                                            JOIN autor ON livroautor.idAutor = autor.id
-                                            WHERE livroautor.idLivro = $idLivro";
 
-                                $resultadoAutor = mysqli_query($conexao, $sqlAutores);
-
-                                $autores = array();
-                                while ($linhaAutor = mysqli_fetch_array($resultadoAutor)) {
-                                    $autores[] = $linhaAutor['nome'];
-                                    
-                                }
-                                    echo implode(', ', $autores);
-                                
-                                ?>                      
+                              
 
 
-                                </h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="insideAcervo">
-                    <div class="icon">+</div>
+                    <div class="icon"><i class="fa-solid fa-plus"></i></div>
                     <div class="contentsAcervo">
                         <table>
                             <tr>
-                                <?= $linha['id'] ?>
-                                <th>Height</th>
+                                <th>Código do livro: </th>
+                                <td>
+                                    <?= $linha['id'] ?>
+                                </td>                               
+
+                            </tr>
+
+                            <tr>
+                                <th>Status do livro: </th>
+                                <td>
+                                    <?= $linha['statusLivro'] ?>
+                                </td>                               
+
                             </tr>
                             <tr>
-                                <td>3000mm</td>
-                                <td>4000mm</td>
+                                <th>Autor(es): </th>
+                                <td>
+                                
+                                    <?php
+                                    $idLivro = $linha['id'];
+                                    $sqlAutores = "SELECT autor.nome FROM livroautor
+                                            JOIN autor ON livroautor.idAutor = autor.id
+                                            WHERE livroautor.idLivro = $idLivro";
+
+                                    $resultadoAutor = mysqli_query($conexao, $sqlAutores);
+
+                                    $autores = array();
+                                    while ($linhaAutor = mysqli_fetch_array($resultadoAutor)) {
+                                        $autores[] = $linhaAutor['nome'];
+
+                                    }
+                                    echo implode(', ', $autores);
+
+                                    ?>
+                                
+                                </td>
                             </tr>
                             <tr>
-                                <th>Something</th>
-                                <th>Something</th>
+                                <th>ISBN: </th>
+                                <td><?= $linha['isbn'] ?></td>
                             </tr>
                             <tr>
-                                <td>200mm</td>
-                                <td>200mm</td>
+                            <th>N° de páginas: </th>
+                                <td><?= $linha['pag'] ?></td>
                             </tr>
                             <tr>
-                                <th>Something</th>
-                                <th>Something</th>
+                            <th>Gênero: </th>
+                                <td><?= $linha['nomeGenero'] ?></td>
                             </tr>
                             <tr>
-                                <td>200mm</td>
-                                <td>200mm</td>
+                                <th>Editora: </th>
+                                <td>
+                                    <?= $linha['nomeEditora'] ?>
+                                </td>                               
+
                             </tr>
-                            <tr>
-                                <th>Something</th>
-                                <th>Something</th>
-                            </tr>
-                            <tr>
-                                <td>200mm</td>
-                                <td>200mm</td>
-                            </tr>
+                           
                         </table>
                     </div>
                 </div>
