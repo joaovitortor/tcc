@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/11/2023 às 22:03
+-- Tempo de geração: 23/11/2023 às 00:39
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.0.28
 
@@ -43,7 +43,8 @@ CREATE TABLE `administrador` (
 INSERT INTO `administrador` (`id`, `status`, `login`, `senha`) VALUES
 (2, '', 'liviamaria', '0'),
 (3, '', 'joaobidoia', '0'),
-(4, '', 'biblioteca1', 'jacnakjd');
+(4, '', 'biblioteca1', 'jacnakjd'),
+(5, '', 'liviamaria', 'livia1234');
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,6 @@ CREATE TABLE `emprestimo` (
   `dataEmprestimo` datetime DEFAULT current_timestamp(),
   `dataPrevistaDevolucao` date DEFAULT NULL,
   `idLeitor` int(11) DEFAULT NULL,
-  `dataDevolucao` date DEFAULT NULL,
   `valorMulta` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -114,14 +114,21 @@ CREATE TABLE `emprestimo` (
 -- Despejando dados para a tabela `emprestimo`
 --
 
-INSERT INTO `emprestimo` (`id`, `statusEmprestimo`, `dataEmprestimo`, `dataPrevistaDevolucao`, `idLeitor`, `dataDevolucao`, `valorMulta`) VALUES
-(75, 'Finalizado', '2023-11-17 17:47:52', '2023-11-24', 2, NULL, NULL),
-(76, 'Em andamento', '2023-11-17 17:48:06', '2023-11-24', 3, NULL, NULL),
-(77, 'Em andamento', '2023-11-17 17:51:59', '2023-11-24', 3, NULL, NULL),
-(78, 'Em andamento', '2023-11-17 17:56:39', '2023-11-24', 3, NULL, NULL),
-(79, 'Em andamento', '2023-11-17 17:56:50', '2023-11-24', 2, NULL, NULL),
-(80, 'Em andamento', '2023-11-17 17:57:23', '2023-11-24', 2, NULL, NULL),
-(81, 'Em andamento', '2023-11-17 17:57:47', '2023-11-24', 3, NULL, NULL);
+INSERT INTO `emprestimo` (`id`, `statusEmprestimo`, `dataEmprestimo`, `dataPrevistaDevolucao`, `idLeitor`, `valorMulta`) VALUES
+(75, 'Finalizado', '2023-11-17 17:47:52', '2023-11-24', 2, NULL),
+(78, 'Em andamento', '2023-11-17 17:56:39', '2023-11-24', 3, NULL),
+(79, 'Em andamento', '2023-11-17 17:56:50', '2023-11-24', 2, NULL),
+(80, 'Em andamento', '2023-11-17 17:57:23', '2023-11-24', 2, NULL),
+(81, 'Em andamento', '2023-11-17 17:57:47', '2023-11-24', 3, NULL),
+(82, 'Em andamento', '2023-11-20 17:56:54', '2023-11-27', 1, NULL),
+(85, 'Em andamento', '2023-11-20 21:39:13', '2023-11-28', 2, NULL),
+(86, 'Em andamento', '2023-11-20 21:40:38', '2023-11-28', 2, NULL),
+(87, 'Em andamento', '2023-11-20 21:40:56', '2023-11-28', 2, NULL),
+(88, 'Em andamento', '2023-11-20 21:41:56', '2023-11-28', 2, NULL),
+(89, 'Em andamento', '2023-11-20 21:42:13', '2023-11-28', 3, NULL),
+(90, 'Em andamento', '2023-11-20 21:42:48', '2023-11-28', 3, NULL),
+(91, 'Em andamento', '2023-11-20 21:43:06', '2023-11-28', 2, NULL),
+(92, 'Em andamento', '2023-11-21 15:13:04', '2023-11-28', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -152,22 +159,32 @@ INSERT INTO `genero` (`id`, `status`, `nome`) VALUES
 CREATE TABLE `itensdeemprestimo` (
   `idLivro` int(11) NOT NULL,
   `idEmprestimo` int(11) NOT NULL,
-  `dataDevolvido` date DEFAULT NULL
+  `dataDevolvido` date DEFAULT NULL,
+  `statusItem` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `itensdeemprestimo`
 --
 
-INSERT INTO `itensdeemprestimo` (`idLivro`, `idEmprestimo`, `dataDevolvido`) VALUES
-(7, 78, NULL),
-(12, 78, NULL),
-(7, 79, NULL),
-(3, 79, NULL),
-(7, 80, NULL),
-(3, 80, NULL),
-(3, 81, NULL),
-(12, 81, NULL);
+INSERT INTO `itensdeemprestimo` (`idLivro`, `idEmprestimo`, `dataDevolvido`, `statusItem`) VALUES
+(7, 78, NULL, ''),
+(12, 78, NULL, ''),
+(7, 79, NULL, ''),
+(3, 79, NULL, ''),
+(7, 80, NULL, ''),
+(3, 80, NULL, ''),
+(3, 81, NULL, ''),
+(12, 81, NULL, ''),
+(22, 82, NULL, ''),
+(14, 85, NULL, ''),
+(14, 86, NULL, ''),
+(22, 87, NULL, ''),
+(22, 88, NULL, ''),
+(13, 89, NULL, ''),
+(13, 90, NULL, ''),
+(16, 91, NULL, ''),
+(22, 92, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -182,11 +199,11 @@ CREATE TABLE `leitor` (
   `telefone` varchar(15) NOT NULL,
   `endereco` varchar(100) NOT NULL,
   `dn` date NOT NULL,
-  `cpf` varchar(11) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(255) NOT NULL,
   `nomeResp` varchar(100) DEFAULT NULL,
-  `cpfResp` varchar(11) DEFAULT NULL,
+  `cpfResp` varchar(14) DEFAULT NULL,
   `telResp` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -231,14 +248,15 @@ INSERT INTO `livro` (`id`, `idEditora`, `idGenero`, `statusLivro`, `titulo`, `pa
 (10, 1, 1, 'Disponível', 'Orgulho e Preconceito', '362', '105447410452', '2', NULL),
 (11, 1, 1, 'Disponível', 'Orgulho e Preconceito', '362', '105447410452', '2', NULL),
 (12, 3, 1, 'Disponível', 'A vida invisível de Addie La Rue', '499', '12345645456', '1', NULL),
-(13, 2, 2, 'Disponível', 'Addie La Rue', '400', '105447410452', '3', NULL),
+(13, 2, 2, 'Emprestado', 'Addie La Rue', '400', '105447410452', '3', NULL),
 (14, 2, 2, 'Disponível', 'Os sete maridos de Evelyn Hugo', '360', '454564545645', '4', NULL),
 (15, 3, 2, 'Disponível', 'Imperfeitos', '350', '123456456', '4', NULL),
-(16, 1, 1, 'Disponível', 'Bom dia, Verônica', '362', '105447410452', '1', NULL),
+(16, 1, 1, 'Emprestado', 'Bom dia, Verônica', '362', '105447410452', '1', NULL),
 (17, 3, 2, 'Disponível', 'Leitura de Verão', '362', '105447410452', '9', NULL),
 (18, 3, 2, 'Disponível', 'Leitura de Verão', '362', '105447410452', '9', NULL),
 (19, 3, 1, 'Disponível', 'Orgulho e Preconceito', '362', '105447410452', '9', NULL),
-(20, 1, 2, 'Disponível', 'Daisy Jones', '400', '1425254242', '3', NULL);
+(20, 1, 2, 'Disponível', 'Daisy Jones', '400', '1425254242', '3', NULL),
+(22, 1, 1, 'Emprestado', 'A Biblioteca da meia-noite', '400', '123789456', '2', 'bibliotecadameianoite.jpg');
 
 -- --------------------------------------------------------
 
@@ -269,7 +287,8 @@ INSERT INTO `livroautor` (`idLivro`, `idAutor`) VALUES
 (16, 12),
 (16, 13),
 (20, 2),
-(20, 7);
+(20, 7),
+(22, 9);
 
 --
 -- Índices para tabelas despejadas
@@ -342,7 +361,7 @@ ALTER TABLE `livroautor`
 -- AUTO_INCREMENT de tabela `administrador`
 --
 ALTER TABLE `administrador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `autor`
@@ -360,7 +379,7 @@ ALTER TABLE `editora`
 -- AUTO_INCREMENT de tabela `emprestimo`
 --
 ALTER TABLE `emprestimo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT de tabela `genero`
@@ -378,7 +397,7 @@ ALTER TABLE `leitor`
 -- AUTO_INCREMENT de tabela `livro`
 --
 ALTER TABLE `livro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Restrições para tabelas despejadas

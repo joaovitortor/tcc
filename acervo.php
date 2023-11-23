@@ -102,7 +102,30 @@ $resultado = mysqli_query($conexao, $sql);
                             <div class="detailsAcervo">
                                 <h5 style="width: 50%; margin-top: 5%; text-align:center">
                                     <?= $linha['titulo'] ?>
+
                                 </h5>
+
+                                <h6 style="width: 50%; margin-top: 5%">
+                                
+                                <?php
+                                $idLivro = $linha['id'];
+                                $sqlAutores = "SELECT autor.nome FROM livroautor
+                                            JOIN autor ON livroautor.idAutor = autor.id
+                                            WHERE livroautor.idLivro = $idLivro";
+
+                                $resultadoAutor = mysqli_query($conexao, $sqlAutores);
+
+                                $autores = array();
+                                while ($linhaAutor = mysqli_fetch_array($resultadoAutor)) {
+                                    $autores[] = $linhaAutor['nome'];
+                                    
+                                }
+                                    echo implode(', ', $autores);
+                                
+                                ?>                      
+
+
+                                </h6>
                             </div>
                         </div>
                     </div>
