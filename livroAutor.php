@@ -12,6 +12,7 @@ if (isset($_POST['cadastrar'])) {
     foreach ($idAutor as $idAutor) {
         $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
         mysqli_query($conexao, $sql);
+        header("Location: cadastrarLivro.php");
     }
 
 }
