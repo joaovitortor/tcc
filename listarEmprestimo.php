@@ -12,14 +12,14 @@ if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
 
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
-    $V_WHERE = " and leitor.nome like '% "  . $_POST['pesquisa'] . "%' ";
+    $V_WHERE = " and leitor.nome like '% "  . $_POST['pesquisar'] . "%' ";
 }
 
 //2. Preparar a sql
 $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
         FROM emprestimo 
         LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
-        WHERE 1 = 1 AND statusEmprestimo = 'Em andamento'" . $V_WHERE;
+        WHERE statusEmprestimo = 'Em andamento'" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -104,8 +104,8 @@ $resultado = mysqli_query($conexao, $sql);
                                     class="botao">
                                     <i class="fa-solid fa-pen-to-square"></i></a>
 
-                                    <a style="margin-right: 8px;" href="itensDeEmprestimo.php? id=<?= $linha['id'] ?>"
-                                    class="botao">
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal_<?= $linha['id'] ?>"
+                                    style="margin-right: 8px;" name="info" class="botao">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
 

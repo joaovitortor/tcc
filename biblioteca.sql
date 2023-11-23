@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/11/2023 às 00:39
+-- Tempo de geração: 23/11/2023 às 02:39
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.0.28
 
@@ -63,16 +63,16 @@ CREATE TABLE `autor` (
 --
 
 INSERT INTO `autor` (`id`, `status`, `nome`) VALUES
+(1, 'Ativo', 'V.E Schwab'),
 (2, 'Ativo', 'Taylor Jenkins Reid'),
-(4, 'Ativo', 'Jane Austen'),
-(5, 'Ativo', 'Kiera Cass'),
-(6, 'Ativo', 'Beth'),
-(7, 'Ativo', 'Coleen Hoover'),
-(9, 'Ativo', 'V.E Schwab'),
-(10, 'Ativo', 'Christina'),
-(11, 'Ativo', 'Lauren'),
-(12, 'Ativo', ' Ilana Casoy'),
-(13, 'Ativo', 'Raphael Montes');
+(3, 'Ativo', 'Jane Austen'),
+(4, 'Ativo', 'Agatha Christie'),
+(5, 'Ativo', 'G.B Baldassari'),
+(6, 'Ativo', 'Sally Rooney'),
+(7, 'Ativo', 'Ilana Casoy'),
+(8, 'Ativo', 'Raphael Montes'),
+(9, 'Ativo', 'Carla Madeira'),
+(10, 'Ativo', 'Alice Oseman');
 
 -- --------------------------------------------------------
 
@@ -93,7 +93,12 @@ CREATE TABLE `editora` (
 INSERT INTO `editora` (`id`, `status`, `nome`) VALUES
 (1, 'Ativo', 'FTD'),
 (2, 'Ativo', 'Paralela'),
-(3, 'Ativo', 'Arqueiro');
+(3, 'Ativo', 'Arqueiro'),
+(4, 'Ativo', 'Record'),
+(5, 'Ativo', 'Companhia das Letras'),
+(6, 'Ativo', 'Galera'),
+(7, 'Ativo', 'Seguinte'),
+(8, 'Ativo', 'HarperCollins');
 
 -- --------------------------------------------------------
 
@@ -115,20 +120,8 @@ CREATE TABLE `emprestimo` (
 --
 
 INSERT INTO `emprestimo` (`id`, `statusEmprestimo`, `dataEmprestimo`, `dataPrevistaDevolucao`, `idLeitor`, `valorMulta`) VALUES
-(75, 'Finalizado', '2023-11-17 17:47:52', '2023-11-24', 2, NULL),
-(78, 'Em andamento', '2023-11-17 17:56:39', '2023-11-24', 3, NULL),
-(79, 'Em andamento', '2023-11-17 17:56:50', '2023-11-24', 2, NULL),
-(80, 'Em andamento', '2023-11-17 17:57:23', '2023-11-24', 2, NULL),
-(81, 'Em andamento', '2023-11-17 17:57:47', '2023-11-24', 3, NULL),
-(82, 'Em andamento', '2023-11-20 17:56:54', '2023-11-27', 1, NULL),
-(85, 'Em andamento', '2023-11-20 21:39:13', '2023-11-28', 2, NULL),
-(86, 'Em andamento', '2023-11-20 21:40:38', '2023-11-28', 2, NULL),
-(87, 'Em andamento', '2023-11-20 21:40:56', '2023-11-28', 2, NULL),
-(88, 'Em andamento', '2023-11-20 21:41:56', '2023-11-28', 2, NULL),
-(89, 'Em andamento', '2023-11-20 21:42:13', '2023-11-28', 3, NULL),
-(90, 'Em andamento', '2023-11-20 21:42:48', '2023-11-28', 3, NULL),
-(91, 'Em andamento', '2023-11-20 21:43:06', '2023-11-28', 2, NULL),
-(92, 'Em andamento', '2023-11-21 15:13:04', '2023-11-28', 2, NULL);
+(1, 'Em andamento', '2023-11-22 22:07:55', '2023-11-30', 3, NULL),
+(2, 'Em andamento', '2023-11-22 22:08:37', '2023-11-30', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -148,7 +141,12 @@ CREATE TABLE `genero` (
 
 INSERT INTO `genero` (`id`, `status`, `nome`) VALUES
 (1, 'Ativo', 'Drama'),
-(2, 'Ativo', 'Romance');
+(2, 'Ativo', 'Romance'),
+(3, 'Ativo', 'Fantasia'),
+(4, 'Ativo', 'Mistério'),
+(5, 'Ativo', 'True Crime'),
+(6, 'Ativo', 'Terror'),
+(7, 'Ativo', 'Aventura');
 
 -- --------------------------------------------------------
 
@@ -168,23 +166,8 @@ CREATE TABLE `itensdeemprestimo` (
 --
 
 INSERT INTO `itensdeemprestimo` (`idLivro`, `idEmprestimo`, `dataDevolvido`, `statusItem`) VALUES
-(7, 78, NULL, ''),
-(12, 78, NULL, ''),
-(7, 79, NULL, ''),
-(3, 79, NULL, ''),
-(7, 80, NULL, ''),
-(3, 80, NULL, ''),
-(3, 81, NULL, ''),
-(12, 81, NULL, ''),
-(22, 82, NULL, ''),
-(14, 85, NULL, ''),
-(14, 86, NULL, ''),
-(22, 87, NULL, ''),
-(22, 88, NULL, ''),
-(13, 89, NULL, ''),
-(13, 90, NULL, ''),
-(16, 91, NULL, ''),
-(22, 92, NULL, '');
+(2, 1, NULL, ''),
+(7, 2, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -239,24 +222,13 @@ CREATE TABLE `livro` (
 --
 
 INSERT INTO `livro` (`id`, `idEditora`, `idGenero`, `statusLivro`, `titulo`, `pag`, `isbn`, `edicao`, `arquivo`) VALUES
-(2, 1, 1, 'Emprestado', 'Orgulho e Preconceito', '320', '1022365214', '2', NULL),
-(3, 2, 2, 'Disponível', 'A Seleção', '120', '12345689', '3', NULL),
-(6, 3, 1, 'Emprestado', 'A garota do lago', '362', '105447410452', '9', NULL),
-(7, 3, 1, 'Emprestado', 'A garota do lago', '362', '105447410452', '9', NULL),
-(8, 3, 1, 'Disponível', 'A garota do lago', '400', '12345645456', '9', NULL),
-(9, 1, 2, 'Disponível', 'Razão e sensibilidade', '362', '105447410452', '9', NULL),
-(10, 1, 1, 'Disponível', 'Orgulho e Preconceito', '362', '105447410452', '2', NULL),
-(11, 1, 1, 'Disponível', 'Orgulho e Preconceito', '362', '105447410452', '2', NULL),
-(12, 3, 1, 'Disponível', 'A vida invisível de Addie La Rue', '499', '12345645456', '1', NULL),
-(13, 2, 2, 'Emprestado', 'Addie La Rue', '400', '105447410452', '3', NULL),
-(14, 2, 2, 'Disponível', 'Os sete maridos de Evelyn Hugo', '360', '454564545645', '4', NULL),
-(15, 3, 2, 'Disponível', 'Imperfeitos', '350', '123456456', '4', NULL),
-(16, 1, 1, 'Emprestado', 'Bom dia, Verônica', '362', '105447410452', '1', NULL),
-(17, 3, 2, 'Disponível', 'Leitura de Verão', '362', '105447410452', '9', NULL),
-(18, 3, 2, 'Disponível', 'Leitura de Verão', '362', '105447410452', '9', NULL),
-(19, 3, 1, 'Disponível', 'Orgulho e Preconceito', '362', '105447410452', '9', NULL),
-(20, 1, 2, 'Disponível', 'Daisy Jones', '400', '1425254242', '3', NULL),
-(22, 1, 1, 'Emprestado', 'A Biblioteca da meia-noite', '400', '123789456', '2', 'bibliotecadameianoite.jpg');
+(1, 1, 3, 'Disponível', 'A vida invisível de Addie La Rue', '499', '6555872551', '7', 'ADDIE.jpg'),
+(2, 2, 2, 'Emprestado', 'Os sete maridos de Evelyn Hugo', '360', '8584391509', '1', 'evelyn.jpg'),
+(3, 2, 1, 'Disponível', 'Daisy Jones and The Six', '360 ', '8584391401', '1', 'daisy.jpg'),
+(4, 1, 1, 'Disponível', 'Pessoas Normais', '264', '8535932569', '1', 'pessoasnormais.jpg'),
+(5, 4, 1, 'Disponível', 'Tudo é rio', '210', '6555871784', '10', 'Tudoerio.jpg'),
+(6, 7, 2, 'Disponível', 'Heartstopper Vol.1', '288', '8555341612', '1', 'heart.jpg'),
+(7, 8, 4, 'Emprestado', 'Assassinato no Expresso Oriente', '240', '8595086788', '1', 'expresso.jpg');
 
 -- --------------------------------------------------------
 
@@ -274,21 +246,13 @@ CREATE TABLE `livroautor` (
 --
 
 INSERT INTO `livroautor` (`idLivro`, `idAutor`) VALUES
-(11, 4),
-(11, 5),
-(11, 7),
-(13, 4),
-(13, 9),
-(14, 2),
-(14, 4),
-(14, 5),
-(15, 10),
-(15, 11),
-(16, 12),
-(16, 13),
-(20, 2),
-(20, 7),
-(22, 9);
+(1, 1),
+(2, 2),
+(3, 2),
+(4, 6),
+(5, 9),
+(6, 10),
+(7, 4);
 
 --
 -- Índices para tabelas despejadas
@@ -367,25 +331,25 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de tabela `autor`
 --
 ALTER TABLE `autor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `editora`
 --
 ALTER TABLE `editora`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `emprestimo`
 --
 ALTER TABLE `emprestimo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `leitor`
@@ -397,7 +361,7 @@ ALTER TABLE `leitor`
 -- AUTO_INCREMENT de tabela `livro`
 --
 ALTER TABLE `livro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restrições para tabelas despejadas
