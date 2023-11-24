@@ -104,7 +104,7 @@ $resultado = mysqli_query($conexao, $sql);
                                     class="botao">
                                     <i class="fa-solid fa-pen-to-square"></i></a>
 
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal_<?= $linha['id'] ?>"
+                                <a href="itensDeEmprestimo1.php? id=<?= $linha['id'] ?>"
                                     style="margin-right: 8px;" name="info" class="botao">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>

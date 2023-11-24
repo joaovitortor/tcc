@@ -48,6 +48,7 @@ $resultado = mysqli_query($conexao, $sql);
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/acervo.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -71,6 +72,9 @@ $resultado = mysqli_query($conexao, $sql);
             <?= $_GET['mensagem'] ?>
         </div>
     <?php } ?>
+        
+    <?php require_once('acervo1.php')?>
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

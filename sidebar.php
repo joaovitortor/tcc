@@ -1,9 +1,9 @@
 <li><a class="emprestimo-btn">
         <i class="fa-solid fa-arrows-left-right-to-line"></i><span class="link-name">Emprestimo</span></a>
     <ul class="emprestimo-show">
-        <li><a href="" class="text">Cadastrar</a></li>
-        <li><a href="" class="text">Listar</a></li>
-        <li><a href="" class="text">Devolução</a></li>
+        <li><a href="emprestimo.php" class="text">Cadastrar</a></li>
+        <li><a href="listarEmprestimo.php" class="text">Listar</a></li>
+        <li><a href="itensDeEmprestimo.php" class="text">Devolução</a></li>
     </ul>
 </li>
 <li><a class="leitor-btn">

@@ -4,7 +4,7 @@ require_once("conexao.php");
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " AND livro.titulo LIKE '%{$_POST['pesquisa']}%' ";
-    
+
 }
 
 $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
@@ -89,22 +89,22 @@ $resultado = mysqli_query($conexao, $sql);
             <div class="container-fluid">
                 <i class="uil uil-bars sidebar-toggle"></i>
 
-                
+
             </div>
         </div>
 
         <h1 class="titulo">Acervo</h1><br><br>
         <center>
-<form method="post">
-        <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
-        <div class="input-button-container">
-            <input name="pesquisa" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <a href="acervo.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
-        </div>
-        <br><br>
-    </form><br><br>
-</center>
+            <form method="post">
+                <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+                <div class="input-button-container">
+                    <input name="pesquisa" type="text" class="formcampo">
+                    <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
+                    <a href="acervo.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+                </div>
+                <br><br>
+            </form><br><br>
+        </center>
 
 
 
@@ -120,13 +120,7 @@ $resultado = mysqli_query($conexao, $sql);
                             <div class="detailsAcervo">
                                 <h5 style="width: 50%; margin-top: 5%; text-align:center">
                                     <?= $linha['titulo'] ?>
-
                                 </h5>
-
-
-                              
-
-
                             </div>
                         </div>
                     </div>
@@ -139,7 +133,7 @@ $resultado = mysqli_query($conexao, $sql);
                                 <th>Código do livro: </th>
                                 <td>
                                     <?= $linha['id'] ?>
-                                </td>                               
+                                </td>
 
                             </tr>
 
@@ -147,13 +141,13 @@ $resultado = mysqli_query($conexao, $sql);
                                 <th>Status do livro: </th>
                                 <td>
                                     <?= $linha['statusLivro'] ?>
-                                </td>                               
+                                </td>
 
                             </tr>
                             <tr>
                                 <th>Autor(es): </th>
                                 <td>
-                                
+
                                     <?php
                                     $idLivro = $linha['id'];
                                     $sqlAutores = "SELECT autor.nome FROM livroautor
@@ -170,29 +164,35 @@ $resultado = mysqli_query($conexao, $sql);
                                     echo implode(', ', $autores);
 
                                     ?>
-                                
+
                                 </td>
                             </tr>
                             <tr>
                                 <th>ISBN: </th>
-                                <td><?= $linha['isbn'] ?></td>
+                                <td>
+                                    <?= $linha['isbn'] ?>
+                                </td>
                             </tr>
                             <tr>
-                            <th>N° de páginas: </th>
-                                <td><?= $linha['pag'] ?></td>
+                                <th>N° de páginas: </th>
+                                <td>
+                                    <?= $linha['pag'] ?>
+                                </td>
                             </tr>
                             <tr>
-                            <th>Gênero: </th>
-                                <td><?= $linha['nomeGenero'] ?></td>
+                                <th>Gênero: </th>
+                                <td>
+                                    <?= $linha['nomeGenero'] ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Editora: </th>
                                 <td>
                                     <?= $linha['nomeEditora'] ?>
-                                </td>                               
+                                </td>
 
                             </tr>
-                           
+
                         </table>
                     </div>
                 </div>

@@ -16,31 +16,32 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 }
 $idEmprestimo = $_GET['id'];
 
-if (isset($_POST['devolver'])) { // botao pesquisar
+$livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
 
-    $sql1 = "SELECT emprestimo.id as idEmprestimo, livro.titulo as idLivro, livro.statusLivro as statusLivro, dataDevolvido
-        FROM itensDeEmprestimo 
-        INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
-        LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
-        WHERE idEmprestimo = $idEmprestimo";
+if (isset($_POST['devolver'])) {
+    $idEmprestimo = $_POST['idEmprestimo'];
 
-    $devolvidos = mysqli_query($conexao, $sql1);
-    
-    while ($linhaDevolvidos = mysqli_fetch_array($devolvidos)) {
-        $check = $_POST['check'];
-        if (isset($check)) {
-            $idLivro = $_POST['idLivro'];
+    // Verifica se o checkbox foi marcado
+    if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
+        $livrosSelecionados = $_POST['idLivro'];
+        $dataAtual = date("Y-m-d");
+        // Percorre os livros selecionados
+        foreach ($livrosSelecionados as $idLivro) {
 
-            $sql2 = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido' where idLivro = $idLivro and idEmprestimo = $idEmprestimo";
-            mysqli_query($conexao, $sql2);
+            // Realiza a atualização no banco de dados para marcar como devolvido
+            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            mysqli_query($conexao, $sql);
+            $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
+            mysqli_query($conexao, $sql);
         }
-    }
 
+        // Outras ações após a devolução, se necessário
+    }
 }
 
 
 //2. Preparar a sql
-    $sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, livro.statusLivro as statusLivro, dataDevolvido, livro.id as idLivro
+$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, livro.id as idLivro
         FROM itensDeEmprestimo 
         INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
@@ -92,24 +93,24 @@ $resultado = mysqli_query($conexao, $sql);
                                 <td>
                                     <?= $linha['idEmprestimo'] ?>
                                 </td>
-                                <input type="hidden" name="idEmprestimo" value="<?=$linha['idEmprestimo'] ?>">
-                                <input type="hidden" name="idLivro" value="<?=$linha['idLivro'] ?>">
+                                <input type="hidden" name="idEmprestimo" value="<?= $linha['idEmprestimo'] ?>">
                                 <td>
                                     <?= $linha['titulo'] ?>
                                 </td>
                                 <td>
-                                    <?= $linha['statusLivro'] ?>
+                                    <?= $linha['statusItem'] ?>
                                 </td>
                                 <td>
-                                    <?php isset($linha['dataDevolvido']) ? date("d/m/Y", strtotime($linha['dataDevolvido'])) : ""; ?>
+                                    <?php isset($linha['dataDevolvido']) ? $data = date("d/m/Y", strtotime($linha['dataDevolvido'])) : $data = "";
+                                    echo $data ?>
                                 </td>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" name="check"
-                                     id="flexCheckDefault">
+                                    <input class="form-check-input" type="checkbox" name="idLivro[]"
+                                        value="<?= $linha['idLivro'] ?>">
                                 </td>
 
                                 <td>
-                                    <button style="margin-right: 8px;" name="devolver" class="botao">
+                                    <button style="margin-right: 8px;" name="alterar" class="botao">
                                         <i class="fa-solid fa-pen-to-square"></i></button>
 
                                     <a style="margin-right: 8px;"
