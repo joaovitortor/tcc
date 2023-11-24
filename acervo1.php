@@ -37,7 +37,7 @@ $resultado = mysqli_query($conexao, $sql);
 <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
 
 
-    <div class="wrapperAcervo">
+    <div class="wrapperAcervo container">
 
         <div class="containerAcervo">
             <div style="background-image: url('uploads/<?= $linha['arquivo'] ?>')" class="topAcervo"></div>
