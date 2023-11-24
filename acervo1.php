@@ -40,7 +40,7 @@ $resultado = mysqli_query($conexao, $sql);
     <div class="wrapperAcervo container">
 
         <div class="containerAcervo">
-            <div style="background-image: url('uploads/<?= $linha['arquivo'] ?>')" class="topAcervo"></div>
+            <div style="background-image: url('uploads/<?= $linha['arquivo'] ?>'); background-repeat: no-repeat" class="topAcervo"></div>
             <div class="bottomAcervo">
                 <div class="leftAcervo">
                     <div class="detailsAcervo">
