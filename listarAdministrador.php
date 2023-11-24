@@ -4,10 +4,10 @@
 require_once("conexao.php");
 
 // Excluir
-if(isset($_GET['id'])){ // Verifica se o botão excluir foi clicado
-  $sql= "delete from administrador where id = " . $_GET['id'];
-  mysqli_query($conexao,$sql);
-  $mensagem= "Exclusão realizada com sucesso.";
+if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
+    $sql = "delete from administrador where id = " . $_GET['id'];
+    mysqli_query($conexao, $sql);
+    $mensagem = "Exclusão realizada com sucesso.";
 }
 
 //2. Prepara a SQL
@@ -55,7 +55,7 @@ $resultado = mysqli_query($conexao, $sql);
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -82,14 +82,7 @@ $resultado = mysqli_query($conexao, $sql);
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
@@ -101,40 +94,49 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <div class="listar">
-                <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de administradores</h2><br>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>ID</td>
-                            <td>Status</td>
-                            <td>Nome</td>
-                        </tr>
-                        <tbody>
-                        <?php while($linha = mysqli_fetch_array($resultado)){ ?>
-    <tr>
-      <td><?=$linha['id']?></td>
-      <td><?=$linha['status']?></td>
-      <td><?=$linha['login']?></td>
-      <td><?=$linha['senha']?></td>
+                    <div class="listar">
+                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de administradores</h2><br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Status</td>
+                                    <td>Nome</td>
+                                </tr>
+                            <tbody>
+                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                                    <tr>
+                                        <td>
+                                            <?= $linha['id'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['status'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['login'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['senha'] ?>
+                                        </td>
 
-      <td>
-    
-    <a href="produtoAlterar.php? id=<?=$linha['id']?>" class="botao">
-    <i class="fa-solid fa-pen-to-square"></i>
-    </a>
-    
-    <a href="listarAdministrador.php? id=<?=$linha['id']?>" class="botao" onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-    <i class="fa-sharp fa-solid fa-trash"></i> </a>
-   
-  </td>
-    </tr>
-    <?php } ?>
+                                        <td>
 
-                    </tbody>
-                </table>
-               
-            </div>
+                                            <a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+
+                                            <a href="listarAdministrador.php? id=<?= $linha['id'] ?>" class="botao"
+                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
                 </form>
             </div>
         </div>

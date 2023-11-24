@@ -17,6 +17,15 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 }
 $idEmprestimo = $_GET['id'];
 
+$sqlNome = "select leitor.nome from emprestimo 
+            inner join leitor ON emprestimo.idLeitor = leitor.id";
+
+$sqlData = "select dataEmprestimo from emprestimo 
+ where id = " . $idEmprestimo;
+
+$nomeLeitor = mysqli_query($conexao, $sqlNome);
+$dataEmprestimo = mysqli_query($conexao, $sqlData);
+
 $livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
 
 if (isset($_POST['devolver'])) {
@@ -41,7 +50,7 @@ if (isset($_POST['devolver'])) {
 
 
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, livro.id as idLivro
+$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, emprestimo.dataPrevistaDevolucao as dataPrevista, livro.id as idLivro
         FROM itensDeEmprestimo 
         INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
@@ -62,15 +71,29 @@ $resultado = mysqli_query($conexao, $sql);
         <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
 
         <br><br>
-
         <div class="card cardlistar">
             <div class="card-body cardlistar2">
+
                 <table class="table">
                     <thead>
+                        <tr>
+                            <div style="display: flex; justify-content: space-between;">
+                                <h5 style="margin-right: ">Leitor(a):
+                                    <?php $row = mysqli_fetch_assoc($nomeLeitor);
+                                    echo $row['nome']; ?>
+                                </h5>
+                                <h5>Data Emprestimo
+                                    <?php $row = mysqli_fetch_assoc($dataEmprestimo);
+                                    $dataEmpres = date("d/m/Y", strtotime($row['dataEmprestimo']));
+                                    echo $dataEmpres ?>
+                                </h5>
+                            </div>
+                        </tr>
                         <tr>
                             <td scope="col"><b>ID do Empréstimo</b></td>
                             <td scope="col"><b>Item</b></td>
                             <td scope="col"><b>Status</b></td>
+                            <td scope="col"><b>Data Prevista</b></td>
                             <td scope="col"><b>Data devolvido</b></td>
                             <td scope="col"><b>Devolvido</b></td>
                         </tr>
@@ -89,6 +112,9 @@ $resultado = mysqli_query($conexao, $sql);
                                     <?= $linha['statusItem'] ?>
                                 </td>
                                 <td>
+                                    <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
+                                </td>
+                                <td>
                                     <?php isset($linha['dataDevolvido']) ? $data = date("d/m/Y", strtotime($linha['dataDevolvido'])) : $data = "";
                                     echo $data ?>
                                 </td>
@@ -97,10 +123,6 @@ $resultado = mysqli_query($conexao, $sql);
                                         value="<?= $linha['idLivro'] ?>">
                                 </td>
                             </tr>
-                            <div class="input-button-container">
-
-                            </div>
-
                             <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -129,6 +151,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
                 <button name="finalizar" type="submit" class="botaopesquisar"
                     style="margin-top: 10pt">Finalizar</button>
+                <button name="renovar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Renovar</button>
     </form>
     </div>
     </div>

@@ -2,29 +2,29 @@
 //1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
 if (isset($_POST['salvar'])) {
-  //2. Receber os dados para inserir no BD
-  $id = $_POST['id'];
-  $nome = $_POST['nome'];
-  $status = $_POST['status'];
+    //2. Receber os dados para inserir no BD
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $status = $_POST['status'];
 
-  //3. Preparar a SQL
-  $sql = "update genero
+    //3. Preparar a SQL
+    $sql = "update genero
     set nome= '$nome',
     status = '$status'
     where id = $id";
 
-  //4. Executar a SQL
-  mysqli_query($conexao, $sql);
+    //4. Executar a SQL
+    mysqli_query($conexao, $sql);
 
-  //5. Mostrar uma mensagem ao usuário
-  $mensagem = "Inserido com sucesso &#128515;";
+    //5. Mostrar uma mensagem ao usuário
+    $mensagem = "Inserido com sucesso &#128515;";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
 $sql = "select * from genero where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
-?>
+    ?>
 
 <?php //require_once("mensagem.php") ?>
 <?php
@@ -68,7 +68,7 @@ require_once("conexao.php");
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -95,14 +95,7 @@ require_once("conexao.php");
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
@@ -114,17 +107,19 @@ require_once("conexao.php");
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <h1 class="titulo">Alterar Gênero</h1>
 
-                    <select class="geekcb-field" value="<?= $linha['status'] ?>" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
-                            </select>
+                    <select class="geekcb-field" value="<?= $linha['status'] ?>" name="status" id="selectbox"
+                        data-selected="">
+                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
 
-                    <input class="geekcb-field"  value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto" name="nome">
+                    <input class="geekcb-field" value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto"
+                        name="nome">
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>

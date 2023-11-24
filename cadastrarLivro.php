@@ -11,7 +11,7 @@ if (isset($_POST['cadastrar'])) {
     $edicao = $_POST['edicao'];
     $idEditora = $_POST['idEditora'];
     $idGenero = $_POST['idGenero'];
-    
+
     $diretorio = "uploads/";
     $arquivoDestino = $diretorio . $_FILES['arquivo']['name'];
 
@@ -21,7 +21,7 @@ if (isset($_POST['cadastrar'])) {
     } else {
         echo "ERRO: Arquivo não enviado";
     }
-    
+
     //3. preparar sql para inserir usando prepared statement
     $sql = "INSERT INTO livro (statusLivro, titulo, pag, isbn, edicao, idEditora, idGenero, arquivo) VALUES ('$statusLivro','$titulo','$pag','$isbn', '$edicao','$idEditora', '$idGenero','$nomeArquivo')";
 
@@ -70,7 +70,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -97,14 +97,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" enctype="multipart/form-data">
@@ -174,13 +167,13 @@ if (isset($_POST['cadastrar'])) {
                                 endwhile;
                                 ?>
                             </select>
-                            </div>
-                            <div class="form-column">
-                                <input type="file" class="geekcb-field" name="arquivo" id="arquivo">
+                        </div>
+                        <div class="form-column">
+                            <input type="file" class="geekcb-field" name="arquivo" id="arquivo">
 
-                            </div>
+                        </div>
 
-                        
+
                     </div>
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
