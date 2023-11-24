@@ -14,7 +14,6 @@ $voltar = "";
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " and livro.titulo like '% " . $_POST['pesquisa'] . "%' ";
-    $voltar = '<a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
 }
 $idEmprestimo = $_GET['id'];
 
@@ -29,7 +28,6 @@ if (isset($_POST['devolver'])) {
         $dataAtual = date("Y-m-d");
         // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
-
             // Realiza a atualização no banco de dados para marcar como devolvido
             $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
@@ -67,16 +65,7 @@ $resultado = mysqli_query($conexao, $sql);
 <center>
     <form method="post">
         <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
-        <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
-        <div class="input-button-container">
-            <input name="pesquisa" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <?php echo $voltar; ?>
-        </div>
-        <div class="input-button-container">
-            <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
-            <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
-        </div>
+        
         <br><br>
 
         <div class="card cardlistar">
@@ -89,7 +78,6 @@ $resultado = mysqli_query($conexao, $sql);
                             <td scope="col"><b>Status</b></td>
                             <td scope="col"><b>Data devolvido</b></td>
                             <td scope="col"><b>Devolvido</b></td>
-                            <td scope="col"><b>Ação</b></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,22 +101,11 @@ $resultado = mysqli_query($conexao, $sql);
                                     <input class="form-check-input" type="checkbox" name="idLivro[]"
                                         value="<?= $linha['idLivro'] ?>">
                                 </td>
-
-                                <td>
-                                    <button style="margin-right: 8px;" name="alterar" class="botao">
-                                        <i class="fa-solid fa-pen-to-square"></i></button>
-
-                                    <a style="margin-right: 8px;"
-                                        href="itensDeEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>" class="botao">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-
-                                    <a href="listarEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>" class="botao"
-                                        onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                        <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
-                                </td>
                             </tr>
+                            <div class="input-button-container">
+            <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
+            <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
+        </div>
         </form>
         <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
