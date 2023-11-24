@@ -56,7 +56,7 @@ $resultado = mysqli_query($conexao, $sql);
     <title>Administrador Bibliotech</title>
 </head>
 
-<body>
+<body style="background-color: #ffd8be;">
 
     <div style="align-items: right" class="navbar bg-body-tertiary">
         <div class="container-fluid">
