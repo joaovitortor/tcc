@@ -55,12 +55,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
 <br><br><br>
-<h1 class="titulo">Itens de Empréstimo<a href="emprestimo.php" class="botao">
-        <i class="fa-solid fa-plus"></i>
-    </a></h1>
-
-<br><br>
-
+<h1 class="titulo">Itens de Empréstimo</h1>
 
 <center>
     <form method="post">
@@ -105,33 +100,36 @@ $resultado = mysqli_query($conexao, $sql);
                             <div class="input-button-container">
 
                             </div>
-        
-        <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="exampleModalLabel">
-                            <?php echo "Leitor " . $linha['nomeLeitor']; ?>
-                        </h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
-    
-    </tbody>
-    </table>
-    <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
-    <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
-</form>
+                            <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title fs-5" id="exampleModalLabel">
+                                                <?php echo "Leitor " . $linha['nomeLeitor']; ?>
+                                            </h2>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+                    </tbody>
+                </table>
+                <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
+                <button name="finalizar" type="submit" class="botaopesquisar"
+                    style="margin-top: 10pt">Finalizar</button>
+    </form>
     </div>
     </div>
 </center>
