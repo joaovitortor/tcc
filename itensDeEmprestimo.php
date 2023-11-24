@@ -9,10 +9,11 @@ require_once("conexao.php");
     mysqli_query($conexao, $sql);
     $mensagem = "Exclusão realizada com sucesso.";
 }*/
-
+$voltar = "";
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
-    $V_WHERE = " and leitor.nome like '% " . $_POST['pesquisa'] . "%' ";
+    $V_WHERE = " and livro.titulo like '% " . $_POST['pesquisa'] . "%' ";
+    $voltar = '<a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
 }
 $idEmprestimo = $_GET['id'];
 
@@ -69,8 +70,11 @@ $resultado = mysqli_query($conexao, $sql);
         <div class="input-button-container">
             <input name="pesquisa" type="text" class="formcampo">
             <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
-            <button name="devolver" type="submit" class="botaopesquisar">Devolver</button>
+            <?php echo $voltar; ?>
+        </div>
+        <div class="input-button-container">
+            <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
+            <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
         </div>
         <br><br>
 
