@@ -65,7 +65,7 @@ $resultado = mysqli_query($conexao, $sql);
 <center>
     <form method="post">
         <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
-        
+
         <br><br>
 
         <div class="card cardlistar">
@@ -103,10 +103,9 @@ $resultado = mysqli_query($conexao, $sql);
                                 </td>
                             </tr>
                             <div class="input-button-container">
-            <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
-            <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
-        </div>
-        </form>
+
+                            </div>
+        
         <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -127,8 +126,12 @@ $resultado = mysqli_query($conexao, $sql);
             </div>
         </div>
     <?php } ?>
+    
     </tbody>
     </table>
+    <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
+    <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
+</form>
     </div>
     </div>
 </center>
