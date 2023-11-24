@@ -22,6 +22,7 @@
     --index-i: #9381ff;
     --title-icon-color: #fff;
     --nav-color: white;
+    --botaoNav: black;
     /* ====== Transition ====== */
     --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
@@ -51,6 +52,7 @@ body.dark {
     --box3-color: #3A3B3C;
     --title-icon-color: #CCC;
     --nav-color: #242526;
+    --botaoNav: white;
 }
 
 /* === Custom Scroll Bar CSS === */
@@ -90,6 +92,9 @@ nav {
     
 }
 
+.botaoNav {
+    color: var(--botaoNav)
+}
 nav.close {
     width: 0;
     
