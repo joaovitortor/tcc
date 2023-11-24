@@ -9,6 +9,7 @@ require_once("conexao.php");
     mysqli_query($conexao, $sql);
     $mensagem = "Exclusão realizada com sucesso.";
 }*/
+
 $voltar = "";
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
