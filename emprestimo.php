@@ -166,7 +166,6 @@ if (isset($_POST['cadastrar'])) {
 
             </div>
         </div>
-        </div>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
