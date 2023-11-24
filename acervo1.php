@@ -19,18 +19,6 @@ $resultado = mysqli_query($conexao, $sql);
 
 ?>
 
-<h1 class="titulo text">Acervo</h1><br><br>
-<center>
-    <form method="post">
-        <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
-        <div class="input-button-container">
-            <input name="pesquisa" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <a href="acervo.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
-        </div>
-        <br><br>
-    </form><br><br>
-</center>
 
 
 
