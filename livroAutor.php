@@ -87,7 +87,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
+                <i class="uil uil-bars sidebar-toggle botaoNav"></i>
 
                 <div class="search-box">
                     <i class="uil uil-search"></i>
