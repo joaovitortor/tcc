@@ -155,7 +155,9 @@
         top:85px;
         color:white;
         opacity: 1;
+        
       }
+   
       &:hover{
         width:100%;
         right:0;
@@ -171,6 +173,7 @@
           opacity: 1;
           transform: scale(1);
           transform: translateY(0);
+          color: white;
         }
       }
       .contentsAcervo{
@@ -190,6 +193,9 @@
           font-size:13px;
         }
       }
+    }
+    .insideAcervo td{
+      color: white;
     }
   }
     

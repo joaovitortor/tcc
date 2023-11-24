@@ -124,11 +124,11 @@ $resultado = mysqli_query($conexao, $sql);
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="insideAcervo">
+                 </div>
+                 <div class="insideAcervo">
                     <div class="icon"><i class="fa-solid fa-plus"></i></div>
                     <div class="contentsAcervo">
-                        <table>
+                        <table style="color: white">
                             <tr>
                                 <th>Código do livro: </th>
                                 <td>
