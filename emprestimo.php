@@ -7,17 +7,17 @@ if (isset($_POST['cadastrar'])) {
     $idLeitor = $_POST['leitor'];
 
     $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataPrevistaDevolucao','$idLeitor')";
-   
+
     mysqli_query($conexao, $sql);
-    
+
     $idEmprestimo = mysqli_insert_id($conexao);
 
-    if(isset($_POST['livro']) && is_array($_POST['livro'])) {
+    if (isset($_POST['livro']) && is_array($_POST['livro'])) {
         foreach ($_POST['livro'] as $idLivro) {
             $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem) VALUES ('$idEmprestimo','$idLivro', 'Emprestado')";
             mysqli_query($conexao, $sql2);
-          
-            $sql3 ="UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
+
+            $sql3 = "UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
             mysqli_query($conexao, $sql3);
         }
     }
@@ -65,7 +65,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -92,19 +92,12 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
-               
+
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
@@ -130,8 +123,9 @@ if (isset($_POST['cadastrar'])) {
                         ?>
 
                     </select>
-                        <br><br>
-                    <label for="livro" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o(s) livros para empréstimo:
+                    <br><br>
+                    <label for="livro" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o(s) livros
+                        para empréstimo:
                     </label>
                     <select class="selectleitor" name="livro[]" id="livro" multiple>
                         <option class="fonte-status" disabled="disabled" placeholder="Selecione o livro"></option>
@@ -152,17 +146,21 @@ if (isset($_POST['cadastrar'])) {
                         ?>
 
                     </select>
-                    <br><br> <p class="titulo" style="text-align: left; font-size: 1.3rem">
-                    <?php
-                    $dataAtual = date("Y-m-d");
-                    echo "Data do empréstimo: " . $dataFormatada = date("d/m/Y", strtotime($dataAtual));?></p>
+                    <br><br>
                     <p class="titulo" style="text-align: left; font-size: 1.3rem">
-                   <?php $dataPrevistaDevolucao = date('Y-m-d', strtotime("+7 days",strtotime($dataAtual))); 
-                    echo  "Data prevista para devolução: " . $dataPrevistaDevolucaoFormatada =  date('d/m/Y', strtotime("+7 days",strtotime($dataAtual))); 
-                    ?> 
+                        <?php
+                        $dataAtual = date("Y-m-d");
+                        echo "Data do empréstimo: " . $dataFormatada = date("d/m/Y", strtotime($dataAtual)); ?>
                     </p>
-                    <input type="hidden" name="dataPrevistaDevolucao" id="dataPrevistaDevolucaoInput" value="<?= $dataPrevistaDevolucao ?>">
-                    <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar empréstimo</button>
+                    <p class="titulo" style="text-align: left; font-size: 1.3rem">
+                        <?php $dataPrevistaDevolucao = date('Y-m-d', strtotime("+7 days", strtotime($dataAtual)));
+                        echo "Data prevista para devolução: " . $dataPrevistaDevolucaoFormatada = date('d/m/Y', strtotime("+7 days", strtotime($dataAtual)));
+                        ?>
+                    </p>
+                    <input type="hidden" name="dataPrevistaDevolucao" id="dataPrevistaDevolucaoInput"
+                        value="<?= $dataPrevistaDevolucao ?>">
+                    <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar
+                        empréstimo</button>
                 </form>
 
 
@@ -206,9 +204,9 @@ if (isset($_POST['cadastrar'])) {
         });
     </script>
 
-<script>
-  
-</script>
+    <script>
+
+    </script>
 
 
 </body>

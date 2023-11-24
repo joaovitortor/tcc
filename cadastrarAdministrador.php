@@ -7,7 +7,7 @@ if (isset($_POST['cadastrar'])) {
     $status = $_POST['status'];
     $login = $_POST['login'];
     $senha = $_POST['senha'];
- 
+
 
     //3. preparar sql para inserir
     $sql = "insert into administrador (status, login, senha)
@@ -58,7 +58,7 @@ values ('$status', '$login', '$senha')";
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -85,14 +85,7 @@ values ('$status', '$login', '$senha')";
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
@@ -107,21 +100,23 @@ values ('$status', '$login', '$senha')";
                     <h1 class="titulo">Cadastrar Administrador</h1>
 
                     <select id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" selected="selected" disabled="disabled" placeholder="Status">Status</option>
+                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Inativo">Inativo</option>
 
                     </select>
 
 
-                    <input class="geekcb-field"  placeholder="Login" required type="text" name="login">
-                    <input class="geekcb-field"  placeholder="Senha" required type="password" name="senha">
+                    <input class="geekcb-field" placeholder="Login" required type="text" name="login">
+                    <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
 
-                        <table>
+                    <table>
                         <tr>
-                            <td style="padding-right: 70px"><a href="listarAdministrador.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
-                            <td > <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
-                            
+                            <td style="padding-right: 70px"><a href="listarAdministrador.php" class="botaolistar"> <i
+                                        class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
+
                         </tr>
                     </table>
                 </form>
