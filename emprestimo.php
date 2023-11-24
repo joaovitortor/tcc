@@ -2,7 +2,7 @@
 require_once("conexao.php");
 
 if (isset($_POST['cadastrar'])) {
-    $statusEmprestimo = $_POST['statusEmprestimo'];
+    $statusEmprestimo = "Em andamento";
     $dataPrevistaDevolucao = $_POST['dataPrevistaDevolucao'];
     $idLeitor = $_POST['leitor'];
 
@@ -98,13 +98,14 @@ if (isset($_POST['cadastrar'])) {
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <h1 class="titulo">Empréstimo</h1>
 
-
+                    <!--
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
                             placeholder="Status">Status</option>
                         <option value="Em andamento">Em andamento</option>
                         <option value="Finalizado">Finalizado</option>
                     </select>
+                    -->
 
                     <label for="leitor" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o leitor:
                     </label>
