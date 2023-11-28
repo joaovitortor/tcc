@@ -3,35 +3,35 @@
 require_once("conexao.php");
 $corpo = "";
 if (isset($_POST['salvar'])) {
-  //2. Receber os dados para inserir no BD
+    //2. Receber os dados para inserir no BD
 
-  $idLeitor = $_POST['leitor'];
-  $statusEmprestimo = $_POST['statusEmprestimo'];
-  $dataEmprestimo = $_POST['dataEmprestimo'];
-  $dataDevolucao = $_POST['dataDevolucao'];
-  $dataPrevistaDevolucao = $_GET['dataPrevistaDevolucao'];
-  $hoje = date("Y-m-d");
+    $idLeitor = $_POST['leitor'];
+    $statusEmprestimo = $_POST['statusEmprestimo'];
+    $dataEmprestimo = $_POST['dataEmprestimo'];
+    $dataDevolucao = $_POST['dataDevolucao'];
+    $dataPrevistaDevolucao = $_GET['dataPrevistaDevolucao'];
+    $hoje = date("Y-m-d");
 
-$datadehoje = date_create();
-$resultado = date_diff($hoje, $dataPrevistaDevolucao);
-echo date_interval_format($resultado, '%a');
+    $datadehoje = date_create();
+    $resultado = date_diff($hoje, $dataPrevistaDevolucao);
+    echo date_interval_format($resultado, '%a');
 
 
 
-  //3. Preparar a SQL
-  $sql = "UPDATE emprestimo
+    //3. Preparar a SQL
+    $sql = "UPDATE emprestimo
     set dataDevolucao = '$dataDevolucao',
     where id = $id";
 
-  //4. Executar a SQL
-  mysqli_query($conexao, $sql);
+    //4. Executar a SQL
+    mysqli_query($conexao, $sql);
 }
 
-if(isset($_POST['livro[]']) && is_array($_POST['livro[]'])) {
+if (isset($_POST['livro[]']) && is_array($_POST['livro[]'])) {
     foreach ($_POST['livro[]'] as $idLivro) {
-        $sql2 = "UPDATE itensdeemprestimo SET idLivro = '$idLivro' WHERE id = " .  $_GET['id'];
-        
-        mysqli_query($conexao, $sql2); 
+        $sql2 = "UPDATE itensdeemprestimo SET idLivro = '$idLivro' WHERE id = " . $_GET['id'];
+
+        mysqli_query($conexao, $sql2);
     }
 }
 
@@ -44,7 +44,7 @@ if (isset($_POST['salvar'])) {
 $sql = "SELECT * FROM emprestimo WHERE id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado);
-  ?>
+?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -87,7 +87,7 @@ $linha = mysqli_fetch_array($resultado);
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -114,38 +114,33 @@ $linha = mysqli_fetch_array($resultado);
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
-                    <?php                   
+                    <?php
                     $dataPrevistaDevolucao = isset($_POST['dataPrevistaDevolucao']) ? $_POST['dataPrevistaDevolucao'] : "";
                     ?>
 
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                <input type="hidden" name="dataPrevistaDevolucao" id="dataPrevistaDevolucaoInput" value="<?= $dataPrevistaDevolucao ?>">
+                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                    <input type="hidden" name="dataPrevistaDevolucao" id="dataPrevistaDevolucaoInput"
+                        value="<?= $dataPrevistaDevolucao ?>">
 
                     <h1 class="titulo">Finalizar empréstimo</h1>
 
                     <select class="geekcb-field" name="statusEmprestimo" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="<?= $linha['statusEmprestimo']?>" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Em andamento">Em andamento</option>
-                                <option selected="selected" value="Finalizado">Finalizado</option>
-                            </select>
-                           
-                        <br><br>
-                    <label for="livro" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o(s) livros para empréstimo:
+                        <option class="fonte-status" value="<?= $linha['statusEmprestimo'] ?>" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option selected="selected" value="Finalizado">Finalizado</option>
+                    </select>
+
+                    <br><br>
+                    <label for="livro" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o(s) livros
+                        para empréstimo:
                     </label>
                     <select class="selectleitor" name="livro[]" id="livro" multiple>
                         <option class="fonte-status" disabled="disabled" placeholder="Selecione o livro"></option>
@@ -166,10 +161,10 @@ $linha = mysqli_fetch_array($resultado);
                         ?>
 
                     </select>
-                    <br><br> 
-                    
+                    <br><br>
+
                     <input type="hidden" name="dataDevolucao" id="dataDevolucaoInput" value="<?= $dataDevolucao ?>">
-                    
+
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                     <button class="geekcb-btn" type="submit" name="renovar">Renovar livro</button>
@@ -217,7 +212,3 @@ $linha = mysqli_fetch_array($resultado);
 </body>
 
 </html>
-
-
-
-

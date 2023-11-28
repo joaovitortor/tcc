@@ -3,33 +3,33 @@
 require_once("conexao.php");
 $corpo = "";
 if (isset($_POST['salvar'])) {
-  //2. Receber os dados para inserir no BD
-  $id = $_POST['id'];
-  $status = $_POST['status'];
-  $status = $_POST['login'];
-  $status = $_POST['senha'];
+    //2. Receber os dados para inserir no BD
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+    $status = $_POST['login'];
+    $status = $_POST['senha'];
 
 
-  //3. Preparar a SQL
-  $sql = "update administrador
+    //3. Preparar a SQL
+    $sql = "update administrador
     set 
     status = '$status',
     login = '$login',
     senha = '$senha'
     where id = $id";
 
-  //4. Executar a SQL
-  mysqli_query($conexao, $sql);
+    //4. Executar a SQL
+    mysqli_query($conexao, $sql);
 
-  //5. Mostrar uma mensagem ao usuário
-  $mensagem = "Inserido com sucesso &#128515;";
+    //5. Mostrar uma mensagem ao usuário
+    $mensagem = "Inserido com sucesso &#128515;";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
 $sql = "select * from editora where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
-  ?>
+    ?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -67,7 +67,7 @@ $linha = mysqli_fetch_array($resultado)
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -94,8 +94,7 @@ $linha = mysqli_fetch_array($resultado)
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
                 <div class="search-box">
                     <i class="uil uil-search"></i>
                     <input type="text" placeholder="Search here...">
@@ -115,18 +114,20 @@ $linha = mysqli_fetch_array($resultado)
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <h1 class="titulo">Alterar Editora</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="status" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
-                            </select>
+                        <option class="fonte-status" value="status" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
 
-                    <input class="geekcb-field"  value="<?= $login ?>" placeholder="Login" required type="texto" name="login">
-                    <input class="geekcb-field"  value="<?= $senha ?>" placeholder="Senha" required type="password" name="login">
+                    <input class="geekcb-field" value="<?= $login ?>" placeholder="Login" required type="texto"
+                        name="login">
+                    <input class="geekcb-field" value="<?= $senha ?>" placeholder="Senha" required type="password"
+                        name="login">
 
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
@@ -165,7 +166,3 @@ $linha = mysqli_fetch_array($resultado)
 </body>
 
 </html>
-
-
-
-

@@ -55,7 +55,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -82,14 +82,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
@@ -101,27 +94,29 @@ if (isset($_POST['cadastrar'])) {
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                
-                   
-                   <h1 class="titulo"> Cadastrar Gênero</h1>
+
+
+                    <h1 class="titulo"> Cadastrar Gênero</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
-                            </select>
+                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
 
-                    <input class="geekcb-field"  value="<?= $nome ?>" placeholder="Nome" required type="texto" name="nome">
-                    
+                    <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
+                        name="nome">
+
                     <table>
-                        <tr> 
-                            <td style="padding-right: 70px"><a href="listarGenero.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
-                            <td > <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
-                           
+                        <tr>
+                            <td style="padding-right: 70px"><a href="listarGenero.php" class="botaolistar"> <i
+                                        class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
+
                         </tr>
                     </table>
-                   
+
                 </form>
             </div>
         </div>

@@ -140,14 +140,7 @@ if (isset($_POST['cadastrar'])) {
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
 
             <div class="geekcb-wrapper">
@@ -167,15 +160,18 @@ if (isset($_POST['cadastrar'])) {
 
                     <h1 class="titulo">Cadastrar Responsável</h1>
 
-                    <input class="geekcb-field" placeholder="Nome do responsável" required value="<?=isset($_SESSION['form_values']['nomeResp']) ? $_SESSION['form_values']['nomeResp'] : ''; ?>"
+                    <input class="geekcb-field" placeholder="Nome do responsável" required
+                        value="<?= isset($_SESSION['form_values']['nomeResp']) ? $_SESSION['form_values']['nomeResp'] : ''; ?>"
                         type="texto" name="nomeResp">
                     <div class="form-column">
-                        <input class="geekcb-field" value="<?=isset($_SESSION['form_values']['cpfResp']) ? $_SESSION['form_values']['cpfResp'] : ''; ?>" id="cpf" placeholder="CPF do responsável"
-                            required type="texto" name="cpfResp">
+                        <input class="geekcb-field"
+                            value="<?= isset($_SESSION['form_values']['cpfResp']) ? $_SESSION['form_values']['cpfResp'] : ''; ?>"
+                            id="cpf" placeholder="CPF do responsável" required type="texto" name="cpfResp">
                         <?php echo $cpfInvalido; ?>
                     </div>
-                    <input class="geekcb-field" value="<?=isset($_SESSION['form_values']['telResp']) ? $_SESSION['form_values']['telResp'] : ''; ?>" id="telefone"
-                        placeholder="Telefone do responsável" required type="texto" name="telResp">
+                    <input class="geekcb-field"
+                        value="<?= isset($_SESSION['form_values']['telResp']) ? $_SESSION['form_values']['telResp'] : ''; ?>"
+                        id="telefone" placeholder="Telefone do responsável" required type="texto" name="telResp">
 
 
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>

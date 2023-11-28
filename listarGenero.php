@@ -55,7 +55,7 @@ $resultado = mysqli_query($conexao, $sql);
 
         <div class="menu-items">
             <ul class="nav-links">
-            <?php require_once('sidebar.php')  ?>
+                <?php require_once('sidebar.php') ?>
             </ul>
 
             <ul class="logout-mode">
@@ -82,14 +82,7 @@ $resultado = mysqli_query($conexao, $sql);
 
         <div class="corpo">
             <div class="top">
-                <i class="uil uil-bars sidebar-toggle"></i>
-
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
@@ -129,7 +122,8 @@ $resultado = mysqli_query($conexao, $sql);
 
                                         <td>
 
-                                            <a style="margin-right: 8px;" href="alterarGenero.php? id=<?= $linha['id'] ?>" class="botao">
+                                            <a style="margin-right: 8px;" href="alterarGenero.php? id=<?= $linha['id'] ?>"
+                                                class="botao">
                                                 <i class="fa-solid fa-pen-to-square"></i></a>
 
 

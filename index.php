@@ -56,25 +56,37 @@ $resultado = mysqli_query($conexao, $sql);
     <title>Administrador Bibliotech</title>
 </head>
 
-<body>
+<body style="background-color: #ffd8be;">
 
     <div style="align-items: right" class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user"></i>|
+        <div style="align-content: right" class="container-fluid">
+            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user"></i>
         </div>
     </div>
     <br><br><br>
-    <h1 class="titulo text">Bibliotech<a href="cadastrarLeitor.php" class="botao">
-            <i class="fa-solid fa-plus"></i>
-        </a></h1>
+    <h1 class="titulo text">Bibliotech</h1>
     <?php if (isset($_GET['mensagem'])) { ?>
         <div class="alert alert-danger" role="alert">
             <?= $_GET['mensagem'] ?>
         </div>
     <?php } ?>
-        
+
+<center>
+    <form method="post">
+        <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar livros no acervo da biblioteca</label>
+        <div class="input-button-container">
+            <input name="pesquisa" type="text" class="formcampo">
+            <button name="pesquisar" stype="button" class="botaopesquisarAcervo">Pesquisar</button>
+            <a href="acervo.php"><button name="voltar" stype="button" class="botaopesquisarAcervo">Voltar</button></a>
+        </div>
+        <br><br>
+    </form>
+</center>
+
+    <div style="align-content= center">
     <?php require_once('acervo1.php')?>
-    
+    </div>
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

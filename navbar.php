@@ -65,6 +65,6 @@
 
         <div class="navbar bg-body-tertiary">
             <div class="container-fluid">
-                <i class="uil uil-bars sidebar-toggle"></i>
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
         </div>

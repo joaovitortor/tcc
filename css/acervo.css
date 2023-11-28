@@ -1,7 +1,6 @@
 
-
     
-    .wrapperAcervo{
+  .wrapperAcervo{
     display: inline-block;
     width: 290px;
     height: 500px;
@@ -28,6 +27,7 @@
       .topAcervo{
         height: 80%;
         width:100%;
+
         
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
@@ -142,7 +142,7 @@
       z-index:9;
       background: #9381ff;;
       width:140px;
-      height:140px;
+      height:150px;
       position: absolute;
       top: -70px;
       right: -70px;

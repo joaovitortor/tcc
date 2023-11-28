@@ -14,9 +14,17 @@ $voltar = "";
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " and livro.titulo like '% " . $_POST['pesquisa'] . "%' ";
-    $voltar = '<a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
 }
 $idEmprestimo = $_GET['id'];
+
+$sqlNome = "select leitor.nome from emprestimo 
+            inner join leitor ON emprestimo.idLeitor = leitor.id";
+
+$sqlData = "select dataEmprestimo from emprestimo 
+ where id = " . $idEmprestimo;
+
+$nomeLeitor = mysqli_query($conexao, $sqlNome);
+$dataEmprestimo = mysqli_query($conexao, $sqlData);
 
 $livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
 
@@ -29,7 +37,6 @@ if (isset($_POST['devolver'])) {
         $dataAtual = date("Y-m-d");
         // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
-
             // Realiza a atualização no banco de dados para marcar como devolvido
             $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
@@ -43,7 +50,7 @@ if (isset($_POST['devolver'])) {
 
 
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, livro.id as idLivro
+$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, emprestimo.dataPrevistaDevolucao as dataPrevista, livro.id as idLivro
         FROM itensDeEmprestimo 
         INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
@@ -57,39 +64,38 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
 <br><br><br>
-<h1 class="titulo">Itens de Empréstimo<a href="emprestimo.php" class="botao">
-        <i class="fa-solid fa-plus"></i>
-    </a></h1>
-
-<br><br>
-
+<h1 class="titulo">Itens de Empréstimo</h1>
 
 <center>
     <form method="post">
         <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
-        <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
-        <div class="input-button-container">
-            <input name="pesquisa" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <?php echo $voltar; ?>
-        </div>
-        <div class="input-button-container">
-            <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
-            <button name="finalizar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Finalizar</button>
-        </div>
-        <br><br>
 
+        <br><br>
         <div class="card cardlistar">
             <div class="card-body cardlistar2">
+
                 <table class="table">
                     <thead>
+                        <tr>
+                            <div style="display: flex; justify-content: space-between;">
+                                <h5 style="margin-right: ">Leitor(a):
+                                    <?php $row = mysqli_fetch_assoc($nomeLeitor);
+                                    echo $row['nome']; ?>
+                                </h5>
+                                <h5>Data Emprestimo
+                                    <?php $row = mysqli_fetch_assoc($dataEmprestimo);
+                                    $dataEmpres = date("d/m/Y", strtotime($row['dataEmprestimo']));
+                                    echo $dataEmpres ?>
+                                </h5>
+                            </div>
+                        </tr>
                         <tr>
                             <td scope="col"><b>ID do Empréstimo</b></td>
                             <td scope="col"><b>Item</b></td>
                             <td scope="col"><b>Status</b></td>
+                            <td scope="col"><b>Data Prevista</b></td>
                             <td scope="col"><b>Data devolvido</b></td>
                             <td scope="col"><b>Devolvido</b></td>
-                            <td scope="col"><b>Ação</b></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,6 +112,9 @@ $resultado = mysqli_query($conexao, $sql);
                                     <?= $linha['statusItem'] ?>
                                 </td>
                                 <td>
+                                    <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
+                                </td>
+                                <td>
                                     <?php isset($linha['dataDevolvido']) ? $data = date("d/m/Y", strtotime($linha['dataDevolvido'])) : $data = "";
                                     echo $data ?>
                                 </td>
@@ -113,45 +122,37 @@ $resultado = mysqli_query($conexao, $sql);
                                     <input class="form-check-input" type="checkbox" name="idLivro[]"
                                         value="<?= $linha['idLivro'] ?>">
                                 </td>
-
-                                <td>
-                                    <button style="margin-right: 8px;" name="alterar" class="botao">
-                                        <i class="fa-solid fa-pen-to-square"></i></button>
-
-                                    <a style="margin-right: 8px;"
-                                        href="itensDeEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>" class="botao">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-
-                                    <a href="listarEmprestimo.php? id=<?= $linha['idEmprestimo'] ?>" class="botao"
-                                        onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                        <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
-                                </td>
                             </tr>
-        </form>
-        <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="exampleModalLabel">
-                            <?php echo "Leitor " . $linha['nomeLeitor']; ?>
-                        </h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
+                            <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title fs-5" id="exampleModalLabel">
+                                                <?php echo "Leitor " . $linha['nomeLeitor']; ?>
+                                            </h2>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
-    </tbody>
-    </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+                    </tbody>
+                </table>
+                <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
+                <button name="finalizar" type="submit" class="botaopesquisar"
+                    style="margin-top: 10pt">Finalizar</button>
+                <button name="renovar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Renovar</button>
+    </form>
     </div>
     </div>
 </center>
