@@ -110,7 +110,7 @@ if (isset($_POST['cadastrar'])) {
                     <label for="leitor" class="titulo" style="font-size:1.2rem; text-align: left">Selecione o leitor:
                     </label>
                     <select class="selectleitor" name="leitor" id="leitor">
-                        <option class="fonte-status" disabled="disabled" placeholder="Selecione o leitor"></option>
+                        <option class="fonte-status" placeholder="Selecione o leitor"></option>
                         <?php
                         $sql = "select * from leitor order by nome";
                         $resultado = mysqli_query($conexao, $sql);
