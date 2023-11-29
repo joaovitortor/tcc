@@ -120,7 +120,7 @@ $resultado = mysqli_query($conexao, $sql);
                             <td scope="col"><b>Status</b></td>
                             <td scope="col"><b>Data Prevista</b></td>
                             <td scope="col"><b>Data devolvido</b></td>
-                            <td scope="col"><b>Devolvido</b></td>
+                            <td scope="col"><b>Selecionar livro</b></td>
                         </tr>
                     </thead>
                     <tbody>
