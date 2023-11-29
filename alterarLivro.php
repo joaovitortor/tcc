@@ -138,13 +138,13 @@ $linha = mysqli_fetch_array($resultado)
                     <h1 class="titulo">Alterar Livro</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
-                            <select class="geekcb-field" value="<?= $linha['statusLivro'] ?>" name="statusLivro"
-                                id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="Disponível">Disponível</option>
-                                <option value="Emprestado">Emprestado</option>
+                            <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
+                                <option value="Disponível" <?= ($linha['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível</option>
+                                <option value="Emprestado" <?= ($linha['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado</option>
                             </select>
+
                         </div>
                         <div class="form-column">
                             <input class="geekcb-field" id="titulo" value="<?= $linha['titulo'] ?>"
@@ -188,19 +188,19 @@ $linha = mysqli_fetch_array($resultado)
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <select class="geekcb-field" value="<?= $linha['idEditora'] ?>" name="idEditora"
-                                id="selectbox" data-selected="">
-                                <option class="fonte-status" value="idEditora" selected="selected" disabled="disabled"
-                                    placeholder="Editora">Editora</option>
+                        <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero">
+                                    Gênero</option>
                                 <?php
                                 $sql = "select * from editora order by nome";
                                 $resultado = mysqli_query($conexao, $sql);
 
-                                while ($linha = mysqli_fetch_array($resultado)):
-                                    $id = $linha['id'];
-                                    $nome = $linha['nome'];
+                                while ($linhaGenero = mysqli_fetch_array($resultado)):
+                                    $idEditora = $linhaEditora['id'];
+                                    $nomeEditora = $linhaEditora['nome'];
+                                    $selectedEditora = ($idEditora == $linha['idEditora']) ? 'selected="selected"' : '';
 
-                                    echo "<option value='{$id}'>{$nome}</option>";
+                                    echo "<option value='{$idEditora}' {$selectedEditora}>{$nomeEditora}</option>";
                                 endwhile;
                                 ?>
                             </select>
