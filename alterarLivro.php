@@ -168,19 +168,19 @@ $linha = mysqli_fetch_array($resultado)
                                 required type="texto" name="edicao">
                         </div>
                         <div class="form-column">
-                            <select class="geekcb-field" name="idGenero" id="selectbox"
-                                value="<?= $linha['idGenero'] ?>" data-selected="">
-                                <option class="fonte-status" value="idGenero" selected="selected" disabled="disabled"
-                                    placeholder="Gênero">Gênero</option>
+                            <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero">
+                                    Gênero</option>
                                 <?php
                                 $sql = "select * from genero order by nome";
                                 $resultado = mysqli_query($conexao, $sql);
 
-                                while ($linha = mysqli_fetch_array($resultado)):
-                                    $id = $linha['id'];
-                                    $nome = $linha['nome'];
+                                while ($linhaGenero = mysqli_fetch_array($resultado)):
+                                    $idGenero = $linhaGenero['id'];
+                                    $nomeGenero = $linhaGenero['nome'];
+                                    $selectedGenero = ($idGenero == $linha['idGenero']) ? 'selected="selected"' : '';
 
-                                    echo "<option value='{$id}'>{$nome}</option>";
+                                    echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
                                 endwhile;
                                 ?>
                             </select>
@@ -208,7 +208,6 @@ $linha = mysqli_fetch_array($resultado)
                         <div class="form-column">
                             <input type="file" class="geekcb-field" value="<?= $linha['arquivo'] ?>" name="arquivo"
                                 id="arquivo">
-
                         </div>
 
 
