@@ -130,7 +130,7 @@ $linha = mysqli_fetch_array($resultado)
                 </form>
 
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
-                    <?php ?>
+                    <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
