@@ -109,11 +109,10 @@ $linha = mysqli_fetch_array($resultado)
             </ul>
 
             <ul class="logout-mode">
-                <li>
-                    <form method="post">
-                        <button type="submit" name="logout"> <span class="link-name"> <i class="uil uil-signout"></i>Logout</span></button>
-                    </form>
-                </li>
+                <li><a href="sair.php">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
 
                 <li class="mode">
                     <a href="#">
