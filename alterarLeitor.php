@@ -34,7 +34,7 @@ if (isset($_POST['salvar'])) {
     mysqli_query($conexao, $sql);
 
     //5. Mostrar uma mensagem ao usuário
-    $mensagem = "Inserido com sucesso &#128515;";
+    $mensagem = "Alterado com sucesso &#128515;";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
@@ -130,6 +130,7 @@ $linha = mysqli_fetch_array($resultado)
                 </form>
 
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
+                    <?php ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>

@@ -1,6 +1,26 @@
 <?php
 //1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
+
+session_start();
+
+if (!(isset($_SESSION['tipo']) && $_SESSION['tipo'] == "adm")) {
+
+    session_destroy();
+
+    header("location: index.php");
+
+    exit();
+}
+
+if (isset($_POST["logout"])) {
+    session_destroy();
+
+    header("location: index.php");
+
+    exit();
+}
+
 if (isset($_POST['salvar'])) {
     //2. Receber os dados para inserir no BD
     $id = $_POST['id'];
@@ -89,10 +109,11 @@ $linha = mysqli_fetch_array($resultado)
             </ul>
 
             <ul class="logout-mode">
-                <li><a href="#">
-                        <i class="uil uil-signout"></i>
-                        <span class="link-name">Logout</span>
-                    </a></li>
+                <li>
+                    <form method="post">
+                        <button type="submit" name="logout"> <span class="link-name"> <i class="uil uil-signout"></i>Logout</span></button>
+                    </form>
+                </li>
 
                 <li class="mode">
                     <a href="#">
@@ -188,7 +209,7 @@ $linha = mysqli_fetch_array($resultado)
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                        <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                            <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero">
                                     Gênero</option>
                                 <?php
