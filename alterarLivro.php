@@ -208,17 +208,17 @@ $linha = mysqli_fetch_array($resultado)
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero">
-                                    Gênero</option>
+                            <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Editora">
+                                    Editora</option>
                                 <?php
                                 $sql = "select * from editora order by nome";
                                 $resultado = mysqli_query($conexao, $sql);
 
-                                while ($linhaGenero = mysqli_fetch_array($resultado)):
+                                while ($linhaEditora = mysqli_fetch_array($resultado)):
                                     $idEditora = $linhaEditora['id'];
                                     $nomeEditora = $linhaEditora['nome'];
-                                    $selectedEditora = ($idEditora == $linha['idEditora']) ? 'selected="selected"' : '';
+                                    $selectedEditora = ($idEditora == $linhaEditora['idEditora']) ? 'selected="selected"' : '';
 
                                     echo "<option value='{$idEditora}' {$selectedEditora}>{$nomeEditora}</option>";
                                 endwhile;
