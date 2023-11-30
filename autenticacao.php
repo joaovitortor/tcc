@@ -28,6 +28,7 @@ if (isset($_POST['entrar'])):
         $_SESSION['id'] = $usuario['id'];
         $_SESSION['nome'] = $usuario['nome'];
         $_SESSION['email'] = $usuario['email'];
+        $_SESSION['tipo'] = "leitor";
 
         //Redireciona para o principal
         header("location: principal.php");
@@ -56,6 +57,7 @@ if (isset($_POST['entrar'])):
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['email'] = $usuario['email'];
+            $_SESSION['tipo'] = "adm";
 
             //Redireciona para o principal
             header("location: main.php");

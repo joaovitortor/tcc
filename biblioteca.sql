@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/11/2023 às 03:08
+-- Tempo de geração: 29/11/2023 às 01:00
 -- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Versão do PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -124,7 +124,22 @@ CREATE TABLE `emprestimo` (
 
 INSERT INTO `emprestimo` (`id`, `statusEmprestimo`, `dataEmprestimo`, `dataPrevistaDevolucao`, `idLeitor`, `valorMulta`) VALUES
 (1, 'Em andamento', '2023-11-22 22:07:55', '2023-11-30', 3, NULL),
-(2, 'Em andamento', '2023-11-22 22:08:37', '2023-11-30', 2, NULL);
+(2, 'Em andamento', '2023-11-22 22:08:37', '2023-11-30', 2, NULL),
+(3, 'Em andamento', '2023-11-24 14:12:13', '2023-12-01', 2, NULL),
+(4, 'Em andamento', '2023-11-24 14:34:57', '2023-12-01', 3, NULL),
+(5, 'Em andamento', '2023-11-24 14:36:22', '2023-12-01', 2, NULL),
+(6, 'Em andamento', '2023-11-24 14:39:24', '2023-12-01', 2, NULL),
+(7, 'Em andamento', '2023-11-24 14:39:32', '2023-12-01', 1, NULL),
+(8, 'Em andamento', '2023-11-24 14:46:38', '2023-12-01', 3, NULL),
+(9, 'Em andamento', '2023-11-24 15:02:34', '2023-12-01', 2, NULL),
+(10, 'Em andamento', '2023-11-24 15:02:51', '2023-12-01', 1, NULL),
+(11, 'Em andamento', '2023-12-01 00:00:00', '2023-12-08', 3, NULL),
+(12, 'Em andamento', '2023-11-24 16:10:30', '2023-12-01', 2, NULL),
+(13, 'Em andamento', '2023-11-25 14:44:12', '2023-12-02', 2, NULL),
+(14, 'Em andamento', '2023-11-25 14:47:49', '2023-12-02', 3, NULL),
+(15, 'Em andamento', '2023-11-25 15:01:34', '2023-12-02', 2, NULL),
+(16, 'Em andamento', '2023-11-25 15:01:39', '2023-12-02', 1, NULL),
+(17, 'Em andamento', '2023-11-25 15:01:47', '2023-12-02', 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -161,16 +176,34 @@ CREATE TABLE `itensdeemprestimo` (
   `idLivro` int(11) NOT NULL,
   `idEmprestimo` int(11) NOT NULL,
   `dataDevolvido` date DEFAULT NULL,
-  `statusItem` varchar(14) NOT NULL
+  `statusItem` varchar(14) NOT NULL,
+  `dataPrevDev` date NOT NULL,
+  `dataRenovacao` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `itensdeemprestimo`
 --
 
-INSERT INTO `itensdeemprestimo` (`idLivro`, `idEmprestimo`, `dataDevolvido`, `statusItem`) VALUES
-(2, 1, NULL, ''),
-(7, 2, NULL, '');
+INSERT INTO `itensdeemprestimo` (`idLivro`, `idEmprestimo`, `dataDevolvido`, `statusItem`, `dataPrevDev`, `dataRenovacao`) VALUES
+(2, 1, NULL, 'Devolvido', '2023-12-01', NULL),
+(7, 2, '2023-11-24', 'Devolvido', '2023-12-01', NULL),
+(7, 3, NULL, 'Renovado', '2023-12-01', '2023-11-24 00:00:00'),
+(5, 4, '2023-11-24', 'Devolvido', '2023-12-01', NULL),
+(3, 5, NULL, 'Emprestado', '2023-12-01', NULL),
+(3, 6, NULL, 'Emprestado', '2023-12-01', '2023-11-24 14:39:24'),
+(1, 7, NULL, 'Emprestado', '2023-12-01', '2023-11-24 14:39:32'),
+(6, 8, NULL, 'Renovado', '2023-12-01', '2023-11-24 00:00:00'),
+(10, 9, '2023-11-24', 'Devolvido', '2023-12-01', '2023-11-24 15:02:34'),
+(9, 10, '2023-11-24', 'Devolvido', '2023-12-01', '2023-11-24 00:00:00'),
+(8, 10, '2023-11-24', 'Devolvido', '2023-12-01', '2023-11-24 00:00:00'),
+(4, 11, NULL, 'Renovado', '2023-12-08', '2023-11-24 00:00:00'),
+(10, 12, NULL, 'Emprestado', '0000-00-00', '2023-11-24 16:10:30'),
+(4, 13, NULL, 'Renovado', '0000-00-00', '2023-11-25 00:00:00'),
+(7, 14, NULL, 'Renovado', '2023-12-02', '2023-11-27 00:00:00'),
+(9, 15, NULL, 'Renovado', '2023-12-04', '2023-11-27 00:00:00'),
+(8, 16, NULL, 'Renovado', '2023-12-04', '2023-11-27 00:00:00'),
+(5, 17, NULL, 'Emprestado', '2023-12-02', '2023-11-25 15:01:47');
 
 -- --------------------------------------------------------
 
@@ -225,16 +258,16 @@ CREATE TABLE `livro` (
 --
 
 INSERT INTO `livro` (`id`, `idEditora`, `idGenero`, `statusLivro`, `titulo`, `pag`, `isbn`, `edicao`, `arquivo`) VALUES
-(1, 1, 3, 'Disponível', 'A vida invisível de Addie La Rue', '499', '6555872551', '7', 'ADDIE.jpg'),
+(1, 1, 3, 'Emprestado', 'A vida invisível de Addie La Rue', '499', '6555872551', '7', 'ADDIE.jpg'),
 (2, 2, 2, 'Emprestado', 'Os sete maridos de Evelyn Hugo', '360', '8584391509', '1', 'evelyn.jpg'),
-(3, 2, 1, 'Disponível', 'Daisy Jones and The Six', '360 ', '8584391401', '1', 'daisy.jpg'),
-(4, 1, 1, 'Disponível', 'Pessoas Normais', '264', '8535932569', '1', 'pessoasnormais.jpg'),
-(5, 4, 1, 'Disponível', 'Tudo é rio', '210', '6555871784', '10', 'Tudoerio.jpg'),
-(6, 7, 2, 'Disponível', 'Heartstopper Vol.1', '288', '8555341612', '1', 'heart.jpg'),
+(3, 2, 1, 'Emprestado', 'Daisy Jones and The Six', '360 ', '8584391401', '1', 'daisy.jpg'),
+(4, 1, 1, 'Emprestado', 'Pessoas Normais', '264', '8535932569', '1', 'pessoasnormais.jpg'),
+(5, 4, 1, 'Emprestado', 'Tudo é rio', '210', '6555871784', '10', 'Tudoerio.jpg'),
+(6, 7, 2, 'Emprestado', 'Heartstopper Vol.1', '288', '8555341612', '1', 'heart.jpg'),
 (7, 8, 4, 'Emprestado', 'Assassinato no Expresso Oriente', '240', '8595086788', '1', 'expresso.jpg'),
-(8, 7, 1, 'Disponível', 'O fim de tudo', '392', '25165165', '2', 'ofimdetudo.jpg'),
-(9, 6, 2, 'Disponível', 'Dois Garotos se beijando', '272', '464564', '1', 'doisgarotos.jpg'),
-(10, 7, 1, 'Disponível', 'Nix', '600', '1656544', '3', 'nix.jpg');
+(8, 7, 1, 'Emprestado', 'O fim de tudo', '392', '25165165', '2', 'ofimdetudo.jpg'),
+(9, 6, 2, 'Emprestado', 'Dois Garotos se beijando', '272', '464564', '1', 'doisgarotos.jpg'),
+(10, 7, 1, 'Emprestado', 'Nix', '600', '1656544', '3', 'nix.jpg');
 
 -- --------------------------------------------------------
 
@@ -352,7 +385,7 @@ ALTER TABLE `editora`
 -- AUTO_INCREMENT de tabela `emprestimo`
 --
 ALTER TABLE `emprestimo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `genero`

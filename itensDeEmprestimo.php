@@ -26,6 +26,7 @@ $sqlData = "select dataEmprestimo from emprestimo
 $nomeLeitor = mysqli_query($conexao, $sqlNome);
 $dataEmprestimo = mysqli_query($conexao, $sqlData);
 
+
 $livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
 
 if (isset($_POST['devolver'])) {
@@ -48,9 +49,33 @@ if (isset($_POST['devolver'])) {
     }
 }
 
+if (isset($_POST['renovar'])) {
+    if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
+        $livrosSelecionados = $_POST['idLivro'];
+        // Percorre os livros selecionados
+        foreach ($livrosSelecionados as $idLivro) {
+            
+            $dataAtual = date("Y-m-d");
+        
+            // Realiza a atualização no banco de dados para marcar como renovado
+            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Renovado', dataRenovacao = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            mysqli_query($conexao, $sql);
+
+            // Atualiza a data prevista de devolução para 7 dias após a renovação
+            $dataPrevDev = date('Y-m-d', strtotime("+7 days", strtotime($dataAtual)));
+            $sqlDataDev = "UPDATE itensdeemprestimo SET dataPrevDev = '$dataPrevDev' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            mysqli_query($conexao, $sqlDataDev);
+        }
+
+        // Outras ações após a renovação, se necessário
+    }
+}
+
+
+
 
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, emprestimo.dataPrevistaDevolucao as dataPrevista, livro.id as idLivro
+$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, dataPrevDev as dataPrevista, livro.id as idLivro
         FROM itensDeEmprestimo 
         INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
@@ -95,7 +120,7 @@ $resultado = mysqli_query($conexao, $sql);
                             <td scope="col"><b>Status</b></td>
                             <td scope="col"><b>Data Prevista</b></td>
                             <td scope="col"><b>Data devolvido</b></td>
-                            <td scope="col"><b>Devolvido</b></td>
+                            <td scope="col"><b>Selecionar livro</b></td>
                         </tr>
                     </thead>
                     <tbody>

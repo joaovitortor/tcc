@@ -14,7 +14,8 @@ if (isset($_POST['cadastrar'])) {
 
     if (isset($_POST['livro']) && is_array($_POST['livro'])) {
         foreach ($_POST['livro'] as $idLivro) {
-            $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem) VALUES ('$idEmprestimo','$idLivro', 'Emprestado')";
+            
+            $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem, dataPrevDev) VALUES ('$idEmprestimo','$idLivro', 'Emprestado', '$dataPrevistaDevolucao')";
             mysqli_query($conexao, $sql2);
 
             $sql3 = "UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
