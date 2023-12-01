@@ -79,7 +79,7 @@ $resultado = mysqli_query($conexao, $sql);
                     </a></li>
 
                 <li class="mode">
-                    <a href="#">
+                    <a href="sair.php">
                         <i class="uil uil-moon"></i>
                         <span class="link-name">Dark Mode</span>
                     </a>

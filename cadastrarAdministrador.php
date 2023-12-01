@@ -64,7 +64,7 @@ values ('$status', '$login', '$senha')";
             </ul>
 
             <ul class="logout-mode">
-                <li><a href="#">
+                <li><a href="sair.php">
                         <i class="uil uil-signout"></i>
                         <span class="link-name">Logout</span>
                     </a></li>

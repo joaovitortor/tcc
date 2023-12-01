@@ -1,56 +1,41 @@
-<li><a class="emprestimo-btn">
-        <i class="fa-solid fa-arrows-left-right-to-line"></i><span class="link-name">Emprestimo</span></a>
-    <ul class="emprestimo-show">
-        <li><a href="emprestimo.php" class="text">Cadastrar</a></li>
-        <li><a href="listarEmprestimo.php" class="text">Listar</a></li>
-        <li><a href="itensDeEmprestimo.php" class="text">Devolução</a></li>
+<li><a class="cadastrar-btn">
+        <i class="fa-solid fa-cash-register"></i><span class="link-name">Cadastrar</span></a>
+    <ul class="cadastrar-show">
+        <li><a href="emprestimo.php" class="text">Emprestimo</a></li>
+        <li><a href="cadastrarLeitor.php" class="text">Leitor</a></li>
+        <li><a href="cadastrarLivro.php" class="text">Livro</a></li>
+        <li><a href="cadastrarAutor.php" class="text">Autor</a></li>
+        <li><a href="cadastrarAdministrador.php" class="text">Administrador</a></li>
+        <li><a href="cadastrarGenero.php" class="text">Gênero</a></li>
+        <li><a href="cadastrarEditora.php" class="text">Editora</a></li>
     </ul>
 </li>
-<li><a class="leitor-btn">
-        <i class="fa-solid fa-user"></i><span class="link-name">Leitor</span></a>
-    <ul class="leitor-show">
-        <li><a href="cadastrarLeitor.php" class="text">Cadastrar</a></li>
-        <li><a href="listarLeitor.php" class="text">Listar</a></li>
+
+
+<li><a class="listar-btn">
+        <i class="fa-solid fa-list"></i><span class="link-name">Listar</span></a>
+    <ul class="listar-show">
+        <li><a href="listarEmprestimo.php" class="text">Emprestimo</a></li>
+        <li><a href="listarLeitor.php" class="text">Leitor</a></li>
+        <li><a href="listarLivro.php" class="text">Livro</a></li>
+        <li><a href="listarAutor.php" class="text">Autor</a></li>
+        <li><a href="listarLeitor.php" class="text">Administrador</a></li>
+        <li><a href="listarLeitor.php" class="text">Gênero</a></li>
+        <li><a href="listarLeitor.php" class="text">Editora</a></li>
     </ul>
 </li>
-<li><a class="livro-btn">
-        <i class="fa-solid fa-book"></i><span class="link-name">Livro</span></a>
-    <ul class="livro-show">
-        <li><a href="cadastrarLivro.php" class="text">Cadastrar</a></li>
-        <li><a href="listarLivros.php" class="text">Listar</a></li>
-    </ul>
-</li>
-<li><a class="autor-btn">
-        <i class="fa-solid fa-pen-nib"></i><span class="link-name">Autor</span></a>
-    <ul class="autor-show">
-        <li><a href="cadastrarAutor.php" class="text">Cadastrar</a></li>
-        <li><a href="listarAutores.php" class="text">Listar</a></li>
-    </ul>
-</li>
-<li><a class="administrador-btn">
-        <i class="fa-solid fa-user-lock"></i><span class="link-name">Administrador</span></a>
-    <ul class="administrador-show">
-        <li><a href="cadastrarAdministrador.php" class="text">Cadastrar</a></li>
-        <li><a href="listarAdministrador.php" class="text">Listar</a></li>
-    </ul>
-</li>
-<li><a class="genero-btn">
-        <i class="fa-solid fa-wand-sparkles"></i><span class="link-name">Gênero</span></a>
-    <ul class="genero-show">
-        <li><a href="cadastrarGenero.php" class="text">Cadastrar</a></li>
-        <li><a href="listarGenero.php" class="text">Listar</a></li>
-    </ul>
-</li>
-<li><a class="editora-btn">
-        <i class="fa-solid fa-newspaper"></i><span class="link-name">Editora</span></a>
-    <ul class="editora-show">
-        <li><a href="cadastrarEditora.php" class="text">Cadastrar</a></li>
-        <li><a href="listarEditora.php" class="text">Listar</a></li>
-    </ul>
+<li><a>
+        <i class="fa-solid fa-arrows-left-right-to-line"></i><span class="link-name">Devolver</span></a>
 </li>
 
 <script>
 
+    $('.cadastrar-btn').click(function () {
+        $('nav ul .cadastrar-show').toggleClass("show");
+    })
+    $('.listar-btn').click(function () {
+        $('nav ul .listar-show').toggleClass("show");
+    })
     $('.emprestimo-btn').click(function () {
         $('nav ul .emprestimo-show').toggleClass("show");
     })
