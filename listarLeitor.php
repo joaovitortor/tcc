@@ -59,14 +59,14 @@ $resultado = mysqli_query($conexao, $sql);
 
 <body>
     <nav>
-        <div class="logo-name">
-            <div class="logo-image">
-                <img src="images/logo.png" alt="">
+        <a href="main.php" style="text-decoration: none">
+            <div class="logo-name">
+                <div class="logo-image">
+                    <img src="logo.ico" alt="">
+                </div>
+                <span class="logo_name">Bibliotech</span>
             </div>
-
-            <span class="logo_name">Bibliotech</span>
-        </div>
-
+        </a>
         <div class="menu-items">
             <ul class="nav-links">
                 <?php require_once('sidebar.php') ?>
@@ -202,7 +202,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </center>
                 <?php $dateObj = DateTime::createFromFormat('Y-m-d', $linha['dn']);
 
-                
+
                 $dataDmy = $dateObj->format('d/m/Y'); ?>
                 <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">

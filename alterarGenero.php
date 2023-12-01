@@ -55,20 +55,21 @@ require_once("conexao.php");
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
 
-    <title>Administrador Bibliotech</title>
+    <title>Alterar Gênero</title>
 </head>
 
 <body>
     <nav>
-        <div class="logo-name">
-            <div class="logo-image">
-                <img src="images/logo.png" alt="">
+        <a href="main.php" style="text-decoration: none">
+            <div class="logo-name">
+                <div class="logo-image">
+                    <img src="logo.ico" alt="">
+                </div>
+                <span class="logo_name">Bibliotech</span>
             </div>
-
-            <span class="logo_name">Bibliotech</span>
-        </div>
-
+        </a>
         <div class="menu-items">
             <ul class="nav-links">
                 <?php require_once('sidebar.php') ?>

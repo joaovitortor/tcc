@@ -15,5 +15,6 @@
   });
   </script>
   <script src="js/script.js"></script>
+  <script src="js/bootstrap.bundle.js"></script>
 </body>
 </html>

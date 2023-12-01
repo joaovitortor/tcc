@@ -50,14 +50,14 @@ values ('$status', '$login', '$senha')";
 
 <body>
     <nav>
-        <div class="logo-name">
-            <div class="logo-image">
-                <img src="images/logo.png" alt="">
+        <a href="main.php" style="text-decoration: none">
+            <div class="logo-name">
+                <div class="logo-image">
+                    <img src="logo.ico" alt="">
+                </div>
+                <span class="logo_name">Bibliotech</span>
             </div>
-
-            <span class="logo_name">Bibliotech</span>
-        </div>
-
+        </a>
         <div class="menu-items">
             <ul class="nav-links">
                 <?php require_once('sidebar.php') ?>
