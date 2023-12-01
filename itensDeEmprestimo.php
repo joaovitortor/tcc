@@ -56,9 +56,9 @@ if (isset($_POST['renovar'])) {
         $livrosSelecionados = $_POST['idLivro'];
         // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
-            
+
             $dataAtual = date("Y-m-d");
-        
+
             // Realiza a atualização no banco de dados para marcar como renovado
             $sql = "UPDATE itensdeemprestimo SET statusItem = 'Renovado', dataRenovacao = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
@@ -146,8 +146,14 @@ $resultado = mysqli_query($conexao, $sql);
                                     echo $data ?>
                                 </td>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" name="idLivro[]"
-                                        value="<?= $linha['idLivro'] ?>">
+                                    <?php
+                                    if ($linha['statusItem'] == 'Devolvido') {
+                                        echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>';
+                                    } else {
+                                        echo '<input class="form-check-input" type="checkbox" name="idLivro[]"
+                                        value="<?=' . $linha['idLivro'] . '?>">';
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                             <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"

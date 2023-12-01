@@ -17,7 +17,7 @@
     <ul class="listar-show">
         <li><a href="listarEmprestimo.php" class="text">Emprestimo</a></li>
         <li><a href="listarLeitor.php" class="text">Leitor</a></li>
-        <li><a href="listarLivro.php" class="text">Livro</a></li>
+        <li><a href="listarLivros.php" class="text">Livro</a></li>
         <li><a href="listarAutor.php" class="text">Autor</a></li>
         <li><a href="listarLeitor.php" class="text">Administrador</a></li>
         <li><a href="listarLeitor.php" class="text">Gênero</a></li>
