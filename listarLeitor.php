@@ -3,6 +3,8 @@
 //require_once("verificaautenticacao.php");
 require_once("conexao.php");
 
+require_once("admAutenticacao.php");
+
 // Excluir
 if (isset($_POST['excluir'])) {
     if (isset($_POST['check'])) { // Verifica se o botão excluir foi clicado

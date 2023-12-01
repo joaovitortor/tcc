@@ -3,6 +3,7 @@
 //require_once("verificaautenticacao.php");
 require_once("conexao.php");
 
+
 // Excluir
 if (isset($_POST['excluir'])) {
     if (isset($_POST['check'])) { // Verifica se o botão excluir foi clicado
@@ -25,6 +26,10 @@ where 1 = 1" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
+
+if (isset($_GET['mensagemAlert'])) {
+    $mensagemAlert = $_GET['mensagemAlert'];
+}
 
 ?>
 
@@ -65,11 +70,11 @@ $resultado = mysqli_query($conexao, $sql);
     </div>
     <br><br><br>
     <h1 class="titulo text">Bibliotech</h1>
-    <?php if (isset($_GET['mensagem'])) { ?>
-        <div class="alert alert-danger" role="alert">
-            <?= $_GET['mensagem'] ?>
-        </div>
-    <?php } ?>
+    <?php 
+    if (isset($mensagemAlert)) {
+        require_once('mensagem.php');
+    }
+     ?>
 
 <center>
     <form method="post">

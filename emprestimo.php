@@ -1,6 +1,8 @@
 <?php
 require_once("conexao.php");
 
+require_once("admAutenticacao.php");
+
 if (isset($_POST['cadastrar'])) {
     $statusEmprestimo = "Em andamento";
     $dataPrevistaDevolucao = $_POST['dataPrevistaDevolucao'];

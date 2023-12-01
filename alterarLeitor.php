@@ -1,6 +1,9 @@
 <?php
 //1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
+
+require_once("admAutenticacao.php");
+
 if (isset($_POST['salvar'])) {
     //2. Receber os dados para inserir no BD
     $id = $_POST['id'];

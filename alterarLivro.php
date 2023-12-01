@@ -2,24 +2,7 @@
 //1. Conectar no BD (IP, usuario, senha, nome do bd)
 require_once("conexao.php");
 
-session_start();
-
-if (!(isset($_SESSION['tipo']) && $_SESSION['tipo'] == "adm")) {
-
-    session_destroy();
-
-    header("location: index.php");
-
-    exit();
-}
-
-if (isset($_POST["logout"])) {
-    session_destroy();
-
-    header("location: index.php");
-
-    exit();
-}
+require_once("admAutenticacao.php");
 
 if (isset($_POST['salvar'])) {
     //2. Receber os dados para inserir no BD

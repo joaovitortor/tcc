@@ -3,6 +3,8 @@
 //require_once("verificaautenticacao.php");
 require_once("conexao.php");
 
+require_once("admAutenticacao.php");
+
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $sql = "delete from genero where id = " . $_GET['id'];

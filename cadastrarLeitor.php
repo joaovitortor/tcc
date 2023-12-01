@@ -2,6 +2,9 @@
 
 //1. conectar no banco de dados (ip, usuario, senha, nome do banco)
 require_once("conexao.php");
+
+require_once("admAutenticacao.php");
+
 $cpfInvalido = "";
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD

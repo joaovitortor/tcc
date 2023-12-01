@@ -1,6 +1,8 @@
 <?php
 require_once("conexao.php");
 
+require_once("admAutenticacao.php");
+
 if (isset($_POST['cadastrarAutorDoLivro'])) {
     $idAutor = $_POST['autor']; // ID do autor selecionado no formulário
     $idLivro = $_POST['idLivro']; // ID do livro que você já cadastrou

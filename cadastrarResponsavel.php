@@ -1,7 +1,8 @@
 <?php
 
 require_once("conexao.php");
-session_start(); // Inicia a sessão (certifique-se de chamá-la no início da página)
+
+require_once("admAutenticacao.php");
 
 $cpfInvalido = isset($_SESSION['cpfInvalido']) ? $_SESSION['cpfInvalido'] : "";
 unset($_SESSION['cpfInvalido']);
