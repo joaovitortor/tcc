@@ -98,8 +98,9 @@ if (isset($_POST['cadastrar'])) {
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
 
-    <title>Administrador Bibliotech</title>
+    <title>Cadastrar Responsável</title>
 </head>
 
 <body>

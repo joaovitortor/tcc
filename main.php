@@ -15,18 +15,15 @@ require_once("navbar.php");
                 </h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post">
+            <form method="post" action="procurarEmprestimo.php">
                 <div class="modal-body">
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="">
-                    <label for="">Para excluir o Leitor
-                        <?= $linha['nome'] ?>, pressione abaixo:
+                    <label for="">Código do Empréstimo:
                     </label>
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" name="check">
+                    <input class="geekcb-field" placeholder="Código" required type="texto" name="idEmprestimo">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" name="excluir" class="btn btn-danger" data-bs-dismiss="modal">Excluir
-                        Leitor</button>
+                    <button type="submit" name="procurarEmprestimo" class="btn btn-danger" data-bs-dismiss="modal">Procurar</button>
                 </div>
             </form>
         </div>

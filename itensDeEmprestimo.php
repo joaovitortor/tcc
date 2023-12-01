@@ -48,7 +48,7 @@ if (isset($_POST['devolver'])) {
 
             if ($diferencaEmDias > 0) {
                 // O livro foi devolvido com atraso
-                $multa = +($diferencaEmDias * 1);
+                $multa = ($diferencaEmDias * 1);
             } else {
                 // O livro foi devolvido no prazo
             }
@@ -99,7 +99,7 @@ if (isset($_POST['renovar'])) {
 }
 
 //2. Preparar a sql
-$sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, dataPrevDev as dataPrevista, livro.id as idLivro
+$sql = "SELECT distinct emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, dataPrevDev as dataPrevista, livro.id as idLivro
         FROM itensDeEmprestimo 
         INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     

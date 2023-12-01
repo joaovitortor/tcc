@@ -86,7 +86,7 @@ $resultado = mysqli_query($conexao, $sql);
                             <td>
                                 <?php
                                 $idEmprestimo = $linha['id'];
-                                $sqlLivros = "SELECT livro.titulo FROM itensdeemprestimo
+                                $sqlLivros = "SELECT distinct livro.titulo FROM itensdeemprestimo
                                             JOIN livro ON itensdeemprestimo.idLivro = livro.id
                                             WHERE itensdeemprestimo.idEmprestimo = $idEmprestimo";
 
@@ -97,24 +97,14 @@ $resultado = mysqli_query($conexao, $sql);
                                     $titulosLivros[] = $linhaLivro['titulo'];
                                 }
 
-                                echo implode(', ', $titulosLivros);
+                                echo implode(', <br>', $titulosLivros);
                                 ?>
                             </td>
-
                             <td>
-                                <a style="margin-right: 8px;" href="alterarEmprestimo.php? id=<?= $linha['id'] ?>"
-                                    class="botao">
-                                    <i class="fa-solid fa-pen-to-square"></i></a>
-
                                 <a href="itensDeEmprestimo.php? id=<?= $linha['id'] ?>" style="margin-right: 8px;"
                                     name="info" class="botao">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-
-                                <a href="listarEmprestimo.php? id=<?= $linha['id'] ?>" class="botao"
-                                    onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                    <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
                             </td>
                         </tr>
                         <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
