@@ -202,7 +202,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </center>
                 <?php $dateObj = DateTime::createFromFormat('Y-m-d', $linha['dn']);
 
-                // Formate a data para o formato 'dmy' e imprima
+                
                 $dataDmy = $dateObj->format('d/m/Y'); ?>
                 <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">

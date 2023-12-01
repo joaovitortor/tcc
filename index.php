@@ -57,7 +57,7 @@ if (isset($_GET['mensagemAlert'])) {
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="shortcut icon" href="logobibibliotech.png">
+    <link rel="shortcut icon" href="logo.ico">
 
     <title> Bibliotech </title>
 </head>
@@ -76,7 +76,7 @@ if (isset($_GET['mensagemAlert'])) {
     }
      ?>
 
-    <h1 class="titulo text"> <img src="logobibliotech.png" alt="logo" width="5%"> Bibliotech</h1>
+    <h1 class="titulo text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
     
 <center>
     <form method="post">
