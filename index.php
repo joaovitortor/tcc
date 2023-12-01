@@ -57,8 +57,9 @@ if (isset($_GET['mensagemAlert'])) {
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logobibibliotech.png">
 
-    <title>Administrador Bibliotech</title>
+    <title> Bibliotech </title>
 </head>
 
 <body style="background-color: #ffd8be;">
@@ -69,7 +70,8 @@ if (isset($_GET['mensagemAlert'])) {
         </div>
     </div>
     <br><br><br>
-    <h1 class="titulo text">Bibliotech</h1>
+   
+    <h1 class="titulo text"> <img src="logobibliotech.png" alt="logo" width="5%"> Bibliotech</h1>
     <?php 
     if (isset($mensagemAlert)) {
         require_once('mensagem.php');
