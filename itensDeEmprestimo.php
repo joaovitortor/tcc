@@ -1,17 +1,10 @@
 <?php
-//1. Conecta no banco de dados (IP, usuario, senha, nome do banco)
-//require_once("verificaautenticacao.php");
+
 require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
-// Excluir
-/*if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from emprestimo where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
-    $mensagem = "Exclusão realizada com sucesso.";
-}*/
-
+$multa = "";
 $voltar = "";
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
@@ -19,7 +12,7 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 }
 $idEmprestimo = $_GET['id'];
 
-$sqlNome = "select leitor.nome from emprestimo 
+$sqlNome = "select leitor.nome, leitor.id as idLeitor from emprestimo 
             inner join leitor ON emprestimo.idLeitor = leitor.id";
 
 $sqlData = "select dataEmprestimo from emprestimo 
@@ -27,6 +20,7 @@ $sqlData = "select dataEmprestimo from emprestimo
 
 $nomeLeitor = mysqli_query($conexao, $sqlNome);
 $dataEmprestimo = mysqli_query($conexao, $sqlData);
+$row = mysqli_fetch_assoc($nomeLeitor);
 
 
 $livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
@@ -38,16 +32,49 @@ if (isset($_POST['devolver'])) {
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
         $dataAtual = date("Y-m-d");
+
         // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
+
+            $sqlDataPrevDev = "SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            $resultDataPrevDev = mysqli_query($conexao, $sqlDataPrevDev);
+            $linhaDataPrevDev = mysqli_fetch_assoc($resultDataPrevDev);
+
+            $dataPrevista = strtotime($linhaDataPrevDev['dataPrevDev']);
+            $dataDevolucao = strtotime($dataAtual);
+
+            // Calcula a diferença em dias
+            $diferencaEmDias = ($dataDevolucao - $dataPrevista) / (60 * 60 * 24);
+
+            if ($diferencaEmDias > 0) {
+                // O livro foi devolvido com atraso
+                $multa = +($diferencaEmDias * 1);
+            } else {
+                // O livro foi devolvido no prazo
+            }
+
             // Realiza a atualização no banco de dados para marcar como devolvido
-            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multa' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+
             mysqli_query($conexao, $sql);
+
             $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
             mysqli_query($conexao, $sql);
+
         }
 
-        // Outras ações após a devolução, se necessário
+        $sqlStatusItem = "SELECT DISTINCT statusItem FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
+        $resultStatusItem = mysqli_query($conexao, $sqlStatusItem);
+        $statusItens = mysqli_fetch_all($resultStatusItem, MYSQLI_ASSOC);
+
+        $todosDevolvidos = count($statusItens) == 1 && $statusItens[0]['statusItem'] == 'Devolvido';
+
+        if ($todosDevolvidos) {
+            $sql = "UPDATE emprestimo SET statusEmprestimo = 'Finalizado' WHERE id = $idEmprestimo";
+            mysqli_query($conexao, $sql);
+            $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $row[idLeitor]";
+            mysqli_query($conexao, $sql);
+        }
     }
 }
 
@@ -68,13 +95,8 @@ if (isset($_POST['renovar'])) {
             $sqlDataDev = "UPDATE itensdeemprestimo SET dataPrevDev = '$dataPrevDev' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sqlDataDev);
         }
-
-        // Outras ações após a renovação, se necessário
     }
 }
-
-
-
 
 //2. Preparar a sql
 $sql = "SELECT emprestimo.id as idEmprestimo, livro.titulo as titulo, statusItem, dataDevolvido, dataPrevDev as dataPrevista, livro.id as idLivro
@@ -96,7 +118,7 @@ $resultado = mysqli_query($conexao, $sql);
 <center>
     <form method="post">
         <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
-
+        <?php echo $multa; ?>
         <br><br>
         <div class="card cardlistar">
             <div class="card-body cardlistar2">
@@ -106,7 +128,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <tr>
                             <div style="display: flex; justify-content: space-between;">
                                 <h5 style="margin-right: ">Leitor(a):
-                                    <?php $row = mysqli_fetch_assoc($nomeLeitor);
+                                    <?php 
                                     echo $row['nome']; ?>
                                 </h5>
                                 <h5>Data Emprestimo
@@ -146,14 +168,8 @@ $resultado = mysqli_query($conexao, $sql);
                                     echo $data ?>
                                 </td>
                                 <td>
-                                    <?php
-                                    if ($linha['statusItem'] == 'Devolvido') {
-                                        echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>';
-                                    } else {
-                                        echo '<input class="form-check-input" type="checkbox" name="idLivro[]"
-                                        value="<?=' . $linha['idLivro'] . '?>">';
-                                    }
-                                    ?>
+                                    <input class="form-check-input" type="checkbox" name="idLivro[]"
+                                        value=" <?= $linha['idLivro'] ?>">
                                 </td>
                             </tr>
                             <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
