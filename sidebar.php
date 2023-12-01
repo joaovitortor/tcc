@@ -34,29 +34,10 @@
 
     $('.cadastrar-btn').click(function () {
         $('nav ul .cadastrar-show').toggleClass("show");
+        $('nav ul .listar-show').removeClass("show");
     })
     $('.listar-btn').click(function () {
         $('nav ul .listar-show').toggleClass("show");
-    })
-    $('.emprestimo-btn').click(function () {
-        $('nav ul .emprestimo-show').toggleClass("show");
-    })
-    $('.leitor-btn').click(function () {
-        $('nav ul .leitor-show').toggleClass("show");
-    })
-    $('.livro-btn').click(function () {
-        $('nav ul .livro-show').toggleClass("show");
-    })
-    $('.autor-btn').click(function () {
-        $('nav ul .autor-show').toggleClass("show");
-    })
-    $('.administrador-btn').click(function () {
-        $('nav ul .administrador-show').toggleClass("show");
-    })
-    $('.genero-btn').click(function () {
-        $('nav ul .genero-show').toggleClass("show");
-    })
-    $('.editora-btn').click(function () {
-        $('nav ul .editora-show').toggleClass("show");
+        $('nav ul .cadastrar-show').removeClass("show");
     })
 </script>

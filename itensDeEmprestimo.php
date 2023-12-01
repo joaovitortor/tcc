@@ -20,7 +20,7 @@ $sqlData = "select dataEmprestimo from emprestimo
 
 $nomeLeitor = mysqli_query($conexao, $sqlNome);
 $dataEmprestimo = mysqli_query($conexao, $sqlData);
-$row = mysqli_fetch_assoc($nomeLeitor);
+$linhaLeitor = mysqli_fetch_assoc($nomeLeitor);
 
 
 $livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
@@ -72,7 +72,8 @@ if (isset($_POST['devolver'])) {
         if ($todosDevolvidos) {
             $sql = "UPDATE emprestimo SET statusEmprestimo = 'Finalizado' WHERE id = $idEmprestimo";
             mysqli_query($conexao, $sql);
-            $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $row[idLeitor]";
+            $idLeitor = $linhaLeitor['idLeitor'];
+            $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $idLeitor";
             mysqli_query($conexao, $sql);
         }
     }
@@ -129,11 +130,11 @@ $resultado = mysqli_query($conexao, $sql);
                             <div style="display: flex; justify-content: space-between;">
                                 <h5 style="margin-right: ">Leitor(a):
                                     <?php 
-                                    echo $row['nome']; ?>
+                                    echo $linhaLeitor['nome']; ?>
                                 </h5>
                                 <h5>Data Emprestimo
-                                    <?php $row = mysqli_fetch_assoc($dataEmprestimo);
-                                    $dataEmpres = date("d/m/Y", strtotime($row['dataEmprestimo']));
+                                    <?php $linhaData = mysqli_fetch_assoc($dataEmprestimo);
+                                    $dataEmpres = date("d/m/Y", strtotime($linhaData['dataEmprestimo']));
                                     echo $dataEmpres ?>
                                 </h5>
                             </div>

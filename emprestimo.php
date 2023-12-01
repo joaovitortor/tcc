@@ -7,24 +7,36 @@ if (isset($_POST['cadastrar'])) {
     $statusEmprestimo = "Em andamento";
     $dataPrevistaDevolucao = $_POST['dataPrevistaDevolucao'];
     $idLeitor = $_POST['leitor'];
+    $sqlLeitor = "SELECT status FROM leitor WHERE id = $idLeitor";
+    $resultado = mysqli_query($conexao, $sqlLeitor);
+    $linhaLeitor = mysqli_fetch_array($resultado);
+    $statusLeitor = $linhaLeitor['status'];
 
-    $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataPrevistaDevolucao','$idLeitor')";
+    if ($statusLeitor == 'Ativo') {
+        $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataPrevistaDevolucao','$idLeitor')";
 
-    mysqli_query($conexao, $sql);
+        mysqli_query($conexao, $sql);
 
-    $idEmprestimo = mysqli_insert_id($conexao);
+        $idEmprestimo = mysqli_insert_id($conexao);
 
-    if (isset($_POST['livro']) && is_array($_POST['livro'])) {
-        foreach ($_POST['livro'] as $idLivro) {
+        if (isset($_POST['livro']) && is_array($_POST['livro'])) {
+            foreach ($_POST['livro'] as $idLivro) {
 
-            $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem, dataPrevDev) VALUES ('$idEmprestimo','$idLivro', 'Emprestado', '$dataPrevistaDevolucao')";
-            mysqli_query($conexao, $sql2);
+                $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem, dataPrevDev) VALUES ('$idEmprestimo','$idLivro', 'Emprestado', '$dataPrevistaDevolucao')";
+                mysqli_query($conexao, $sql2);
 
-            $sql3 = "UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
-            mysqli_query($conexao, $sql3);
+                $sql3 = "UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
+                mysqli_query($conexao, $sql3);
+
+                $sql4 = "UPDATE leitor set status = 'Pendente' where id = $idLeitor";
+                mysqli_query($conexao, $sql4);
+            }
         }
+    } else {
+        echo "Leitor Pendente";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
