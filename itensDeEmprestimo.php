@@ -12,7 +12,7 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 }
 $idEmprestimo = $_GET['id'];
 
-$sqlNome = "select leitor.nome from emprestimo 
+$sqlNome = "select leitor.nome, leitor.id as idLeitor from emprestimo 
             inner join leitor ON emprestimo.idLeitor = leitor.id";
 
 $sqlData = "select dataEmprestimo from emprestimo 
@@ -20,6 +20,7 @@ $sqlData = "select dataEmprestimo from emprestimo
 
 $nomeLeitor = mysqli_query($conexao, $sqlNome);
 $dataEmprestimo = mysqli_query($conexao, $sqlData);
+$row = mysqli_fetch_assoc($nomeLeitor);
 
 
 $livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
@@ -71,7 +72,7 @@ if (isset($_POST['devolver'])) {
         if ($todosDevolvidos) {
             $sql = "UPDATE emprestimo SET statusEmprestimo = 'Finalizado' WHERE id = $idEmprestimo";
             mysqli_query($conexao, $sql);
-            $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $idLeitor";
+            $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $row[idLeitor]";
             mysqli_query($conexao, $sql);
         }
     }
@@ -127,7 +128,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <tr>
                             <div style="display: flex; justify-content: space-between;">
                                 <h5 style="margin-right: ">Leitor(a):
-                                    <?php $row = mysqli_fetch_assoc($nomeLeitor);
+                                    <?php 
                                     echo $row['nome']; ?>
                                 </h5>
                                 <h5>Data Emprestimo
