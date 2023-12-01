@@ -70,14 +70,14 @@ if (isset($_GET['mensagemAlert'])) {
         </div>
     </div>
     <br><br><br>
-   
-    <h1 class="titulo text"> <img src="logobibliotech.png" alt="logo" width="5%"> Bibliotech</h1>
-    <?php 
+   <?php 
     if (isset($mensagemAlert)) {
         require_once('mensagem.php');
     }
      ?>
 
+    <h1 class="titulo text"> <img src="logobibliotech.png" alt="logo" width="5%"> Bibliotech</h1>
+    
 <center>
     <form method="post">
         <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar livros no acervo da biblioteca</label>

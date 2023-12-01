@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST['entrar'])):
+if (isset($_POST['entrar'])) :
 
     //1. pega os dados do usuário
     $email = $_POST['email'];
@@ -62,8 +62,8 @@ if (isset($_POST['entrar'])):
             //Redireciona para o principal
             header("location: main.php");
         } else {
-            $mensagem = "Usuário/senha inválidos";
-            header("location: index.php?mensagem=$mensagem");
+            $mensagemAlert = "Usuário/senha inválidos";
+            header("location: index.php?mensagemAlert=$mensagemAlert");
         }
     }
 endif;
