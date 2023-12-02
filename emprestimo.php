@@ -11,7 +11,7 @@ if (isset($_POST['cadastrar'])) {
     $resultado = mysqli_query($conexao, $sqlLeitor);
     $linhaLeitor = mysqli_fetch_array($resultado);
     $statusLeitor = $linhaLeitor['status'];
-
+  
     if ($statusLeitor == 'Ativo') {
         $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataPrevistaDevolucao','$idLeitor')";
 
@@ -30,10 +30,11 @@ if (isset($_POST['cadastrar'])) {
 
                 $sql4 = "UPDATE leitor set status = 'Pendente' where id = $idLeitor";
                 mysqli_query($conexao, $sql4);
+                $mensagem = "Empréstimo realizado com sucesso";
             }
         }
     } else {
-        echo "Leitor Pendente";
+        $mensagemAlert = "Leitor pendente";
     }
 }
 
@@ -112,6 +113,7 @@ if (isset($_POST['cadastrar'])) {
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
+                    <?php require_once("mensagem.php"); ?>
                     <h1 class="titulo">Empréstimo</h1>
 
                     <!--

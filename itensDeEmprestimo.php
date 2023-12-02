@@ -7,35 +7,34 @@ require_once("admAutenticacao.php");
 $multa = "";
 $voltar = "";
 $V_WHERE = "";
-if (isset($_POST['pesquisar'])) { // botao pesquisar
-    $V_WHERE = " and livro.titulo like '% " . $_POST['pesquisa'] . "%' ";
+
+if (isset($_POST['pesquisar'])) {
+    $V_WHERE = " AND livro.titulo LIKE '%" . $_POST['pesquisa'] . "%' ";
 }
 $idEmprestimo = $_GET['id'];
 
-$sqlNome = "select leitor.nome, leitor.id as idLeitor from emprestimo 
-            inner join leitor ON emprestimo.idLeitor = leitor.id";
+$sqlNome = "SELECT leitor.nome, leitor.id AS idLeitor FROM emprestimo 
+            INNER JOIN leitor ON emprestimo.idLeitor = leitor.id
+            WHERE emprestimo.id = $idEmprestimo";
 
-$sqlData = "select dataEmprestimo from emprestimo 
- where id = " . $idEmprestimo;
+
+$sqlData = "SELECT dataEmprestimo FROM emprestimo 
+             WHERE id = " . $idEmprestimo;
 
 $nomeLeitor = mysqli_query($conexao, $sqlNome);
 $dataEmprestimo = mysqli_query($conexao, $sqlData);
 $linhaLeitor = mysqli_fetch_assoc($nomeLeitor);
 
-
-$livrosSelecionados = array(); // Array para armazenar os IDs dos livros selecionados
+$livrosSelecionados = array();
 
 if (isset($_POST['devolver'])) {
     $idEmprestimo = $_POST['idEmprestimo'];
+    $dataAtual = date("Y-m-d");
 
-    // Verifica se o checkbox foi marcado
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
-        $dataAtual = date("Y-m-d");
 
-        // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
-
             $sqlDataPrevDev = "SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             $resultDataPrevDev = mysqli_query($conexao, $sqlDataPrevDev);
             $linhaDataPrevDev = mysqli_fetch_assoc($resultDataPrevDev);
@@ -43,24 +42,24 @@ if (isset($_POST['devolver'])) {
             $dataPrevista = strtotime($linhaDataPrevDev['dataPrevDev']);
             $dataDevolucao = strtotime($dataAtual);
 
-            // Calcula a diferença em dias
             $diferencaEmDias = ($dataDevolucao - $dataPrevista) / (60 * 60 * 24);
 
-            if ($diferencaEmDias > 0) {
-                // O livro foi devolvido com atraso
-                $multa = ($diferencaEmDias * 1);
-            } else {
-                // O livro foi devolvido no prazo
-            }
+            $multaItem = ($diferencaEmDias > 0) ? $diferencaEmDias * 1 : 0;
 
-            // Realiza a atualização no banco de dados para marcar como devolvido
-            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multa' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
-
+            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multaItem' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
 
             $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
             mysqli_query($conexao, $sql);
+        }
 
+        $sqlMulta = "SELECT multa FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
+        $resultadoMulta = mysqli_query($conexao, $sqlMulta);
+
+        $multaTotal = 0;
+
+        while ($linhaMulta = mysqli_fetch_assoc($resultadoMulta)) {
+            $multaTotal += $linhaMulta['multa'];
         }
 
         $sqlStatusItem = "SELECT DISTINCT statusItem FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
@@ -70,11 +69,19 @@ if (isset($_POST['devolver'])) {
         $todosDevolvidos = count($statusItens) == 1 && $statusItens[0]['statusItem'] == 'Devolvido';
 
         if ($todosDevolvidos) {
-            $sql = "UPDATE emprestimo SET statusEmprestimo = 'Finalizado' WHERE id = $idEmprestimo";
+            $sql = "UPDATE emprestimo SET statusEmprestimo = 'Finalizado', valorMulta = '$multaTotal' WHERE id = $idEmprestimo";
             mysqli_query($conexao, $sql);
+
             $idLeitor = $linhaLeitor['idLeitor'];
+
             $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $idLeitor";
             mysqli_query($conexao, $sql);
+
+            if ($multaTotal > 0) {
+                $mensagemAlert = "Empréstimo finalizado com multa: R$" . $multaTotal;
+            } else {
+                $mensagem = "Empréstimo finalizado";
+            }
         }
     }
 }
@@ -96,6 +103,63 @@ if (isset($_POST['renovar'])) {
             $sqlDataDev = "UPDATE itensdeemprestimo SET dataPrevDev = '$dataPrevDev' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sqlDataDev);
         }
+    }
+}
+
+if (isset($_POST["finalizar"]) && isset($_POST['check'])) {
+    $idEmprestimo = $_POST['idEmprestimo'];
+    $dataAtual = date("Y-m-d");
+    $multaTotal = 0;
+
+    // Obtém todos os livros relacionados ao empréstimo
+    $sqlLivros = "SELECT idLivro FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
+    $resultLivros = mysqli_query($conexao, $sqlLivros);
+
+    // Itera sobre os livros para devolvê-los
+    while ($linhaLivro = mysqli_fetch_assoc($resultLivros)) {
+        $idLivro = $linhaLivro['idLivro'];
+
+        $sqlDataPrevDev = "SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+        $resultDataPrevDev = mysqli_query($conexao, $sqlDataPrevDev);
+        $linhaDataPrevDev = mysqli_fetch_assoc($resultDataPrevDev);
+
+        $dataPrevista = strtotime($linhaDataPrevDev['dataPrevDev']);
+        $dataDevolucao = strtotime($dataAtual);
+
+        $diferencaEmDias = ($dataDevolucao - $dataPrevista) / (60 * 60 * 24);
+
+        $multaItem = ($diferencaEmDias > 0) ? $diferencaEmDias * 1 : 0;
+
+        $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multaItem' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+        mysqli_query($conexao, $sql);
+
+        $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
+        mysqli_query($conexao, $sql);
+    }
+
+    // Atualiza o status do empréstimo
+    $sql = "UPDATE emprestimo SET statusEmprestimo = 'Finalizado', valorMulta = '$multaTotal' WHERE id = $idEmprestimo";
+    mysqli_query($conexao, $sql);
+
+    // Atualiza o status do leitor
+    $idLeitor = $linhaLeitor['idLeitor'];
+    $sql = "UPDATE leitor SET status = 'Ativo' WHERE id = $idLeitor";
+    mysqli_query($conexao, $sql);
+
+    // Calcula a multa total
+    $sqlMulta = "SELECT multa FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
+    $resultadoMulta = mysqli_query($conexao, $sqlMulta);
+    $multaTotal = 0;
+
+    while ($linhaMulta = mysqli_fetch_assoc($resultadoMulta)) {
+        $multaTotal += $linhaMulta['multa'];
+    }
+
+    // Exibe mensagem
+    if ($multaTotal > 0) {
+        $mensagemAlert = "Empréstimo finalizado com multa: R$" . $multaTotal;
+    } else {
+        $mensagem = "Empréstimo finalizado";
     }
 }
 
@@ -129,7 +193,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <tr>
                             <div style="display: flex; justify-content: space-between;">
                                 <h5 style="margin-right: ">Leitor(a):
-                                    <?php 
+                                    <?php
                                     echo $linhaLeitor['nome']; ?>
                                 </h5>
                                 <h5>Data Emprestimo
@@ -139,6 +203,7 @@ $resultado = mysqli_query($conexao, $sql);
                                 </h5>
                             </div>
                         </tr>
+                        <?php require_once("mensagem.php"); ?>
                         <tr>
                             <td scope="col"><b>ID do Empréstimo</b></td>
                             <td scope="col"><b>Item</b></td>
@@ -173,24 +238,32 @@ $resultado = mysqli_query($conexao, $sql);
                                         value=" <?= $linha['idLivro'] ?>">
                                 </td>
                             </tr>
-                            <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h2 class="modal-title fs-5" id="exampleModalLabel">
-                                                <?php echo "Leitor " . $linha['nomeLeitor']; ?>
+                                            <h2 class="modal-title fs-5" id="exampleModalLabel">Finalizar
                                             </h2>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Fechar</button>
-                                        </div>
+                                        <form method="post">
+                                            <div class="modal-body">
+                                                <input type="hidden" id="idEmprestimo" name="idEmprestimo"
+                                                    value="<?= $linha['idEmprestimo'] ?>">
+                                                <label for="">Para finalizar o empréstimo, pressione:
+                                                </label>
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckIndeterminate" name="check">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Fechar</button>
+                                                <button type="submit" name="finalizar" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Finalizar</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -199,8 +272,8 @@ $resultado = mysqli_query($conexao, $sql);
                     </tbody>
                 </table>
                 <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
-                <button name="finalizar" type="submit" class="botaopesquisar"
-                    style="margin-top: 10pt">Finalizar</button>
+                <button name="finalizar" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4" class="
+                    botaopesquisar" style="margin-top: 10pt">Finalizar</button>
                 <button name="renovar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Renovar</button>
     </form>
     </div>
