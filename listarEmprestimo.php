@@ -5,6 +5,8 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
+$voltar = "";
+
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $sql = "delete from emprestimo where id = " . $_GET['id'];
@@ -15,6 +17,11 @@ if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " and leitor.nome like '% " . $_POST['pesquisar'] . "%' ";
+    $voltar = '<a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
+}
+
+if (isset($_GET['mensagemAlert'])) {
+    $mensagemAlert = $_GET['mensagemAlert'];
 }
 
 //2. Preparar a sql
@@ -31,6 +38,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
 <br><br><br>
+<?php require_once("mensagem.php"); ?>
 <h1 class="titulo">Listagem de empréstimos ativos<a href="emprestimo.php" class="botao">
         <i class="fa-solid fa-plus"></i>
     </a></h1>
@@ -44,7 +52,7 @@ $resultado = mysqli_query($conexao, $sql);
         <div class="input-button-container">
             <input name="pesquisa" type="text" class="formcampo">
             <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+            <?php echo $voltar; ?>
         </div>
         <br><br>
     </form>
