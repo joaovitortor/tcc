@@ -93,7 +93,6 @@ $resultado = mysqli_query($conexao, $sql);
         </div>
     </div>
 </center>
-<?php require_once("procurarEmprestimo.php") ?>
 </section>
 <script>
     let arrow = document.querySelectorAll(".arrow");
