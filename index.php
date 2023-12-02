@@ -90,9 +90,11 @@ if (isset($_GET['mensagemAlert'])) {
     </form>
 </center>
 
-    <div style="align-content= center">
+    <div class="acervocontainer">
+
     <?php require_once('acervo1.php')?>
     </div>
+
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

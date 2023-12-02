@@ -97,6 +97,8 @@ if (isset($_POST['cadastrar'])) {
                     <h1 class="titulo" name="tituloLivro">
                         <?php echo $_GET['titulo']; ?>
                     </h1>
+                    <label for="autor">Selecione o(s) autor(es) do livro: </label>
+                    <br>
                     <select class="geekcb-field" name="autor[]" id="autor" multiple>
                         <option class="fonte-status" disabled="disabled" placeholder="Selecione os autores"></option>
                         <?php
