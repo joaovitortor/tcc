@@ -16,9 +16,7 @@ if (isset($_POST['excluir'])) {
 
 
 $V_WHERE = "";
-if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
-    $V_WHERE = " and nome like '%" . $_POST['nome'] . "%' ";
-}
+
 
 //2. Preparar a sql
 $sql = "select * from leitor

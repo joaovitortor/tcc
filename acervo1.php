@@ -7,19 +7,32 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 
 }
 
+$pagina = 2;
+
+if (isset($_GET['pagina']))
+    $pagina = filter_input(INPUT_GET, "pagina", FILTER_VALIDATE_INT);
+
+if (!$pagina)
+    $pagina = 1;
+
+$limite = 3;
+$inicio = ($pagina * $limite) - $limite;
+
 $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
         FROM livro
         LEFT JOIN editora ON livro.idEditora = editora.id
         LEFT JOIN genero ON livro.idGenero = genero.id
-        WHERE 1 {$V_WHERE}";
+        WHERE 1 {$V_WHERE}
+        ORDER BY livro.id desc LIMIT $inicio, $limite";
 
+$registros = mysqli_fetch_array(mysqli_query($conexao, "SELECT COUNT(titulo) count FROM livro"))['count'];
+
+$paginas = ceil($registros / $limite);
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
 
 ?>
-
-
 
 
 <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
@@ -28,7 +41,8 @@ $resultado = mysqli_query($conexao, $sql);
     <div class="wrapperAcervo">
 
         <div class="containerAcervo">
-            <div style="background-image: url('uploads/<?= $linha['arquivo'] ?>'); background-repeat: no-repeat" class="topAcervo"></div>
+            <div style="background-image: url('uploads/<?= $linha['arquivo'] ?>'); background-repeat: no-repeat"
+                class="topAcervo"></div>
             <div class="bottomAcervo">
                 <div class="leftAcervo">
                     <div class="detailsAcervo">
@@ -115,7 +129,23 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php } ?>
 
+<br>
 
+<div class="paginacao">
+
+    <a href="?pagina=1"> Primeira </a>
+    <?php if ($pagina > 1) { ?>
+        <a href="?pagina=<?= $pagina - 1 ?>">
+            << </a>
+            <?php } ?>
+
+            <?= $pagina ?>
+
+            <?php if ($pagina < $paginas) { ?>
+                <a href="?pagina=<?= $pagina + 1 ?>"> >> </a>
+            <?php } ?>
+            <a href="?pagina=<?= $paginas ?>"> Última </a>
+</div>
 
 
 <script>
