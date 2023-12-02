@@ -277,7 +277,7 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <label for="">Imagem</label>
+                            <label for="">Imagem Atual</label>
                             <input type="text" class="geekcb-field" value="<?= $linha['arquivo'] ?>" readonly>
                         </div>
                         <div class="form-column">
