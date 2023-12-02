@@ -278,6 +278,7 @@ body :focus-within .botaopesquisar:hover {
     text-transform: uppercase;
     transition: .2 all ease-in-out;
     margin-left: 10px;
+    display: flex;
     }
   
     .botaopesquisarAcervo:hover {

@@ -1,4 +1,7 @@
-
+.acervocontainer {
+  max-width: 90%; /* Adjust the maximum width as needed */
+  margin: 1% 3% 4% auto; /* Center the container horizontally */
+}
     
   .wrapperAcervo{
     display: inline-block;
