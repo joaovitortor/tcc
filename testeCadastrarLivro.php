@@ -30,8 +30,10 @@ if (isset($_POST['cadastrar'])) {
     mysqli_query($conexao, $sql);
 
     $idLivro = mysqli_insert_id($conexao);
+    $idAutores = $_POST['autor'];
 
-    foreach ($idAutor as $idAutor) {
+
+    foreach ($idAutores as $idAutor) {
         $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
         mysqli_query($conexao, $sql);
         header("Location: https://www.youtube.com/watch?v=PVx4TQoIc-o&list=RDPVx4TQoIc-o&start_radio=1");
@@ -111,7 +113,7 @@ if (isset($_POST['cadastrar'])) {
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
             <div class="geekcb-wrapper">
-                <form method="post" class="geekcb-form-contact" id="insert_data">
+                <form method="post" class="geekcb-form-contact" enctype="multipart/form-data" id="insert_data">
                     <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Livro</h1>
                     <div class="form-row">
