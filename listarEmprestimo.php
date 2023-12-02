@@ -51,7 +51,7 @@ $resultado = mysqli_query($conexao, $sql);
         <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
         <div class="input-button-container">
             <input name="pesquisa" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
+            <button name="pesquisar" stype="button" class="botaopesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
             <?php echo $voltar; ?>
         </div>
         <br><br>

@@ -5,7 +5,6 @@ require_once("conexao.php");
 require_once("admAutenticacao.php");
 
 if (isset($_POST['salvar'])) {
-    //2. Receber os dados para inserir no BD
     $id = $_POST['id'];
     $idEditora = $_POST['idEditora'];
     $idGenero = $_POST['idGenero'];
@@ -15,41 +14,77 @@ if (isset($_POST['salvar'])) {
     $isbn = $_POST['isbn'];
     $edicao = $_POST['edicao'];
 
-    $diretorio = "uploads/";
-    $arquivoDestino = $diretorio . $_FILES['arquivo']['name'];
+    if (isset($_FILES['novaImagem']) && $_FILES['novaImagem']['error'] == UPLOAD_ERR_OK) {
+        $diretorio = "uploads/";
+        $nomeArquivo = $_FILES['novaImagem']['name'];
+        $arquivoDestino = $diretorio . $_FILES['novaImagem']['name'];
+        move_uploaded_file($_FILES['novaImagem']['tmp_name'], $arquivoDestino);
 
-    $nomeArquivo = "";
-    if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $arquivoDestino)) {
-        $nomeArquivo = $_FILES['arquivo']['name'];
+        $sql = "UPDATE livro
+            SET 
+            idEditora = '$idEditora',
+            idGenero = '$idGenero',
+            statusLivro = '$statusLivro',
+            titulo = '$titulo',
+            pag = '$pag',
+            isbn = '$isbn',
+            arquivo = '$nomeArquivo',
+            edicao = '$edicao'
+            WHERE id = $id";
+
+        // Executar a SQL
+        mysqli_query($conexao, $sql);
     } else {
-        echo "ERRO: Arquivo não enviado";
+        $sql = "UPDATE livro
+            SET 
+            idEditora = '$idEditora',
+            idGenero = '$idGenero',
+            statusLivro = '$statusLivro',
+            titulo = '$titulo',
+            pag = '$pag',
+            isbn = '$isbn',
+            edicao = '$edicao'
+            WHERE id = $id";
+
+        // Executar a SQL
+        mysqli_query($conexao, $sql);
     }
 
-    //3. Preparar a SQL
-    $sql = "update livro
-    set 
-    idEditora = '$idEditora',
-    idGenero = '$idGenero',
-    statusLivro = '$statusLivro',
-    titulo = '$titulo',
-    pag = '$pag',
-    isbn = '$isbn',
-    arquivo = '$nomeArquivo',
-    edicao = '$edicao'
-    where id = $id";
 
-    //4. Executar a SQL
-    mysqli_query($conexao, $sql);
+    // Atualizar autores associados ao livro
+    if (isset($_POST['autor'])) {
+        $autoresSelecionados = $_POST['autor'];
 
-    //5. Mostrar uma mensagem ao usuário
-    $mensagem = "Inserido com sucesso &#128515;";
+        // Remover autores existentes para substituir pelos novos
+        $sqlDelete = "DELETE FROM livroautor WHERE idLivro = $id";
+        mysqli_query($conexao, $sqlDelete);
+
+        // Inserir os novos autores
+        foreach ($autoresSelecionados as $idAutor) {
+            $sqlInsertAutor = "INSERT INTO livroautor (idLivro, idAutor) VALUES ($id, $idAutor)";
+            mysqli_query($conexao, $sqlInsertAutor);
+        }
+    }
+
+
+    // Sua mensagem de sucesso...
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
 $sql = "select * from livro where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
-$linha = mysqli_fetch_array($resultado)
-    ?>
+$linha = mysqli_fetch_array($resultado);
+
+// Buscar autores associados ao livro
+$sqlAutoresLivro = "SELECT idAutor FROM livroautor WHERE idLivro = " . $_GET['id'];
+$resultadoAutoresLivro = mysqli_query($conexao, $sqlAutoresLivro);
+
+$autoresAssociados = array();
+while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
+    $autoresAssociados[] = $linhaAutorLivro['idAutor'];
+}
+
+?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -63,8 +98,11 @@ $linha = mysqli_fetch_array($resultado)
     <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-    <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
@@ -136,12 +174,13 @@ $linha = mysqli_fetch_array($resultado)
                     ?>
                 </form>
 
-                <form method="post" class="geekcb-form-contact" enctype="multipart/form-data">
+                <form method="post" class="geekcb-form-contact" enctype="multipart/form-data" id="insert_data">
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Alterar Livro</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
+                            <label for="">Status</label>
                             <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
                                 </option>
@@ -151,27 +190,32 @@ $linha = mysqli_fetch_array($resultado)
 
                         </div>
                         <div class="form-column">
+                            <label for="">Título</label>
                             <input class="geekcb-field" id="titulo" value="<?= $linha['titulo'] ?>"
                                 placeholder="Título do livro" required type="texto" name="titulo">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
+                            <label for="">Quantidade de Páginas</label>
                             <input class="geekcb-field" placeholder="Quantidade de páginas" value="<?= $linha['pag'] ?>"
                                 required type="texto" name="pag">
                         </div>
 
                         <div class="form-column">
+                            <label for="">ISBN</label>
                             <input class="geekcb-field" value="<?= $linha['isbn'] ?>" id="isbn" name="isbn"
                                 placeholder="ISBN" required type="texto">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
+                            <label for="">Edição</label>
                             <input class="geekcb-field" id="edicao" value="<?= $linha['edicao'] ?>" placeholder="Edição"
                                 required type="texto" name="edicao">
                         </div>
                         <div class="form-column">
+                            <label for="">Gênero</label>
                             <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero">
                                     Gênero</option>
@@ -192,6 +236,7 @@ $linha = mysqli_fetch_array($resultado)
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
+                            <label for="">Editora</label>
                             <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" disabled="disabled" placeholder="Editora">
                                     Editora</option>
@@ -210,11 +255,35 @@ $linha = mysqli_fetch_array($resultado)
                             </select>
                         </div>
                         <div class="form-column">
-                            <input type="file" class="geekcb-field" value="<?= $linha['arquivo'] ?>" name="arquivo"
-                                id="arquivo">
+                            <label for="">Autor(es)</label>
+                            <select class="geekcb-field" name="autor[]" id="autor" multiple>
+                                <option class="fonte-status" disabled="disabled" placeholder="Selecione os autores">
+                                </option>
+                                <?php
+                                $sqlAutores = "SELECT * FROM autor ORDER BY nome";
+                                $resultadoAutores = mysqli_query($conexao, $sqlAutores);
+
+                                while ($linhaAutor = mysqli_fetch_array($resultadoAutores)) {
+                                    $idAutor = $linhaAutor['id'];
+                                    $nomeAutor = $linhaAutor['nome'];
+
+                                    $selected = (in_array($idAutor, $autoresAssociados)) ? 'selected="selected"' : '';
+
+                                    echo "<option value='{$idAutor}' {$selected}>{$nomeAutor}</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
-
-
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
+                            <label for="">Imagem</label>
+                            <input type="text" class="geekcb-field" value="<?= $linha['arquivo'] ?>" readonly>
+                        </div>
+                        <div class="form-column">
+                            <label for="">Nova Imagem</label>
+                            <input type="file" class="geekcb-field" name="novaImagem" id="novaImagem">
+                        </div>
                     </div>
 
                     <button class="geekcb-btn" type="submit" name="salvar">Cadastrar</button>
@@ -249,6 +318,11 @@ $linha = mysqli_fetch_array($resultado)
         });
     </script>
     <script src="js/script.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#autor').select2();
+        });
+    </script>
 </body>
 
 </html>

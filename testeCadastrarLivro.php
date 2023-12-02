@@ -36,7 +36,6 @@ if (isset($_POST['cadastrar'])) {
     foreach ($idAutores as $idAutor) {
         $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
         mysqli_query($conexao, $sql);
-        header("Location: https://www.youtube.com/watch?v=PVx4TQoIc-o&list=RDPVx4TQoIc-o&start_radio=1");
     }
 }
 
