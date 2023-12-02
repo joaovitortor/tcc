@@ -118,29 +118,34 @@ if (isset($_POST["finalizar"]) && isset($_POST['check'])) {
 
     if ($linhaStatusEmprestimo['statusEmprestimo'] != 'Finalizado') {
         // Obtém todos os livros relacionados ao empréstimo
-        $sqlLivros = "SELECT idLivro FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
+        $sqlLivros = "SELECT idLivro, statusItem FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
         $resultLivros = mysqli_query($conexao, $sqlLivros);
 
         // Itera sobre os livros para devolvê-los
         while ($linhaLivro = mysqli_fetch_assoc($resultLivros)) {
             $idLivro = $linhaLivro['idLivro'];
+            $statusItem = $linhaLivro['statusItem'];
 
-            $sqlDataPrevDev = "SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
-            $resultDataPrevDev = mysqli_query($conexao, $sqlDataPrevDev);
-            $linhaDataPrevDev = mysqli_fetch_assoc($resultDataPrevDev);
+            if ($statusItem != 'Devolvido') {
 
-            $dataPrevista = strtotime($linhaDataPrevDev['dataPrevDev']);
-            $dataDevolucao = strtotime($dataAtual);
+                $sqlDataPrevDev = "SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+                $resultDataPrevDev = mysqli_query($conexao, $sqlDataPrevDev);
+                $linhaDataPrevDev = mysqli_fetch_assoc($resultDataPrevDev);
 
-            $diferencaEmDias = ($dataDevolucao - $dataPrevista) / (60 * 60 * 24);
+                $dataPrevista = strtotime($linhaDataPrevDev['dataPrevDev']);
+                $dataDevolucao = strtotime($dataAtual);
 
-            $multaItem = ($diferencaEmDias > 0) ? $diferencaEmDias * 1 : 0;
+                $diferencaEmDias = ($dataDevolucao - $dataPrevista) / (60 * 60 * 24);
 
-            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multaItem' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
-            mysqli_query($conexao, $sql);
+                $multaItem = ($diferencaEmDias > 0) ? $diferencaEmDias * 1 : 0;
 
-            $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
-            mysqli_query($conexao, $sql);
+                $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multaItem' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+                mysqli_query($conexao, $sql);
+
+                $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
+                mysqli_query($conexao, $sql);
+
+            }
         }
 
         // Atualiza o status do empréstimo
@@ -247,9 +252,9 @@ $resultado = mysqli_query($conexao, $sql);
                                 <td>
                                     <?php
                                     $checked = "";
-                                    if($linha['statusItem'] == 'Devolvido') {
+                                    if ($linha['statusItem'] == 'Devolvido') {
                                         $checked = 'disabled';
-                                    }?>
+                                    } ?>
                                     <input class="form-check-input" type="checkbox" name="idLivro[]"
                                         value=" <?= $linha['idLivro'] ?>" id="flexCheckIndeterminate" <?php echo $checked ?>>
                                 </td>
