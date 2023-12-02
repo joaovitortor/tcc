@@ -7,7 +7,7 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
 
 }
 
-$pagina = 2;
+$pagina = 1;
 
 if (isset($_GET['pagina']))
     $pagina = filter_input(INPUT_GET, "pagina", FILTER_VALIDATE_INT);
@@ -15,7 +15,7 @@ if (isset($_GET['pagina']))
 if (!$pagina)
     $pagina = 1;
 
-$limite = 3;
+$limite = 20;
 $inicio = ($pagina * $limite) - $limite;
 
 $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
@@ -131,7 +131,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <br>
 
-<div class="paginacao">
+<div class="paginacao container">
 
     <a href="?pagina=1"> Primeira </a>
     <?php if ($pagina > 1) { ?>
