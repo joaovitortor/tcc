@@ -5,7 +5,6 @@ require_once("conexao.php");
 require_once("admAutenticacao.php");
 
 $multa = "";
-$voltar = "";
 $V_WHERE = "";
 
 if (isset($_POST['pesquisar'])) {
