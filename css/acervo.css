@@ -4,8 +4,10 @@
 }
 
 .paginacao{
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-family: "Fjalla One";
+  width: fit-content;
+  margin-top: 2%;
 }
 
 .paginacao a{
