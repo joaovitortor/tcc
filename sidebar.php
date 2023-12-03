@@ -1,3 +1,8 @@
+<li><a data-bs-toggle="modal" data-bs-target="#modalProcurarEmprestimo">
+        <i class="fa-solid fa-arrows-left-right-to-line"></i><span class="link-name">Devolver</span>
+    </a>
+</li>
+
 <li><a class="cadastrar-btn">
         <i class="fa-solid fa-cash-register"></i><span class="link-name">Cadastrar</span></a>
     <ul class="cadastrar-show">
@@ -23,11 +28,6 @@
         <li><a href="listarGenero.php" class="text">Gênero</a></li>
         <li><a href="listarEditora.php" class="text">Editora</a></li>
     </ul>
-</li>
-
-<li><a data-bs-toggle="modal" data-bs-target="#modalProcurarEmprestimo">
-        <i class="fa-solid fa-arrows-left-right-to-line"></i><span class="link-name">Devolver</span>
-    </a>
 </li>
 
 <script>
