@@ -5,17 +5,35 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
+$voltar = '';
 // Excluir
-if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from livro where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
-    $mensagem = "Exclusão realizada com sucesso.";
+if (isset($_POST['excluir'])) { // Verifica se o botão excluir foi clicado
+    $idLivro = $_POST['idLivro'];
+
+    $sqlVerificarEmprestimo = "SELECT * FROM emprestimo WHERE idLeitor = " . $idLivro;
+    $resultadoVerificarEmprestimo = mysqli_query($conexao, $sqlVerificarEmprestimo);
+
+    if (mysqli_num_rows($resultadoVerificarEmprestimo) > 0) {
+        // O leitor possui empréstimos pendentes, não permitir a exclusão
+        $mensagemAlert = "Não é possível excluir o Livro. Há empréstimos realizados por ele.";
+    } else {
+        // Não existem empréstimos pendentes, prosseguir com a exclusão
+
+        $sqlExcluirLivroAutor = "DELETE FROM livroautor WHERE idLivro = $idLivro";
+        mysqli_query($conexao, $sqlExcluirLivroAutor);
+
+        $sqlExcluirLivro = "DELETE FROM livro WHERE id = " . $idLivro;
+        mysqli_query($conexao, $sqlExcluirLivro);
+
+        $mensagem = "Exclusão realizada com sucesso.";
+    }
 }
 
 
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " and titulo like '%" . $_POST['titulo'] . "%' ";
+    $voltar = '<a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
 }
 
 //2. Preparar a sql
@@ -33,6 +51,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
 <br><br><br>
+<?php require_once("mensagem.php") ?>
 <h1 class="titulo">Listagem de Livros <a href="cadastrarLivro.php" class="botao">
         <i class="fa-solid fa-plus"></i>
     </a></h1>
@@ -45,8 +64,10 @@ $resultado = mysqli_query($conexao, $sql);
         <label name="titulo" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
         <div class="input-button-container">
             <input name="titulo" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <a href="listarLivros.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+            <button name="pesquisar" stype="button" class="botaopesquisar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <?= $voltar ?>
         </div>
         <br><br>
     </form>
@@ -84,7 +105,7 @@ $resultado = mysqli_query($conexao, $sql);
                             <td>
                                 <?= $linha['statusLivro'] ?>
                             </td>
-                            <td>
+                            <td style="word-wrap: break-word;">
                                 <?= $linha['titulo'] ?>
                             </td>
                             <td>
@@ -98,19 +119,20 @@ $resultado = mysqli_query($conexao, $sql);
                             </td>
 
                             <td>
+                                <div class="d-flex justify-content-start">
+                                    <a style="margin-right: 8px;" href="alterarLivro.php? id=<?= $linha['id'] ?>"
+                                        class="botao">
+                                        <i class="fa-solid fa-pen-to-square"></i></a>
 
-                                <a style="margin-right: 8px;" href="alterarLivro.php? id=<?= $linha['id'] ?>" class="botao">
-                                    <i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal_<?= $linha['id'] ?>"
+                                        style="margin-right: 8px;" name="info" class="botao">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
 
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal_<?= $linha['id'] ?>"
-                                    style="margin-right: 8px;" name="info" class="botao">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
-
-                                <a href="listarLivros.php? id=<?= $linha['id'] ?>" class="botao"
-                                    onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                    <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
+                                    <a href="listarLivros.php? id=<?= $linha['id'] ?>" class="botao" data-bs-toggle="modal"
+                                        data-bs-target="#modalExcluir<?= $linha['id'] ?>">
+                                        <i class=" fa-sharp fa-solid fa-trash"></i> </a>
+                                </div>
                             </td>
                         </tr>
                         <div class="modal fade" id="exampleModal_<?= $linha['id'] ?>" tabindex="-1"
@@ -125,12 +147,43 @@ $resultado = mysqli_query($conexao, $sql);
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <img src="<?php echo "uploads/" . $linha['arquivo'] ?>" alt="">
+                                        <img src="<?php echo "uploads/" . $linha['arquivo'] ?>" alt=""
+                                            style="width: 200px; height: auto;">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modalExcluir<?= $linha['id'] ?>" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5" id="exampleModalLabel">Excluir Livro
+                                        </h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="post">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="idLivro" name="idLivro"
+                                                value="<?= $linha['id'] ?>">
+                                            <label for="">Para excluir o Livro
+                                                <?= $linha['titulo'] ?>, pressione:
+                                            </label>
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckIndeterminate" name="check">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" name="excluir" class="btn btn-danger"
+                                                data-bs-dismiss="modal">Excluir Livro</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -4,18 +4,28 @@
 require_once("conexao.php");
 
 require_once("admAutenticacao.php");
-
+$voltar = "";
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from editora where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
-    $mensagem = "Exclusão realizada com sucesso.";
+    $sqlVerificarEditora = "SELECT * FROM livro WHERE idEditora = " . $_GET['id'];
+    $resultadoVerificarEditora = mysqli_query($conexao, $sqlVerificarEditora);
+
+    if (mysqli_num_rows($resultadoVerificarEditora) > 0) {
+        // O leitor possui empréstimos pendentes, não permitir a exclusão
+        $mensagemAlert = "Não é possível excluir a Editora. Há livros cadastrados com ele.";
+    } else {
+        // Não existem empréstimos pendentes, prosseguir com a exclusão
+        $sqlExcluirLeitor = "DELETE FROM editora WHERE id = " . $_GET['id'];
+        mysqli_query($conexao, $sqlExcluirLeitor);
+        $mensagem = "Exclusão realizada com sucesso.";
+    }
 }
 
 
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
     $V_WHERE = " and nome like '%" . $_POST['nome'] . "%' ";
+    $voltar = '<a href="listarEditora.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
 }
 
 //2. Preparar a sql
@@ -29,6 +39,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <?php require_once("navbar.php"); ?>
 <br><br><br>
+<?php require_once("mensagem.php"); ?>
 <h1 class="titulo">Listagem de Editoras <a href="cadastrarEditora.php" class="botao">
         <i class="fa-solid fa-plus"></i>
     </a></h1>
@@ -41,8 +52,8 @@ $resultado = mysqli_query($conexao, $sql);
         <label name="nome" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
         <div class="input-button-container">
             <input name="nome" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar">Pesquisar</button>
-            <a href="listarEditora.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>
+            <button name="pesquisar" stype="button" class="botaopesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <?php echo $voltar ?>
         </div>
         <br><br>
     </form>

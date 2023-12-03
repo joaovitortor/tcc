@@ -7,9 +7,18 @@ require_once("admAutenticacao.php");
 
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
-    $sql = "delete from genero where id = " . $_GET['id'];
-    mysqli_query($conexao, $sql);
-    $mensagem = "Exclusão realizada com sucesso.";
+    $sqlVerificarGenero = "SELECT * FROM livro WHERE idGenero = " . $_GET['id'];
+    $resultadoVerificarGenero = mysqli_query($conexao, $sqlVerificarGenero);
+
+    if (mysqli_num_rows($resultadoVerificarGenero) > 0) {
+        // O leitor possui empréstimos pendentes, não permitir a exclusão
+        $mensagemAlert = "Não é possível excluir o Gênero. Há livros cadastrados com ele.";
+    } else {
+        // Não existem empréstimos pendentes, prosseguir com a exclusão
+        $sqlExcluirLeitor = "DELETE FROM genero WHERE id = " . $_GET['id'];
+        mysqli_query($conexao, $sqlExcluirLeitor);
+        $mensagem = "Exclusão realizada com sucesso.";
+    }
 }
 
 //2. Prepara a SQL
@@ -38,6 +47,7 @@ $resultado = mysqli_query($conexao, $sql);
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -96,6 +106,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
+                <?php require_once('mensagem.php') ?>
                     <div class="listar">
                         <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero
                             <a href="cadastrarGenero.php" class="botao">
