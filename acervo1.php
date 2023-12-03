@@ -15,7 +15,7 @@ if (isset($_GET['pagina']))
 if (!$pagina)
     $pagina = 1;
 
-$limite = 20;
+$limite = 3;
 $inicio = ($pagina * $limite) - $limite;
 
 $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
@@ -136,13 +136,13 @@ $resultado = mysqli_query($conexao, $sql);
     <a href="?pagina=1"> Primeira </a>
     <?php if ($pagina > 1) { ?>
         <a href="?pagina=<?= $pagina - 1 ?>">
-            << </a>
+        <i class="fa-solid fa-caret-left"></i> </a>
             <?php } ?>
 
             <?= $pagina ?>
 
             <?php if ($pagina < $paginas) { ?>
-                <a href="?pagina=<?= $pagina + 1 ?>"> >> </a>
+                <a href="?pagina=<?= $pagina + 1 ?>"> <i class="fa-solid fa-caret-right"></i> </a>
             <?php } ?>
             <a href="?pagina=<?= $paginas ?>"> Última </a>
 </div>
