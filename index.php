@@ -72,6 +72,9 @@ if (isset($_GET['mensagemAlert'])) {
     if (isset($mensagemAlert)) {
         require_once('mensagem.php');
     }
+    if(isset($_POST['pesquisar'])) {
+        $voltar = '<a href="acervo.php" style="text-decoration: none"><button name="voltar" stype="button" class="botaopesquisarAcervo">Voltar</button></a>';
+    }
     ?>
 
     <h1 class="titulo text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
@@ -85,7 +88,7 @@ if (isset($_GET['mensagemAlert'])) {
                 <button name="pesquisar" stype="button" class="botaopesquisarAcervo"><i
                         class="fa-solid fa-magnifying-glass"></i>
                 </button>
-
+                <?= $voltar; ?>
             </div>
             <br><br>
         </form>
