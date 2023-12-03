@@ -15,7 +15,7 @@ if (isset($_POST["procurarEmprestimo"])) {
 
 ?>
 
-<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalProcurarEmprestimo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,11 +28,11 @@ if (isset($_POST["procurarEmprestimo"])) {
                 <div class="modal-body">
                     <label for="">Código do Empréstimo:
                     </label>
-                    <input class="geekcb-field" placeholder="Código" required type="texto" name="idEmprestimo">
+                    <input style="width: 50%" class="geekcb-field" placeholder="Código" required type="texto" name="idEmprestimo">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" name="procurarEmprestimo" class="btn btn-danger"
+                    <button type="submit" name="procurarEmprestimo" class="btn btn-success"
                         data-bs-dismiss="modal">Procurar</button>
                 </div>
             </form>

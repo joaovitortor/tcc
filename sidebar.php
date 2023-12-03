@@ -25,7 +25,7 @@
     </ul>
 </li>
 
-<li><a data-bs-toggle="modal" data-bs-target="#exampleModal3">
+<li><a data-bs-toggle="modal" data-bs-target="#modalProcurarEmprestimo">
         <i class="fa-solid fa-arrows-left-right-to-line"></i><span class="link-name">Devolver</span>
     </a>
 </li>
