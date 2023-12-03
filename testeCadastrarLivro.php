@@ -4,6 +4,42 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
+if (isset($_POST['cadastrarAutor'])) {
+    //2. Receber os dados para inserir no BD
+    $status = $_POST['cadastrarAutorStatus'];
+    $nome = $_POST['cadastrarAutorNome'];
+
+    //3. preparar sql para inserir
+    $sql = "INSERT INTO autor (status, nome) VALUES ('$status', '$nome')";
+
+    //4. executar sql no bd
+    mysqli_query($conexao, $sql);
+}
+
+if (isset($_POST['cadastrarEditora'])) {
+    //2. Receber os dados para inserir no BD
+    $status = $_POST['cadastrarEditoraStatus'];
+    $nome = $_POST['cadastrarEditoraNome'];
+
+    //3. preparar sql para inserir
+    $sql = "INSERT INTO editora (status, nome) VALUES ('$status', '$nome')";
+
+    //4. executar sql no bd
+    mysqli_query($conexao, $sql);
+}
+
+if (isset($_POST['cadastrarGenero'])) {
+    //2. Receber os dados para inserir no BD
+    $status = $_POST['cadastrarGeneroStatus'];
+    $nome = $_POST['cadastrarGeneroNome'];
+
+    //3. preparar sql para inserir
+    $sql = "INSERT INTO genero (status, nome) VALUES ('$status', '$nome')";
+
+    //4. executar sql no bd
+    mysqli_query($conexao, $sql);
+}
+
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $statusLivro = $_POST['statusLivro'];
@@ -107,28 +143,57 @@ if (isset($_POST['cadastrar'])) {
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" enctype="multipart/form-data" id="insert_data">
                     <?php require_once("mensagem.php") ?>
-                    <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Livro</h1>
+
+                    <input class="geekcb-field" id="titulo" placeholder="Título do livro" required type="texto"
+                        name="titulo">
+
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" disabled="disabled"
-                                    placeholder="Status">Status</option>
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
                                 <option value="Disponível" selected="selected">Disponível</option>
                                 <option value="Emprestado">Emprestado</option>
                             </select>
                         </div>
                         <div class="form-column">
-                            <input class="geekcb-field" id="titulo" placeholder="Título do livro" required type="texto"
-                                name="titulo">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="geekcb-field" name="autor[]" id="autor" multiple>
+                                            <option class="fonte-status" disabled="disabled"
+                                                placeholder="Selecione os autores">
+                                            </option>
+                                            <?php
+                                            $sql = "select * from autor order by nome";
+                                            $resultado = mysqli_query($conexao, $sql);
+
+                                            while ($linha = mysqli_fetch_array($resultado)):
+                                                $idAutor = $linha['id'];
+                                                $nome = $linha['nome'];
+
+                                                echo "<option value='{$idAutor}'>{$nome}</option>";
+                                            endwhile;
+                                            ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalAutor">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <div class="form-row">
@@ -138,7 +203,31 @@ if (isset($_POST['cadastrar'])) {
                         </div>
 
                         <div class="form-column">
-                            <input class="geekcb-field" id="isbn" name="isbn" placeholder="ISBN" required type="texto">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
+                                            <option class="fonte-status" value="idEditora" selected="selected"
+                                                disabled="disabled" placeholder="Editora">Editora</option>
+                                            <?php
+                                            $sql = "select * from editora order by nome";
+                                            $resultado = mysqli_query($conexao, $sql);
+
+                                            while ($linha = mysqli_fetch_array($resultado)):
+                                                $id = $linha['id'];
+                                                $nome = $linha['nome'];
+
+                                                echo "<option value='{$id}'>{$nome}</option>";
+                                            endwhile;
+                                            ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalEditora"><i class="fa-solid fa-plus"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
                     <div class="form-row">
@@ -147,73 +236,147 @@ if (isset($_POST['cadastrar'])) {
                                 name="edicao">
                         </div>
                         <div class="form-column">
-                            <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="idGenero" selected="selected" disabled="disabled"
-                                    placeholder="Gênero">Gênero</option>
-                                <?php
-                                $sql = "select * from genero order by nome";
-                                $resultado = mysqli_query($conexao, $sql);
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                                            <option class="fonte-status" value="idGenero" selected="selected"
+                                                disabled="disabled" placeholder="Gênero">Gênero</option>
+                                            <?php
+                                            $sql = "select * from genero order by nome";
+                                            $resultado = mysqli_query($conexao, $sql);
 
-                                while ($linha = mysqli_fetch_array($resultado)):
-                                    $id = $linha['id'];
-                                    $nome = $linha['nome'];
+                                            while ($linha = mysqli_fetch_array($resultado)):
+                                                $id = $linha['id'];
+                                                $nome = $linha['nome'];
 
-                                    echo "<option value='{$id}'>{$nome}</option>";
-                                endwhile;
-                                ?>
-                            </select>
+                                                echo "<option value='{$id}'>{$nome}</option>";
+                                            endwhile;
+                                            ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalGenero"><i class="fa-solid fa-plus"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="idEditora" selected="selected" disabled="disabled"
-                                    placeholder="Editora">Editora</option>
-                                <?php
-                                $sql = "select * from editora order by nome";
-                                $resultado = mysqli_query($conexao, $sql);
-
-                                while ($linha = mysqli_fetch_array($resultado)):
-                                    $id = $linha['id'];
-                                    $nome = $linha['nome'];
-
-                                    echo "<option value='{$id}'>{$nome}</option>";
-                                endwhile;
-                                ?>
-                            </select>
+                            <input class="geekcb-field" id="isbn" name="isbn" placeholder="ISBN" required type="texto">
                         </div>
                         <div class="form-column">
                             <input type="file" class="geekcb-field" name="arquivo" id="arquivo">
-
                         </div>
-
-
                     </div>
-                    <label for="autor">Selecione o(s) autor(es) do livro: </label>
-                    <br>
-                    <select class="geekcb-field" name="autor[]" id="autor" multiple>
-                        <option class="fonte-status" disabled="disabled" placeholder="Selecione os autores"></option>
-                        <?php
-                        $sql = "select * from autor order by nome";
-                        $resultado = mysqli_query($conexao, $sql);
-
-                        while ($linha = mysqli_fetch_array($resultado)):
-                            $idAutor = $linha['id'];
-                            $nome = $linha['nome'];
-
-                            echo "<option value='{$idAutor}'>{$nome}</option>";
-                        endwhile;
-                        ?>
-
-                    </select>
-                    <br><br>
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                    <div class="form-row">
+                        <div class="form-column esquerda" style="width: 70%">
+                            <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></a>
+                        </div>
+                        <div class="form-column">
+                            <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                        </div>
+                    </div>
                 </form>
-
-
             </div>
         </div>
+
+        <!-- MODALS CADASTRAR -->
+
+        <!-- MODAL CADASTRAR AUTOR -->
+        <div class="modal fade" id="modalAutor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">
+                            Cadastrar Autor
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="post">
+                        <div class="modal-body">
+                            <select type="hidden" class="geekcb-field" name="cadastrarAutorStatus" id="selectbox"
+                                data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
+                                <option value="Ativo" selected="selected">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                            <input class="geekcb-field" value="" placeholder="Nome" required type="texto"
+                                name="cadastrarAutorNome">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button class="geekcb-btn" type="submit" name="cadastrarAutor">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
+        <!-- MODAL CADASTRAR GÊNERO -->
+        <div class="modal fade" id="modalGenero" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">
+                            Cadastrar Gênero
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="post">
+                        <div class="modal-body">
+                            <select type="hidden" class="geekcb-field" name="cadastrarGeneroStatus" id="selectbox"
+                                data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
+                                <option value="Ativo" selected="selected">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                            <input class="geekcb-field" value="" placeholder="Nome" required type="texto"
+                                name="cadastrarGeneroNome">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button class="geekcb-btn" type="submit" name="cadastrarGenero">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL CADASTRAR EDITORA -->
+        <div class="modal fade" id="modalEditora" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">
+                            Cadastrar Editora
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="post">
+                        <div class="modal-body">
+                            <select type="hidden" class="geekcb-field" name="cadastrarEditoraStatus" id="selectbox"
+                                data-selected="">
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
+                                <option value="Ativo" selected="selected">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                            <input class="geekcb-field" value="" placeholder="Nome" required type="texto"
+                                name="cadastrarEditoraNome">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button class="geekcb-btn" type="submit" name="cadastrarEditora">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
@@ -242,6 +405,7 @@ if (isset($_POST['cadastrar'])) {
         });
     </script>
     <script src="js/script.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
     <script>
         $(document).ready(function () {
             $('#autor').select2();
