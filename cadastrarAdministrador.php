@@ -103,9 +103,9 @@ values ('$status', '$login', '$senha')";
                     <h1 class="titulo">Cadastrar Administrador</h1>
 
                     <select id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                            placeholder="Status" selected="selected">Status</option>
-                        <option value="Ativo">Ativo</option>
+                        <option class="fonte-status" value="" disabled="disabled"
+                            placeholder="Status">Status</option>
+                        <option value="Ativo" selected="selected">Ativo</option>
                         <option value="Inativo">Inativo</option>
 
                     </select>

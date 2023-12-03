@@ -10,12 +10,12 @@ $voltar = '';
 if (isset($_POST['excluir'])) { // Verifica se o botão excluir foi clicado
     $idLivro = $_POST['idLivro'];
 
-    $sqlVerificarEmprestimo = "SELECT * FROM emprestimo WHERE idLeitor = " . $idLivro;
+    $sqlVerificarEmprestimo = "SELECT * FROM itensdeemprestimo WHERE idLivro = " . $idLivro;
     $resultadoVerificarEmprestimo = mysqli_query($conexao, $sqlVerificarEmprestimo);
 
     if (mysqli_num_rows($resultadoVerificarEmprestimo) > 0) {
         // O leitor possui empréstimos pendentes, não permitir a exclusão
-        $mensagemAlert = "Não é possível excluir o Livro. Há empréstimos realizados por ele.";
+        $mensagemAlert = "Não é possível excluir o Livro. Há empréstimos cadastrados com ele.";
     } else {
         // Não existem empréstimos pendentes, prosseguir com a exclusão
 
@@ -52,7 +52,7 @@ $resultado = mysqli_query($conexao, $sql);
 <?php require_once("navbar.php"); ?>
 <br><br><br>
 <?php require_once("mensagem.php") ?>
-<h1 class="titulo">Listagem de Livros <a href="cadastrarLivro.php" class="botao">
+<h1 class="titulo text">Listagem de Livros <a href="cadastrarLivro.php" class="botao">
         <i class="fa-solid fa-plus"></i>
     </a></h1>
 
@@ -61,7 +61,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <center>
     <form method="post">
-        <label name="titulo" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+        <label name="titulo" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
         <div class="input-button-container">
             <input name="titulo" type="text" class="formcampo">
             <button name="pesquisar" stype="button" class="botaopesquisar">

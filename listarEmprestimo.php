@@ -39,7 +39,7 @@ $resultado = mysqli_query($conexao, $sql);
 <?php require_once("navbar.php"); ?>
 <br><br><br>
 <?php require_once("mensagem.php"); ?>
-<h1 class="titulo">Listagem de empréstimos ativos<a href="emprestimo.php" class="botao">
+<h1 class="titulo text">Listagem de empréstimos ativos<a href="emprestimo.php" class="botao">
         <i class="fa-solid fa-plus"></i>
     </a></h1>
 
@@ -48,7 +48,7 @@ $resultado = mysqli_query($conexao, $sql);
 
 <center>
     <form method="post">
-        <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar</label>
+        <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
         <div class="input-button-container">
             <input name="pesquisa" type="text" class="formcampo">
             <button name="pesquisar" stype="button" class="botaopesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
