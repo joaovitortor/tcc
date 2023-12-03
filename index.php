@@ -3,7 +3,7 @@
 //require_once("verificaautenticacao.php");
 require_once("conexao.php");
 
-
+$voltar = "";
 // Excluir
 if (isset($_POST['excluir'])) {
     if (isset($_POST['check'])) { // Verifica se o botão excluir foi clicado
@@ -68,29 +68,32 @@ if (isset($_GET['mensagemAlert'])) {
         </div>
     </div>
     <br><br><br>
-   <?php 
+    <?php
     if (isset($mensagemAlert)) {
         require_once('mensagem.php');
     }
-     ?>
+    ?>
 
     <h1 class="titulo text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
-    
-<center>
-    <form method="post">
-        <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar livros no acervo da biblioteca</label>
-        <div class="input-button-container">
-            <input name="pesquisa" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisarAcervo">Pesquisar</button>
-            <a href="acervo.php"><button name="voltar" stype="button" class="botaopesquisarAcervo">Voltar</button></a>
-        </div>
-        <br><br>
-    </form>
-</center>
+
+    <center>
+        <form method="post">
+            <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar livros no acervo da
+                biblioteca</label>
+            <div class="input-button-container">
+                <input name="pesquisa" type="text" class="formcampo">
+                <button name="pesquisar" stype="button" class="botaopesquisarAcervo"><i
+                        class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+            </div>
+            <br><br>
+        </form>
+    </center>
 
     <div class="acervocontainer">
 
-    <?php require_once('acervo1.php')?>
+        <?php require_once('acervo1.php') ?>
     </div>
 
 
@@ -105,11 +108,13 @@ if (isset($_GET['mensagemAlert'])) {
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input class="geekcb-field"  placeholder="E-mail" required type="text" name="email" id="email">
+                            <input class="geekcb-field" placeholder="E-mail" required type="text" name="email"
+                                id="email">
                         </div>
                         <div class="mb-3">
                             <label for="senha" class="form-label">Senha</label>
-                            <input class="geekcb-field"  placeholder="senha" required type="password" name="senha" id="senha">
+                            <input class="geekcb-field" placeholder="senha" required type="password" name="senha"
+                                id="senha">
                         </div>
                     </div>
                     <div class="modal-footer">

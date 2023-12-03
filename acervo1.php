@@ -4,7 +4,7 @@ require_once("conexao.php");
 $V_WHERE = "";
 if (isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " AND livro.titulo LIKE '%{$_POST['pesquisa']}%' ";
-
+    $voltar = '<a href="acervo.php" style="text-decoration: none"><button name="voltar" stype="button" class="botaopesquisarAcervo">Voltar</button></a>';
 }
 
 $pagina = 1;
