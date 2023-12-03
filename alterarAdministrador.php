@@ -24,11 +24,11 @@ if (isset($_POST['salvar'])) {
     mysqli_query($conexao, $sql);
 
     //5. Mostrar uma mensagem ao usuário
-    $mensagem = "Inserido com sucesso &#128515;";
+    $mensagem = "Alterado com sucesso";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
-$sql = "select * from editora where id = " . $_GET['id'];
+$sql = "select * from administrador where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
     ?>
@@ -50,6 +50,7 @@ $linha = mysqli_fetch_array($resultado)
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -111,25 +112,28 @@ $linha = mysqli_fetch_array($resultado)
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
                     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
                     $login = isset($_POST['login']) ? $_POST['login'] : "";
-
+                    $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
                     ?>
 
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
+                    <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <h1 class="titulo">Alterar Editora</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="status" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
+                        <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                        </option>
+                        <option value="Ativo" <?= ($linha['status'] == 'Ativo') ? 'selected="selected"' : '' ?>>Ativo
+                        </option>
+                        <option value="Inativo" <?= ($linha['status'] == 'Inativo') ? 'selected="selected"' : '' ?>>Inativo
+                        </option>
                     </select>
 
-                    <input class="geekcb-field" value="<?= $login ?>" placeholder="Login" required type="texto"
+                    <input class="geekcb-field" value="<?= $linha['login'] ?>" placeholder="Login" required type="texto"
                         name="login">
-                    <input class="geekcb-field" value="<?= $senha ?>" placeholder="Senha" required type="password"
+                    <input class="geekcb-field" value="<?= $linha['senha'] ?>" placeholder="Senha" required type="password"
                         name="login">
 
 

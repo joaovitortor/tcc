@@ -123,7 +123,7 @@ $resultado = mysqli_query($conexao, $sql);
 
                                         <td>
 
-                                            <a href="produtoAlterar.php? id=<?= $linha['id'] ?>" class="botao">
+                                            <a href="alterarAdministrador.php? id=<?= $linha['id'] ?>" class="botao">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
 

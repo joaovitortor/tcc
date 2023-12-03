@@ -11,21 +11,29 @@ if (isset($_POST['salvar'])) {
     $status = $_POST['status'];
 
     //3. Preparar a SQL
-    $sql = "update editora
+    $sql = "update autor
     set nome= '$nome',
     status = '$status'
     where id = $id";
 
     //4. Executar a SQL
     mysqli_query($conexao, $sql);
+
+    //5. Mostrar uma mensagem ao usuário
     $mensagem = "Alterado com sucesso";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
-$sql = "select * from editora where id = " . $_GET['id'];
+$sql = "select * from autor where id = " . $_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
     ?>
+
+<?php //require_once("mensagem.php") ?>
+<?php
+//1. conectar no banco de dados (ip, usuario, senha, nome do banco)
+require_once("conexao.php");
+?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
@@ -50,12 +58,12 @@ $linha = mysqli_fetch_array($resultado)
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="shortcut icon" href="logo.ico">
 
-    <title>Alterar Editora</title>
+    <title>Alterar Gênero</title>
 </head>
 
 <body>
     <nav>
-        <a href="main.php" style="text-decoration:none">
+        <a href="main.php" style="text-decoration: none">
             <div class="logo-name">
                 <div class="logo-image">
                     <img src="logo.ico" alt="">
@@ -69,13 +77,13 @@ $linha = mysqli_fetch_array($resultado)
             </ul>
 
             <ul class="logout-mode">
-                <li><a href="#">
+                <li><a href="sair.php">
                         <i class="uil uil-signout"></i>
                         <span class="link-name">Logout</span>
                     </a></li>
 
                 <li class="mode">
-                    <a href="sair.php">
+                    <a href="#">
                         <i class="uil uil-moon"></i>
                         <span class="link-name">Dark Mode</span>
                     </a>
@@ -104,9 +112,9 @@ $linha = mysqli_fetch_array($resultado)
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                    <?php require_once("mensagem.php") ?>
+                    <?php require_once("mensagem.php"); ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                    <h1 class="titulo">Alterar Editora</h1>
+                    <h1 class="titulo">Alterar Autor</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status

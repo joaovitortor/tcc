@@ -20,7 +20,7 @@ if (isset($_POST['salvar'])) {
     mysqli_query($conexao, $sql);
 
     //5. Mostrar uma mensagem ao usuário
-    $mensagem = "Inserido com sucesso &#128515;";
+    $mensagem = "Alterado com sucesso";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
@@ -52,6 +52,7 @@ require_once("conexao.php");
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -111,15 +112,17 @@ require_once("conexao.php");
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
+                    <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <h1 class="titulo">Alterar Gênero</h1>
 
-                    <select class="geekcb-field" value="<?= $linha['status'] ?>" name="status" id="selectbox"
-                        data-selected="">
-                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
+                    <select class="geekcb-field" name="status" id="selectbox" data-selected="">
+                        <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                        </option>
+                        <option value="Ativo" <?= ($linha['status'] == 'Ativo') ? 'selected="selected"' : '' ?>>Ativo
+                        </option>
+                        <option value="Inativo" <?= ($linha['status'] == 'Inativo') ? 'selected="selected"' : '' ?>>Inativo
+                        </option>
                     </select>
 
                     <input class="geekcb-field" value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto"

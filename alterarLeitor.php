@@ -37,7 +37,7 @@ if (isset($_POST['salvar'])) {
     mysqli_query($conexao, $sql);
 
     //5. Mostrar uma mensagem ao usuário
-    $mensagem = "Alterado com sucesso &#128515;";
+    $mensagem = "Alterado com sucesso";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
@@ -141,10 +141,10 @@ $linha = mysqli_fetch_array($resultado)
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                                    placeholder="Status">Status</option>
-                                <option value="1">Ativo</option>
-                                <option value="2">Inativo</option>
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
+                                <option value="Ativo" <?= ($linha['status'] == 'Ativo') ? 'selected="selected"' : '' ?>>Ativo</option>
+                                <option value="Pendente" <?= ($linha['status'] == 'Pendente') ? 'selected="selected"' : '' ?>>Pendente</option>
                             </select>
                         </div>
                         <div class="form-column">

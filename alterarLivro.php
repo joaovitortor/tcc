@@ -67,7 +67,7 @@ if (isset($_POST['salvar'])) {
     }
 
 
-    // Sua mensagem de sucesso...
+    $mensagem = "Alterado com sucesso";
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
@@ -175,6 +175,7 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
                 </form>
 
                 <form method="post" class="geekcb-form-contact" enctype="multipart/form-data" id="insert_data">
+                    <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Alterar Livro</h1>
@@ -187,7 +188,6 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
                                 <option value="Disponível" <?= ($linha['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível</option>
                                 <option value="Emprestado" <?= ($linha['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado</option>
                             </select>
-
                         </div>
                         <div class="form-column">
                             <label for="">Título</label>
