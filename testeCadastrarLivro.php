@@ -37,6 +37,7 @@ if (isset($_POST['cadastrar'])) {
         $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
         mysqli_query($conexao, $sql);
     }
+    $mensagem = "Cadastrado com sucesso";
 }
 
 
@@ -113,14 +114,15 @@ if (isset($_POST['cadastrar'])) {
             </div>
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" enctype="multipart/form-data" id="insert_data">
+                    <?php require_once("mensagem.php") ?>
                     <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Livro</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                                <option class="fonte-status" value="" disabled="disabled"
                                     placeholder="Status">Status</option>
-                                <option value="Disponível">Disponível</option>
+                                <option value="Disponível" selected="selected">Disponível</option>
                                 <option value="Emprestado">Emprestado</option>
                             </select>
                         </div>

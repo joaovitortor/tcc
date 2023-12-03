@@ -3,7 +3,7 @@
     <ul class="cadastrar-show">
         <li><a href="emprestimo.php" class="text">Emprestimo</a></li>
         <li><a href="cadastrarLeitor.php" class="text">Leitor</a></li>
-        <li><a href="cadastrarLivro.php" class="text">Livro</a></li>
+        <li><a href="testeCadastrarLivro.php" class="text">Livro</a></li>
         <li><a href="cadastrarAutor.php" class="text">Autor</a></li>
         <li><a href="cadastrarAdministrador.php" class="text">Administrador</a></li>
         <li><a href="cadastrarGenero.php" class="text">Gênero</a></li>
