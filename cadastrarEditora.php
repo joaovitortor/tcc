@@ -102,8 +102,8 @@ if (isset($_POST['cadastrar'])) {
                     <h1 class="titulo">Cadastrar Editora</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
+                        <option class="fonte-status" value="" disabled="disabled"
+                            placeholder="Status" selected="selected">Status</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Inativo">Inativo</option>
                     </select>

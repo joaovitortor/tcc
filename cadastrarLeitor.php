@@ -177,9 +177,9 @@ if (isset($_POST['cadastrar'])) {
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                                <option class="fonte-status" value="" disabled="disabled"
                                     placeholder="Status">Status</option>
-                                <option value="Ativo">Ativo</option>
+                                <option value="Ativo" selected="selected">Ativo</option>
                                 <option value="Inativo">Inativo</option>
                             </select>
                         </div>

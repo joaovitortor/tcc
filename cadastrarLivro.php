@@ -109,9 +109,9 @@ if (isset($_POST['cadastrar'])) {
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" selected="selected" disabled="disabled"
+                                <option class="fonte-status" value="" disabled="disabled"
                                     placeholder="Status">Status</option>
-                                <option value="Disponível">Disponível</option>
+                                <option value="Disponível" selected="selected">Disponível</option>
                                 <option value="Emprestado">Emprestado</option>
                             </select>
                         </div>

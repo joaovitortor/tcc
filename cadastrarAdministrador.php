@@ -104,7 +104,7 @@ values ('$status', '$login', '$senha')";
 
                     <select id="selectbox" data-selected="">
                         <option class="fonte-status" value="" selected="selected" disabled="disabled"
-                            placeholder="Status">Status</option>
+                            placeholder="Status" selected="selected">Status</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Inativo">Inativo</option>
 
