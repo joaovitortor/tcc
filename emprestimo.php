@@ -11,7 +11,7 @@ if (isset($_POST['cadastrar'])) {
     $resultado = mysqli_query($conexao, $sqlLeitor);
     $linhaLeitor = mysqli_fetch_array($resultado);
     $statusLeitor = $linhaLeitor['status'];
-  
+
     if ($statusLeitor == 'Ativo') {
         $sql = "INSERT INTO emprestimo (statusEmprestimo, dataPrevistaDevolucao, idLeitor) VALUES ('$statusEmprestimo', '$dataPrevistaDevolucao','$idLeitor')";
 
@@ -41,7 +41,6 @@ if (isset($_POST['cadastrar'])) {
 ?>
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -106,11 +105,12 @@ if (isset($_POST['cadastrar'])) {
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="geekcb-form-contact" id="formularioEmprestimo">
                     <?php require_once("mensagem.php"); ?>
@@ -181,10 +181,9 @@ if (isset($_POST['cadastrar'])) {
                     <button class="geekcb-btn" type="submit" name="cadastrar" id="cadastrar">Realizar
                         empréstimo</button>
                 </form>
-
-
             </div>
         </div>
+        <?php require_once("procurarEmprestimo.php"); ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

@@ -37,101 +37,172 @@ $resultado = mysqli_query($conexao, $sql);
 
 ?>
 
-<?php require_once("navbar.php"); ?>
-<br><br><br>
-<?php require_once("mensagem.php"); ?>
-<h1 class="titulo text">Listagem de Editoras <a href="cadastrarEditora.php" class="botao">
-        <i class="fa-solid fa-plus"></i>
-    </a></h1>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-<br><br>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <!--muda a fonte-->
+    <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
 
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/acervo.css">
 
-<center>
-    <form method="post">
-        <label name="nome" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
-        <div class="input-button-container">
-            <input name="nome" type="text" class="formcampo">
-            <button name="pesquisar" stype="button" class="botaopesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <?php echo $voltar ?>
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
+
+    <title>Listar Editoras</title>
+</head>
+
+<body>
+    <nav>
+        <a href="main.php" style="text-decoration: none">
+            <div class="logo-name">
+                <div class="logo-image">
+                    <img src="logo.ico" alt="">
+                </div>
+                <span class="logo_name">Bibliotech</span>
+            </div>
+        </a>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <?php require_once('sidebar.php') ?>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="sair.php">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Dark Mode</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </nav>
+
+    <section class="dashboard">
+
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
+            </div>
+        </div>
+        <br><br><br>
+        <?php require_once("mensagem.php"); ?>
+        <h1 class="titulo text">Listagem de Editoras <a href="cadastrarEditora.php" class="botao">
+                <i class="fa-solid fa-plus"></i>
+            </a></h1>
+
         <br><br>
-    </form>
-</center>
 
 
-<center>
-    <div class="card cardlistar">
-        <div class="card-body cardlistar2">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td scope="col"><b>ID</b></td>
-                        <td scope="col"><b>Status</b></td>
-                        <td scope="col"><b>Nome</b></td>
-                        <td scope="col"><b>Ações</b></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                        <tr>
-                            <td>
-                                <?= $linha['id'] ?>
-                            </td>
-                            <td>
-                                <?= $linha['status'] ?>
-                            </td>
-                            <td>
-                                <?= $linha['nome'] ?>
-                            </td>
-                            <td>
-
-                                <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>"
-                                    class="botao">
-                                    <i class="fa-solid fa-pen-to-square"></i></a>
+        <center>
+            <form method="post">
+                <label name="nome" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
+                <div class="input-button-container">
+                    <input name="nome" type="text" class="formcampo">
+                    <button name="pesquisar" stype="button" class="botaopesquisar"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                    <?php echo $voltar ?>
+                </div>
+                <br><br>
+            </form>
+        </center>
 
 
-                                <a href="listarEditora.php? id=<?= $linha['id'] ?>" class="botao"
-                                    onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                    <i class="fa-sharp fa-solid fa-trash"></i> </a>
+        <center>
+            <div class="card cardlistar">
+                <div class="card-body cardlistar2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td scope="col"><b>ID</b></td>
+                                <td scope="col"><b>Status</b></td>
+                                <td scope="col"><b>Nome</b></td>
+                                <td scope="col"><b>Ações</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                                <tr>
+                                    <td>
+                                        <?= $linha['id'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $linha['status'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $linha['nome'] ?>
+                                    </td>
+                                    <td>
 
-                            </td>
-                        </tr>
+                                        <a style="margin-right: 8px;" href="alterarEditora.php? id=<?= $linha['id'] ?>"
+                                            class="botao">
+                                            <i class="fa-solid fa-pen-to-square"></i></a>
 
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</center>
-</section>
-<script>
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-        arrow[i].addEventListener("click", (e) => {
-            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-            arrowParent.classList.toggle("showMenu");
+
+                                        <a href="listarEditora.php? id=<?= $linha['id'] ?>" class="botao"
+                                            onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                            <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                    </td>
+                                </tr>
+
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </center>
+        <?php require_once('procurarEmprestimo.php') ?>
+    </section>
+    <script>
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        console.log(sidebarBtn);
+        sidebarBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
         });
-    }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#telefone').inputmask('(99) 99999-9999');
-    });
-    $(document).ready(function () {
-        $('#dn').inputmask('99/99/9999');
-    });
-    $(document).ready(function () {
-        $('#cpf').inputmask('999.999.999-99');
-    });
-</script>
-<script src="js/script.js"></script>
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#telefone').inputmask('(99) 99999-9999');
+        });
+        $(document).ready(function () {
+            $('#dn').inputmask('99/99/9999');
+        });
+        $(document).ready(function () {
+            $('#cpf').inputmask('999.999.999-99');
+        });
+    </script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

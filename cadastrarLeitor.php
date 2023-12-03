@@ -6,6 +6,10 @@ require_once("conexao.php");
 require_once("admAutenticacao.php");
 
 $cpfInvalido = "";
+
+if (isset($_GET['mensagem'])) {
+$mensagem = $_GET['mensagem'];
+}
 if (isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
@@ -93,7 +97,6 @@ if (isset($_POST['cadastrar'])) {
 
 ?>
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -110,11 +113,12 @@ if (isset($_POST['cadastrar'])) {
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="shortcut icon" href="logo.ico">
-    
+
     <title>Cadastrar Leitor</title>
 </head>
 
@@ -154,11 +158,12 @@ if (isset($_POST['cadastrar'])) {
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
@@ -172,13 +177,13 @@ if (isset($_POST['cadastrar'])) {
                     ?>
                 </form>
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
-                    <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
+                    <?php require_once("mensagem.php") ?>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                                <option class="fonte-status" value="" disabled="disabled"
-                                    placeholder="Status">Status</option>
+                                <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                                </option>
                                 <option value="Ativo" selected="selected">Ativo</option>
                                 <option value="Inativo">Inativo</option>
                             </select>
@@ -219,13 +224,19 @@ if (isset($_POST['cadastrar'])) {
                             <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
                         </div>
                     </div>
-                    <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                    <div class="form-row">
+                        <div class="form-column esquerda" style="width: 70%">
+                            <a href="listarLeitor.php" class="botaolistar" style="padding: 7.45px 8px"><i
+                                    class="fa-regular fa-file-lines"></i></a>
+                        </div>
+                        <div class="form-column">
+                            <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
+                        </div>
+                    </div>
                 </form>
-
-
             </div>
         </div>
-        </div>
+        <?php require_once("procurarEmprestimo.php") ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

@@ -33,7 +33,6 @@ $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
     ?>
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -95,17 +94,12 @@ $linha = mysqli_fetch_array($resultado)
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
-                <div class="search-box">
-                    <i class="uil uil-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-
-                <!--<img src="images/profile.jpg" alt="">-->
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
@@ -133,15 +127,17 @@ $linha = mysqli_fetch_array($resultado)
 
                     <input class="geekcb-field" value="<?= $linha['login'] ?>" placeholder="Login" required type="texto"
                         name="login">
-                    <input class="geekcb-field" value="<?= $linha['senha'] ?>" placeholder="Senha" required type="password"
-                        name="login">
+                    <input class="geekcb-field" value="<?= $linha['senha'] ?>" placeholder="Senha" required
+                        type="password" name="login">
 
 
                     <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
                 </form>
             </div>
         </div>
-        </div>
+        <?php
+        require_once("procurarEmprestimo.php");
+        ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

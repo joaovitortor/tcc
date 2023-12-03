@@ -21,7 +21,6 @@ if (isset($_POST['cadastrar'])) {
 
 ?>
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -38,6 +37,7 @@ if (isset($_POST['cadastrar'])) {
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -82,11 +82,12 @@ if (isset($_POST['cadastrar'])) {
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
@@ -97,20 +98,16 @@ if (isset($_POST['cadastrar'])) {
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-
-
+                    <?php require_once("mensagem.php") ?>
                     <h1 class="titulo"> Cadastrar Gênero</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" disabled="disabled"
-                            placeholder="Status">Status</option>
+                        <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status</option>
                         <option value="Ativo" selected="selected">Ativo</option>
                         <option value="Inativo">Inativo</option>
                     </select>
-
                     <input class="geekcb-field" value="<?= $nome ?>" placeholder="Nome" required type="texto"
                         name="nome">
-
                     <table>
                         <tr>
                             <td style="padding-right: 70px"><a href="listarGenero.php" class="botaolistar"> <i
@@ -119,11 +116,10 @@ if (isset($_POST['cadastrar'])) {
 
                         </tr>
                     </table>
-
                 </form>
             </div>
         </div>
-        </div>
+        <?php require_once("procurarEmprestimo.php") ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

@@ -21,7 +21,6 @@ $resultado = mysqli_query($conexao, $sql);
 
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>

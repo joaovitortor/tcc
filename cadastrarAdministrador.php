@@ -24,7 +24,6 @@ values ('$status', '$login', '$senha')";
 
 ?>
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -41,6 +40,7 @@ values ('$status', '$login', '$senha')";
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -85,11 +85,12 @@ values ('$status', '$login', '$senha')";
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
@@ -100,18 +101,18 @@ values ('$status', '$login', '$senha')";
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
+                    <?php require_once("mensagem.php"); ?>
                     <h1 class="titulo">Cadastrar Administrador</h1>
 
-                    <select id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" disabled="disabled"
-                            placeholder="Status">Status</option>
+                    <select class="geekcb-field" id="selectbox" data-selected="" name="status">
+                        <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
+                        </option>
                         <option value="Ativo" selected="selected">Ativo</option>
                         <option value="Inativo">Inativo</option>
-
                     </select>
 
-
                     <input class="geekcb-field" placeholder="Login" required type="text" name="login">
+
                     <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
 
                     <table>
@@ -125,7 +126,9 @@ values ('$status', '$login', '$senha')";
                 </form>
             </div>
         </div>
-        </div>
+        <?php
+        require_once("procurarEmprestimo.php");
+        ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

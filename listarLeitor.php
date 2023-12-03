@@ -43,7 +43,6 @@ $resultado = mysqli_query($conexao, $sql);
 ?>
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -65,8 +64,9 @@ $resultado = mysqli_query($conexao, $sql);
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
 
-    <title>Administrador Bibliotech</title>
+    <title>Listar Leitores</title>
 </head>
 
 <body>
@@ -105,7 +105,6 @@ $resultado = mysqli_query($conexao, $sql);
     </nav>
 
     <section class="dashboard">
-
         <div class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
@@ -126,7 +125,8 @@ $resultado = mysqli_query($conexao, $sql);
                 <center>
                     <div class="input-button-container">
                         <input name="nome" type="text" class="formcampo">
-                        <button name="pesquisar" stype="button" class="botaopesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button name="pesquisar" stype="button" class="botaopesquisar"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                         <?php echo $voltar; ?>
                     </div>
                 </center>
@@ -267,8 +267,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </table>
             </div>
         </div>
-
-
+        <?php require_once("procurarEmprestimo.php"); ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

@@ -3,7 +3,6 @@ require_once('leitorAutenticacao.php');
 ?>
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>

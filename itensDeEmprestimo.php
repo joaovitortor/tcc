@@ -191,144 +191,211 @@ $resultado = mysqli_query($conexao, $sql);
 
 ?>
 
-<?php require_once("navbar.php"); ?>
-<br><br><br>
-<h1 class="titulo text">Itens de Empréstimo</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-<center>
-    <form method="post">
-        <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
-        <?php echo $multa; ?>
-        <br><br>
-        <div class="card cardlistar">
-            <div class="card-body cardlistar2">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <!--muda a fonte-->
+    <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <div style="display: flex; justify-content: space-between;">
-                                <h5 style="margin-right: ">Leitor(a):
-                                    <?php
-                                    echo $linhaLeitor['nome']; ?>
-                                </h5>
-                                <h5>Data Emprestimo
-                                    <?php $linhaData = mysqli_fetch_assoc($dataEmprestimo);
-                                    $dataEmpres = date("d/m/Y", strtotime($linhaData['dataEmprestimo']));
-                                    echo $dataEmpres ?>
-                                </h5>
-                            </div>
-                        </tr>
-                        <?php require_once("mensagem.php"); ?>
-                        <tr>
-                            <td scope="col"><b>ID do Empréstimo</b></td>
-                            <td scope="col"><b>Item</b></td>
-                            <td scope="col"><b>Status</b></td>
-                            <td scope="col"><b>Data Prevista</b></td>
-                            <td scope="col"><b>Data devolvido</b></td>
-                            <td scope="col"><b>Selecionar livro</b></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                            <tr>
-                                <td>
-                                    <?= $linha['idEmprestimo'] ?>
-                                </td>
-                                <input type="hidden" name="idEmprestimo" value="<?= $linha['idEmprestimo'] ?>">
-                                <td>
-                                    <?= $linha['titulo'] ?>
-                                </td>
-                                <td>
-                                    <?= $linha['statusItem'] ?>
-                                </td>
-                                <td>
-                                    <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
-                                </td>
-                                <td>
-                                    <?php isset($linha['dataDevolvido']) ? $data = date("d/m/Y", strtotime($linha['dataDevolvido'])) : $data = "";
-                                    echo $data ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    $checked = "";
-                                    if ($linha['statusItem'] == 'Devolvido') {
-                                        $checked = 'disabled';
-                                    } ?>
-                                    <input class="form-check-input" type="checkbox" name="idLivro[]"
-                                        value=" <?= $linha['idLivro'] ?>" id="flexCheckIndeterminate" <?php echo $checked ?>>
-                                </td>
-                            </tr>
-                            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h2 class="modal-title fs-5" id="exampleModalLabel">Finalizar
-                                            </h2>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form method="post">
-                                            <div class="modal-body">
-                                                <input type="hidden" id="idEmprestimo" name="idEmprestimo"
-                                                    value="<?= $linha['idEmprestimo'] ?>">
-                                                <label for="">Para finalizar o empréstimo, pressione:
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckIndeterminate" name="check">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Fechar</button>
-                                                <button type="submit" name="finalizar" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Finalizar</button>
-                                            </div>
-                                        </form>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/acervo.css">
+
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
+
+    <title>Devolução</title>
+</head>
+
+<body>
+    <nav>
+        <a href="main.php" style="text-decoration: none">
+            <div class="logo-name">
+                <div class="logo-image">
+                    <img src="logo.ico" alt="">
+                </div>
+                <span class="logo_name">Bibliotech</span>
+            </div>
+        </a>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <?php require_once('sidebar.php') ?>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="sair.php">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Dark Mode</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
+            </div>
+        </div><br><br><br>
+        <h1 class="titulo text">Itens de Empréstimo</h1>
+        <center>
+            <form method="post">
+                <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
+                <?php echo $multa; ?>
+                <br><br>
+                <div class="card cardlistar">
+                    <div class="card-body cardlistar2">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <h5 style="margin-right: ">Leitor(a):
+                                            <?php
+                                            echo $linhaLeitor['nome']; ?>
+                                        </h5>
+                                        <h5>Data Emprestimo
+                                            <?php $linhaData = mysqli_fetch_assoc($dataEmprestimo);
+                                            $dataEmpres = date("d/m/Y", strtotime($linhaData['dataEmprestimo']));
+                                            echo $dataEmpres ?>
+                                        </h5>
                                     </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-
-                    </tbody>
-                </table>
-                <button name="devolver" type="submit" class="botaopesquisar" style="margin-top: 10pt">Devolver</button>
-                <button name="finalizar" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4" class="
+                                </tr>
+                                <?php require_once("mensagem.php"); ?>
+                                <tr>
+                                    <td scope="col"><b>ID do Empréstimo</b></td>
+                                    <td scope="col"><b>Item</b></td>
+                                    <td scope="col"><b>Status</b></td>
+                                    <td scope="col"><b>Data Prevista</b></td>
+                                    <td scope="col"><b>Data devolvido</b></td>
+                                    <td scope="col"><b>Selecionar livro</b></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                                    <tr>
+                                        <td>
+                                            <?= $linha['idEmprestimo'] ?>
+                                        </td>
+                                        <input type="hidden" name="idEmprestimo" value="<?= $linha['idEmprestimo'] ?>">
+                                        <td>
+                                            <?= $linha['titulo'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $linha['statusItem'] ?>
+                                        </td>
+                                        <td>
+                                            <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
+                                        </td>
+                                        <td>
+                                            <?php isset($linha['dataDevolvido']) ? $data = date("d/m/Y", strtotime($linha['dataDevolvido'])) : $data = "";
+                                            echo $data ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $checked = "";
+                                            if ($linha['statusItem'] == 'Devolvido') {
+                                                $checked = 'disabled';
+                                            } ?>
+                                            <input class="form-check-input" type="checkbox" name="idLivro[]"
+                                                value=" <?= $linha['idLivro'] ?>" id="flexCheckIndeterminate" <?php echo $checked ?>>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="exampleModal4" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h2 class="modal-title fs-5" id="exampleModalLabel">Finalizar
+                                                    </h2>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form method="post">
+                                                    <div class="modal-body">
+                                                        <input type="hidden" id="idEmprestimo" name="idEmprestimo"
+                                                            value="<?= $linha['idEmprestimo'] ?>">
+                                                        <label for="">Para finalizar o empréstimo, pressione:
+                                                        </label>
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckIndeterminate" name="check">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Fechar</button>
+                                                        <button type="submit" name="finalizar" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Finalizar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <button name="devolver" type="submit" class="botaopesquisar"
+                            style="margin-top: 10pt">Devolver</button>
+                        <button name="finalizar" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4"
+                            class="
                     botaopesquisar" style="margin-top: 10pt">Finalizar</button>
-                <button name="renovar" type="submit" class="botaopesquisar" style="margin-top: 10pt">Renovar</button>
-    </form>
-    </div>
-    </div>
-</center>
-
-</section>
-<script>
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-        arrow[i].addEventListener("click", (e) => {
-            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-            arrowParent.classList.toggle("showMenu");
+                        <button name="renovar" type="submit" class="botaopesquisar"
+                            style="margin-top: 10pt">Renovar</button>
+            </form>
+            </div>
+            </div>
+        </center>
+    </section>
+    <script>
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        console.log(sidebarBtn);
+        sidebarBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
         });
-    }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#telefone').inputmask('(99) 99999-9999');
-    });
-    $(document).ready(function () {
-        $('#dn').inputmask('99/99/9999');
-    });
-    $(document).ready(function () {
-        $('#cpf').inputmask('999.999.999-99');
-    });
-</script>
-<script src="js/script.js"></script>
-<script src="js/bootstrap.bundle.js"></script>
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#telefone').inputmask('(99) 99999-9999');
+        });
+        $(document).ready(function () {
+            $('#dn').inputmask('99/99/9999');
+        });
+        $(document).ready(function () {
+            $('#cpf').inputmask('999.999.999-99');
+        });
+    </script>
+    <script src="js/script.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
 </body>
 
 </html>

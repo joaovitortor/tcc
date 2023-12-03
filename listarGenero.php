@@ -30,7 +30,6 @@ $resultado = mysqli_query($conexao, $sql);
 ?>
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -51,8 +50,9 @@ $resultado = mysqli_query($conexao, $sql);
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
 
-    <title>Administrador Bibliotech</title>
+    <title>Listar Gêneros</title>
 </head>
 
 <body>
@@ -91,11 +91,12 @@ $resultado = mysqli_query($conexao, $sql);
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
@@ -106,7 +107,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
 
                 <form method="post" class="geekcb-form-contact">
-                <?php require_once('mensagem.php') ?>
+                    <?php require_once('mensagem.php') ?>
                     <div class="listar">
                         <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero
                             <a href="cadastrarGenero.php" class="botao">
@@ -155,7 +156,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </form>
             </div>
         </div>
-        </div>
+        <?php require_once('procurarEmprestimo.php') ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

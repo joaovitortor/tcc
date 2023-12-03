@@ -63,7 +63,8 @@ if (isset($_POST['cadastrar'])) {
         $sql = "UPDATE leitor SET nomeResp = '$nomeResp', telResp = '$telResp', cpfResp = '$cpfResp' WHERE id = $idUsuario";
         mysqli_query($conexao, $sql);
         $cpfInvalido = "";
-        header("Location: cadastrarLeitor.php");
+        $mensagem = "Cadastrado com sucesso!";
+        header("Location: cadastrarLeitor.php?mensagem=$mensagem");
 
     } elseif (!validarCPFResp($cpfResp)) {
         $cpfInvalido = '<span style="margin-top: -26pt; margin-bottom: 10pt; color: red; font-family: Fjalla One;">Cpf Inválido</span>';
@@ -71,14 +72,11 @@ if (isset($_POST['cadastrar'])) {
         $_SESSION['cpfInvalido'] = $cpfInvalido;
         header("Location: cadastrarResponsavel.php?idusuario=$idUsuario&nomeResp=$nomeResp&cpfResp=$cpfResp&telResp=$telResp");
     }
-
-
-
 }
+
 ?>
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -95,6 +93,7 @@ if (isset($_POST['cadastrar'])) {
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -139,12 +138,12 @@ if (isset($_POST['cadastrar'])) {
     </nav>
 
     <section class="dashboard">
-
-        <div class="corpo">
-            <div class="top">
+        <div class="navbar bg-body-tertiary">
+            <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
-
+        </div>
+        <div class="corpo">
             <div class="geekcb-wrapper">
                 <form method="post" class="container">
                     <?php
@@ -179,9 +178,6 @@ if (isset($_POST['cadastrar'])) {
                     <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button>
                 </form>
             </div>
-
-        </div>
-        </div>
         </div>
     </section>
     <script>

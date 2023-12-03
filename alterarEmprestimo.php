@@ -174,7 +174,9 @@ $linha = mysqli_fetch_array($resultado);
                 </form>
             </div>
         </div>
-        </div>
+        <?php
+        require_once("procurarEmprestimo.php");
+        ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

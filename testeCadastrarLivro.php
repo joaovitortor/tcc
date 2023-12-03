@@ -75,11 +75,9 @@ if (isset($_POST['cadastrar'])) {
     }
     $mensagem = "Cadastrado com sucesso";
 }
-
-
 ?>
+
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -103,8 +101,9 @@ if (isset($_POST['cadastrar'])) {
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="shortcut icon" href="logo.ico">
 
-    <title>Administrador Bibliotech</title>
+    <title>Cadastrar Livro</title>
 </head>
 
 <body>
@@ -281,7 +280,7 @@ if (isset($_POST['cadastrar'])) {
                 </form>
             </div>
         </div>
-
+        <?php require_once("procurarEmprestimo.php"); ?>
         <!-- MODALS CADASTRAR -->
 
         <!-- MODAL CADASTRAR AUTOR -->

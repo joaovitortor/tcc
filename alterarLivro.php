@@ -86,7 +86,6 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
 
 ?>
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -151,8 +150,6 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
     </nav>
 
     <section class="dashboard">
-
-
         <div class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
@@ -177,7 +174,6 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
                 <form method="post" class="geekcb-form-contact" enctype="multipart/form-data" id="insert_data">
                     <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                    <a href="listarLivros.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Alterar Livro</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
@@ -285,11 +281,21 @@ while ($linhaAutorLivro = mysqli_fetch_array($resultadoAutoresLivro)) {
                             <input type="file" class="geekcb-field" name="novaImagem" id="novaImagem">
                         </div>
                     </div>
-
-                    <button class="geekcb-btn" type="submit" name="salvar">Cadastrar</button>
+                    <div class="form-row">
+                        <div class="form-column esquerda" style="width: 70%">
+                            <a href="listarLivros.php" class="botaolistar" style="padding: 7.45px 8px"><i
+                                    class="fa-regular fa-file-lines"></i></a>
+                        </div>
+                        <div class="form-column">
+                            <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
+        <?php
+        require_once("procurarEmprestimo.php");
+        ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");

@@ -93,8 +93,10 @@ nav {
 }
 
 .botaoNav {
-    color: var(--botaoNav)
+    color: var(--botaoNav);
+    cursor: pointer;
 }
+
 nav.close {
     width: 0;
     

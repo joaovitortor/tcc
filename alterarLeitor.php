@@ -46,7 +46,6 @@ $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
     ?>
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="pt-br">
 
 <head>
@@ -108,8 +107,6 @@ $linha = mysqli_fetch_array($resultado)
     </nav>
 
     <section class="dashboard">
-
-
         <div class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
@@ -136,14 +133,14 @@ $linha = mysqli_fetch_array($resultado)
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
                     <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                    <a href="listarLeitor.php" class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a>
                     <h1 class="titulo">Cadastrar Leitor</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="status" id="selectbox" data-selected="">
                                 <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
                                 </option>
-                                <option value="Ativo" <?= ($linha['status'] == 'Ativo') ? 'selected="selected"' : '' ?>>Ativo</option>
+                                <option value="Ativo" <?= ($linha['status'] == 'Ativo') ? 'selected="selected"' : '' ?>>
+                                    Ativo</option>
                                 <option value="Pendente" <?= ($linha['status'] == 'Pendente') ? 'selected="selected"' : '' ?>>Pendente</option>
                             </select>
                         </div>
@@ -199,11 +196,21 @@ $linha = mysqli_fetch_array($resultado)
                                 placeholder="Telefone do responsável" type="texto" name="telResp">
                         </div>
                     </div>
-
-                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                    <div class="form-row">
+                        <div class="form-column esquerda" style="width: 70%">
+                            <a href="listarLeitor.php" class="botaolistar" style="padding: 7.45px 8px"><i
+                                    class="fa-regular fa-file-lines"></i></a>
+                        </div>
+                        <div class="form-column">
+                            <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
+        <?php
+        require_once("procurarEmprestimo.php");
+        ?>
     </section>
     <script>
         let arrow = document.querySelectorAll(".arrow");
