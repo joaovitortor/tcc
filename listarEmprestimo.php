@@ -28,7 +28,7 @@ if (isset($_GET['mensagemAlert'])) {
 $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
         FROM emprestimo 
         LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
-        WHERE statusEmprestimo = 'Em andamento'" . $V_WHERE;
+        ORDER BY statusEmprestimo = 'Em andamento'desc" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);

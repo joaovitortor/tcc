@@ -52,7 +52,7 @@ if (isset($_POST['devolver'])) {
             mysqli_query($conexao, $sql);
         }
 
-        $sqlMulta = "SELECT multa FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
+        $sqlMulta = "SELECT DISTINCT multa FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
         $resultadoMulta = mysqli_query($conexao, $sqlMulta);
 
         $multaTotal = 0;
@@ -85,16 +85,29 @@ if (isset($_POST['devolver'])) {
     }
 }
 
+
 if (isset($_POST['renovar'])) {
+
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
         // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
 
+            $consultaQuantRenov = "SELECT quantRenov FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            $resultadoConsulta = mysqli_query($conexao, $consultaQuantRenov);
+
+            $dados = mysqli_fetch_assoc($resultadoConsulta);
+            $quantRenov = $dados['quantRenov'] + 1;
+
+            // Atualiza o banco de dados com o novo valor de quantRenov
+            $atualizaQuantRenov = "UPDATE itensdeemprestimo SET quantRenov = $quantRenov WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            mysqli_query($conexao, $atualizaQuantRenov);
+
+
             $dataAtual = date("Y-m-d");
 
             // Realiza a atualização no banco de dados para marcar como renovado
-            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Renovado', dataRenovacao = '$dataAtual' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            $sql = "UPDATE itensdeemprestimo SET statusItem = 'Renovado', dataRenovacao = '$dataAtual', quantRenov = $quantRenov WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
 
             // Atualiza a data prevista de devolução para 7 dias após a renovação
@@ -361,6 +374,7 @@ $resultado = mysqli_query($conexao, $sql);
                         <button name="finalizar" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4"
                             class="
                     botaopesquisar" style="margin-top: 10pt">Finalizar</button>
+                    <?php if(){?>
                         <button name="renovar" type="submit" class="botaopesquisar"
                             style="margin-top: 10pt">Renovar</button>
             </form>
