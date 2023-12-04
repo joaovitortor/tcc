@@ -20,17 +20,26 @@ if (isset($_POST['cadastrar'])) {
         $idEmprestimo = mysqli_insert_id($conexao);
 
         if (isset($_POST['livro']) && is_array($_POST['livro'])) {
-            foreach ($_POST['livro'] as $idLivro) {
 
-                $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem, dataPrevDev) VALUES ('$idEmprestimo','$idLivro', 'Emprestado', '$dataPrevistaDevolucao')";
-                mysqli_query($conexao, $sql2);
+            $livrosSelecionados = $_POST['livro'];
 
-                $sql3 = "UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
-                mysqli_query($conexao, $sql3);
+            // Verificar se mais de dois livros foram selecionados
+            if (count($livrosSelecionados) <= 2) {
 
-                $sql4 = "UPDATE leitor set status = 'Pendente' where id = $idLeitor";
-                mysqli_query($conexao, $sql4);
-                $mensagem = "Empréstimo realizado com sucesso";
+                foreach ($_POST['livro'] as $idLivro) {
+
+                    $sql2 = "INSERT INTO itensDeEmprestimo (idEmprestimo, idLivro, statusItem, dataPrevDev) VALUES ('$idEmprestimo','$idLivro', 'Emprestado', '$dataPrevistaDevolucao')";
+                    mysqli_query($conexao, $sql2);
+
+                    $sql3 = "UPDATE livro SET statusLivro = 'Emprestado' WHERE id = $idLivro";
+                    mysqli_query($conexao, $sql3);
+
+                    $sql4 = "UPDATE leitor set status = 'Pendente' where id = $idLeitor";
+                    mysqli_query($conexao, $sql4);
+                    $mensagem = "Empréstimo realizado com sucesso";
+                }
+            } else {
+                $mensagemAlert = "Selecione no máximo dois livros para realizar o empréstimo";
             }
         }
     } else {
