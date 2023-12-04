@@ -6,6 +6,9 @@ if(isset($mensagem)) {
 if(isset($mensagemAlert)) {
     echo '<div class="alert alert-danger" style="text-align :center" role="alert">' . $mensagemAlert . '</div>';
 } 
+if(isset($mensagemRenovacao)) {
+    echo '<div class="alert alert-danger" style="text-align :center" role="alert">' . $mensagemRenovacao . '</div>';
+} 
 
 ?>
 

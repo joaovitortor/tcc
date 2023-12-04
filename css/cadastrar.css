@@ -317,6 +317,10 @@ body :focus-within .botaopesquisarAcervo:hover {
     background-color: white;
 }
 
+.botaoLeitor{
+    margin: 2% 0 0 85%;
+   
+}
 
 
 

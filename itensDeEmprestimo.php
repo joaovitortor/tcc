@@ -87,11 +87,8 @@ if (isset($_POST['devolver'])) {
 
 
 if (isset($_POST['renovar'])) {
-    $consquant = "SELECT quantRenov FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
-    $resultadoconsquant = mysqli_query($conexao, $consquant);
 
-    $dadosCons = mysqli_fetch_assoc($resultadoconsquant);
-    if($dados['quantRenov'] < 2){
+
 
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
@@ -110,7 +107,8 @@ if (isset($_POST['renovar'])) {
 
 
             $dataAtual = date("Y-m-d");
-
+            
+            if($quantRenov <= 2){
             // Realiza a atualização no banco de dados para marcar como renovado
             $sql = "UPDATE itensdeemprestimo SET statusItem = 'Renovado', dataRenovacao = '$dataAtual', quantRenov = $quantRenov WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
@@ -119,11 +117,11 @@ if (isset($_POST['renovar'])) {
             $dataPrevDev = date('Y-m-d', strtotime("+7 days", strtotime($dataAtual)));
             $sqlDataDev = "UPDATE itensdeemprestimo SET dataPrevDev = '$dataPrevDev' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sqlDataDev);
-        }
-    }
-  } else{
-        echo $mensagemRenov = "O livro já foi renovado duas vezes.";
+        } else{
+        $mensagemRenovacao = "O livro já foi renovado duas vezes.";
   }
+    }
+  } 
 }
 
 if (isset($_POST["finalizar"]) && isset($_POST['check'])) {

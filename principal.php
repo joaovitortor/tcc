@@ -21,6 +21,7 @@ require_once('leitorAutenticacao.php');
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/acervo.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -28,21 +29,20 @@ require_once('leitorAutenticacao.php');
     <title>Administrador Bibliotech</title>
 </head>
 
-<body>
+<body style="background-color: #ffd8be">
 
-    <div style="align-items: right" class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user"></i>|
-        </div>
+
+        <div class="botaoLeitor">
+            
+        <button class="botaopesquisarAcervo" href="meusEmprestimos.php">Meus empréstimos</button>
+    </div>
     </div>
     <br><br><br>
-    <h1 class="titulo text">Bibliotech<a href="cadastrarLeitor.php" class="botao">
-            <i class="fa-solid fa-plus"></i>
-        </a></h1>
+    <h1 class="titulo text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1><br>
     <div class="container">
         <h2 class="mt-3">
             <?php
-            session_start();
+        
             $nome = $_SESSION['nome'];
             ?>
             Seja bem vindo,
@@ -50,6 +50,10 @@ require_once('leitorAutenticacao.php');
         </h2>
     </div>
 
+    <div class="acervocontainer">
+
+        <?php require_once('acervo1.php') ?>
+    </div>
     <script src="js/script.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
 </body>
