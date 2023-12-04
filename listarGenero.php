@@ -4,7 +4,7 @@
 require_once("conexao.php");
 
 require_once("admAutenticacao.php");
-
+$voltar = "";
 // Excluir
 if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
     $sqlVerificarGenero = "SELECT * FROM livro WHERE idGenero = " . $_GET['id'];
@@ -12,17 +12,25 @@ if (isset($_GET['id'])) { // Verifica se o botão excluir foi clicado
 
     if (mysqli_num_rows($resultadoVerificarGenero) > 0) {
         // O leitor possui empréstimos pendentes, não permitir a exclusão
-        $mensagemAlert = "Não é possível excluir o Gênero. Há livros cadastrados com ele.";
+        $mensagemAlert = "Não é possível excluir o gênero. Há livros cadastrados com ele.";
     } else {
         // Não existem empréstimos pendentes, prosseguir com a exclusão
-        $sqlExcluirLeitor = "DELETE FROM genero WHERE id = " . $_GET['id'];
-        mysqli_query($conexao, $sqlExcluirLeitor);
+        $sqlExcluirGenero = "DELETE FROM genero WHERE id = " . $_GET['id'];
+        mysqli_query($conexao, $sqlExcluirGenero);
         $mensagem = "Exclusão realizada com sucesso.";
     }
 }
 
-//2. Prepara a SQL
-$sql = "select * from genero";
+
+$V_WHERE = "";
+if (isset($_POST['pesquisar'])) { //se clicou no botao pesquisar
+    $V_WHERE = " and nome like '%" . $_POST['nome'] . "%' ";
+    $voltar = '<a href="listarGenero.php"><button name="voltar" stype="button" class="botaopesquisar">Voltar</button></a>';
+}
+
+//2. Preparar a sql
+$sql = "select * from genero
+where 1 = 1" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -43,10 +51,12 @@ $resultado = mysqli_query($conexao, $sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <!--muda a fonte-->
     <script src="https://kit.fontawesome.com/e507e7a758.js" crossorigin="anonymous"></script>
+
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cadastrar.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/acervo.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -91,71 +101,79 @@ $resultado = mysqli_query($conexao, $sql);
     </nav>
 
     <section class="dashboard">
+
         <div class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <i class="fa-solid fa-bars sidebar-toggle botaoNav"></i>
             </div>
         </div>
-        <div class="corpo">
-            <div class="geekcb-wrapper">
-                <form method="post" class="container">
-                    <?php
-                    $status = isset($_POST['status']) ? $_POST['status'] : "";
-                    $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-                    ?>
+        <br><br><br>
+        <?php require_once("mensagem.php"); ?>
+        <h1 class="titulo text">Listagem de Gêneros <a href="cadastrarGenero.php" class="botao">
+                <i class="fa-solid fa-plus"></i>
+            </a></h1>
 
-                </form>
+        <br><br>
 
-                <form method="post" class="geekcb-form-contact">
-                    <?php require_once('mensagem.php') ?>
-                    <div class="listar">
-                        <h2 style="font-family: 'Fjalla One'; text-align: center">Listagem de Gênero
-                            <a href="cadastrarGenero.php" class="botao">
-                                <i class="fa-solid fa-plus"></i>
-                            </a>
-                        </h2><br>
-                        <table>
-                            <thead>
+
+        <center>
+            <form method="post">
+                <label name="nome" for="exampleFormControlInput1" class="titulo text">Pesquisar</label>
+                <div class="input-button-container">
+                    <input name="nome" type="text" class="formcampo">
+                    <button name="pesquisar" stype="button" class="botaopesquisar"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                    <?php echo $voltar ?>
+                </div>
+                <br><br>
+            </form>
+        </center>
+
+
+        <center>
+            <div class="card cardlistar">
+                <div class="card-body cardlistar2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td scope="col"><b>ID</b></td>
+                                <td scope="col"><b>Status</b></td>
+                                <td scope="col"><b>Nome</b></td>
+                                <td scope="col"><b>Ações</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
                                 <tr>
-                                    <td>ID</td>
-                                    <td>Status</td>
-                                    <td>Nome</td>
+                                    <td>
+                                        <?= $linha['id'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $linha['status'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $linha['nome'] ?>
+                                    </td>
+                                    <td>
+
+                                        <a style="margin-right: 8px;" href="alterarGenero.php? id=<?= $linha['id'] ?>"
+                                            class="botao">
+                                            <i class="fa-solid fa-pen-to-square"></i></a>
+
+
+                                        <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
+                                            onclick="return confirm('Deseja mesmo excluir o cadastro?')">
+                                            <i class="fa-sharp fa-solid fa-trash"></i> </a>
+
+                                    </td>
                                 </tr>
-                            <tbody>
-                                <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
-                                    <tr>
-                                        <td>
-                                            <?= $linha['id'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['status'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $linha['nome'] ?>
-                                        </td>
 
-                                        <td>
-
-                                            <a style="margin-right: 8px;" href="alterarGenero.php? id=<?= $linha['id'] ?>"
-                                                class="botao">
-                                                <i class="fa-solid fa-pen-to-square"></i></a>
-
-
-                                            <a href="listarGenero.php? id=<?= $linha['id'] ?>" class="botao"
-                                                onclick="return confirm('Deseja mesmo excluir o cadastro?')">
-                                                <i class="fa-sharp fa-solid fa-trash"></i> </a>
-
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </form>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        </center>
         <?php require_once('procurarEmprestimo.php') ?>
     </section>
     <script>

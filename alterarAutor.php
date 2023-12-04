@@ -127,8 +127,14 @@ require_once("conexao.php");
 
                     <input class="geekcb-field" value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto"
                         name="nome">
+                    <table>
+                        <tr>
+                            <td style="padding-right: 70px;width: 80%;"><a href="listarAutores.php"
+                                    class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td> <button class="geekcb-btn" type="submit" name="salvar">Salvar</button></td>
 
-                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                        </tr>
+                    </table>
                 </form>
             </div>
         </div>

@@ -8,8 +8,8 @@ if (isset($_POST['salvar'])) {
     //2. Receber os dados para inserir no BD
     $id = $_POST['id'];
     $status = $_POST['status'];
-    $status = $_POST['login'];
-    $status = $_POST['senha'];
+    $login = $_POST['login'];
+    $senha = $_POST['senha'];
 
 
     //3. Preparar a SQL
@@ -114,7 +114,7 @@ $linha = mysqli_fetch_array($resultado)
                 <form method="post" class="geekcb-form-contact">
                     <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                    <h1 class="titulo">Alterar Editora</h1>
+                    <h1 class="titulo">Alterar Administrador</h1>
 
                     <select class="geekcb-field" name="status" id="selectbox" data-selected="">
                         <option class="fonte-status" value="" disabled="disabled" placeholder="Status">Status
@@ -128,10 +128,17 @@ $linha = mysqli_fetch_array($resultado)
                     <input class="geekcb-field" value="<?= $linha['login'] ?>" placeholder="Login" required type="texto"
                         name="login">
                     <input class="geekcb-field" value="<?= $linha['senha'] ?>" placeholder="Senha" required
-                        type="password" name="login">
+                        type="password" name="senha">
 
+                    <table>
+                        <tr>
+                            <td style="padding-right: 70px;width: 80%;"><a href="listarAdministrador.php"
+                                    class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td> <button class="geekcb-btn" type="submit" name="salvar">Salvar</button></td>
 
-                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                        </tr>
+                    </table>
+
                 </form>
             </div>
         </div>

@@ -117,7 +117,7 @@ values ('$status', '$login', '$senha')";
 
                     <table>
                         <tr>
-                            <td style="padding-right: 70px"><a href="listarAdministrador.php" class="botaolistar"> <i
+                            <td style="padding-right: 70px;width: 80%;"><a href="listarAdministrador.php" class="botaolistar"> <i
                                         class="fa-regular fa-file-lines"></i></i></a></td>
                             <td> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
 

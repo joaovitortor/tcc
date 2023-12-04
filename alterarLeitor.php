@@ -133,7 +133,7 @@ $linha = mysqli_fetch_array($resultado)
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
                     <?php require_once("mensagem.php") ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
-                    <h1 class="titulo">Cadastrar Leitor</h1>
+                    <h1 class="titulo">Alterar Leitor</h1>
                     <div class="form-row">
                         <div class="form-column; esquerda">
                             <select class="geekcb-field" name="status" id="selectbox" data-selected="">
