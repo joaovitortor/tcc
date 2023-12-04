@@ -87,6 +87,11 @@ if (isset($_POST['devolver'])) {
 
 
 if (isset($_POST['renovar'])) {
+    $consquant = "SELECT quantRenov FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+    $resultadoconsquant = mysqli_query($conexao, $consquant);
+
+    $dadosCons = mysqli_fetch_assoc($resultadoconsquant);
+    if($dados['quantRenov'] < 2){
 
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
@@ -116,6 +121,9 @@ if (isset($_POST['renovar'])) {
             mysqli_query($conexao, $sqlDataDev);
         }
     }
+  } else{
+        echo $mensagemRenov = "O livro já foi renovado duas vezes.";
+  }
 }
 
 if (isset($_POST["finalizar"]) && isset($_POST['check'])) {
@@ -374,7 +382,6 @@ $resultado = mysqli_query($conexao, $sql);
                         <button name="finalizar" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4"
                             class="
                     botaopesquisar" style="margin-top: 10pt">Finalizar</button>
-                    <?php if(){?>
                         <button name="renovar" type="submit" class="botaopesquisar"
                             style="margin-top: 10pt">Renovar</button>
             </form>
