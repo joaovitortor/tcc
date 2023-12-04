@@ -12,6 +12,10 @@ if (isset($_POST['pesquisar'])) {
 }
 $idEmprestimo = $_GET['id'];
 
+if(isset($_GET['mensagem'])) {
+    $mensagem = $_GET['mensagem'];
+}
+
 $sqlNome = "SELECT leitor.nome, leitor.id AS idLeitor FROM emprestimo 
             INNER JOIN leitor ON emprestimo.idLeitor = leitor.id
             WHERE emprestimo.id = $idEmprestimo";
@@ -50,6 +54,8 @@ if (isset($_POST['devolver'])) {
 
             $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
             mysqli_query($conexao, $sql);
+
+            $mensagem = "Devolvido com sucesso";
         }
 
         $sqlMulta = "SELECT DISTINCT multa FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo";
@@ -88,8 +94,6 @@ if (isset($_POST['devolver'])) {
 
 if (isset($_POST['renovar'])) {
 
-
-
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
         // Percorre os livros selecionados
@@ -117,6 +121,8 @@ if (isset($_POST['renovar'])) {
             $dataPrevDev = date('Y-m-d', strtotime("+7 days", strtotime($dataAtual)));
             $sqlDataDev = "UPDATE itensdeemprestimo SET dataPrevDev = '$dataPrevDev' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sqlDataDev);
+
+            $mensagem = "Renovado com sucesso";
         } else{
         $mensagemRenovacao = "O livro já foi renovado duas vezes.";
   }

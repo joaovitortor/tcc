@@ -37,6 +37,8 @@ if (isset($_POST['cadastrar'])) {
                     $sql4 = "UPDATE leitor set status = 'Pendente' where id = $idLeitor";
                     mysqli_query($conexao, $sql4);
                     $mensagem = "Empréstimo realizado com sucesso";
+
+                    header("location: itensdeemprestimo.php?id=$idEmprestimo&mensagem=$mensagem");
                 }
             } else {
                 $mensagemAlert = "Selecione no máximo dois livros para realizar o empréstimo";
