@@ -134,6 +134,13 @@
     font-family: Fjalla One;
 }
 
+.tituloLeitor {
+    padding-bottom: 10px;
+    text-align: left;
+    font-family: Fjalla One;
+}
+
+
 .form-row {
     display: flex;
     flex-wrap: wrap;
@@ -322,7 +329,9 @@ body :focus-within .botaopesquisarAcervo:hover {
    
 }
 
-
+.logoLeitor{
+    align-content: baseline;
+}
 
 
 

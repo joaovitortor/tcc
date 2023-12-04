@@ -1,5 +1,6 @@
 <?php 
 require_once('leitorAutenticacao.php');
+$voltar = "";
 ?>
 
 <!DOCTYPE html>
@@ -26,29 +27,57 @@ require_once('leitorAutenticacao.php');
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-    <title>Administrador Bibliotech</title>
+    <title>Bibliotech</title>
 </head>
 
 <body style="background-color: #ffd8be">
 
 
+<ul class="nav justify-content-end">
+    <div class="justify-content-start">
+<a href="principal.php" style="text-decoration: none" class="logoLeitor justify-content-start"><h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1><br></a>
+</div>
+
+  <li class="nav-item">
+    <a class="nav-link active" href="meusEmprestimos.php">Meus empréstimos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="renovarLeitor.php">Renovar livro</a>
+  </li>
+
+</ul>
+
         <div class="botaoLeitor">
             
-        <button class="botaopesquisarAcervo" href="meusEmprestimos.php">Meus empréstimos</button>
     </div>
     </div>
-    <br><br><br>
-    <h1 class="titulo text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1><br>
+    
     <div class="container">
-        <h2 class="mt-3">
+        <h2 class="mt-3" style="font-family: Fjalla One">
             <?php
         
             $nome = $_SESSION['nome'];
             ?>
-            Seja bem vindo,
+            Seja bem vindo(a),
             <?= $nome ?>
-        </h2>
+        </h2><br>
+       
     </div>
+
+    <center>
+        <form method="post">
+            <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar livros no acervo da
+                biblioteca</label>
+            <div class="input-button-container">
+                <input name="pesquisa" type="text" class="formcampo">
+                <button name="pesquisar" stype="button" class="botaopesquisarAcervo"><i
+                        class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <?= $voltar; ?>
+            </div>
+            <br><br>
+        </form>
+    </center>
 
     <div class="acervocontainer">
 

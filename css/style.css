@@ -246,6 +246,16 @@ body.dark .switch:before {
     left: 20px;
 }
 
+.dashboardLeitor {
+    position: relative;
+    left: 0px;
+    width: 100%;
+    background-color: var(--panel-color);
+    min-height: 100vh;
+    padding: 10px 14px;
+    transition: var(--tran-05);
+}
+
 .dashboard {
     position: relative;
     left: 250px;

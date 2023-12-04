@@ -116,7 +116,7 @@ if (isset($_GET['mensagemAlert'])) {
                         </div>
                         <div class="mb-3">
                             <label for="senha" class="form-label">Senha</label>
-                            <input class="geekcb-field" placeholder="senha" required type="password" name="senha"
+                            <input class="geekcb-field" placeholder="Senha" required type="password" name="senha"
                                 id="senha">
                         </div>
                     </div>
