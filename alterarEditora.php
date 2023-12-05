@@ -120,7 +120,14 @@ $linha = mysqli_fetch_array($resultado)
                     <input class="geekcb-field" value="<?= $linha['nome'] ?>" placeholder="Nome" required type="texto"
                         name="nome">
 
-                    <button class="geekcb-btn" type="submit" name="salvar">Salvar</button>
+                        <table>
+                        <tr>
+                            <td style="padding-right: 70px;width: 80%;"><a href="listarEditora.php"
+                                    class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td> <button class="geekcb-btn" type="submit" name="salvar">Salvar</button></td>
+
+                        </tr>
+                    </table>
                 </form>
             </div>
         </div>
