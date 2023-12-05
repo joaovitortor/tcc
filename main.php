@@ -18,7 +18,7 @@ if (isset($_POST['pesquisar'])) {
                 biblioteca</label>
             <div class="input-button-container">
                 <input name="pesquisa" type="text" class="formcampo">
-                <button name="pesquisar" stype="button" class="botaopesquisarAcervo"><i
+                <button name="pesquisar" stype="button" class="botaopesquisarAcervo2"><i
                         class="fa-solid fa-magnifying-glass"></i>
                 </button>
                 <?= $voltar; ?>
@@ -26,11 +26,11 @@ if (isset($_POST['pesquisar'])) {
             <br><br>
         </form>
     </center>
-
+    <div class="acervocontainer">
     <?php
     require_once("acervo1.php");
     require_once("procurarEmprestimo.php");
     ?>
-
+ </div>
     </div>
     <?php require_once("rodape.php");

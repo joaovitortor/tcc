@@ -841,3 +841,7 @@ nav ul .leitor-show.show ul {
     color: #9381ff;
     text-decoration: none;
 }
+
+.acervoCentro{
+    align-items: center;
+}

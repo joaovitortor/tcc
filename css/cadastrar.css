@@ -314,6 +314,53 @@ body :focus-within .botaopesquisarAcervo:hover {
       color: white;
 }
 
+.botaopesquisarAcervo2{
+    background-color: #9381ff;
+    border: 1px solid black;
+    box-shadow: 3px 3px 1px #ffd8be, 3px 3px 1px 1px black;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    letter-spacing: 2px;
+    line-height: 20pt;
+    margin: 0 auto;
+    outline: none;
+    padding: 7px 10px;
+    text-transform: uppercase;
+    transition: .2 all ease-in-out;
+    margin-left: 10px;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+  
+    .botaopesquisarAcervo2:hover {
+      background-color: #9381ff;
+      border: 1px solid black;
+      box-shadow: -3px -3px 1px #ffd8be, -3px -3px 1px 1px black;
+      color: white;
+  }
+  
+  .botaopesquisarAcervo2:active {
+      box-shadow: 0 0 0 #ffd8be;
+      transform: translateX(-3px) translateY(-3px);
+  }
+
+  body :focus-within .botaopesquisarAcervo2 {
+    background-color:#9381ff;
+    border: 1px solid black;
+    box-shadow: 3px 3px 1px #ffd8be, 3px 3px 1px 1px black;
+    color: white;
+}
+
+body :focus-within .botaopesquisarAcervo2:hover {
+    background-color: #9381ff;
+      border: 1px solid black;
+      box-shadow: -3px -3px 1px #ffd8be, -3px -3px 1px 1px black;
+      color: white;
+}
+
+
 .corpolistar {
     align-items: center;
     display: flex;

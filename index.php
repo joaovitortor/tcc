@@ -85,7 +85,7 @@ if (isset($_GET['mensagemAlert'])) {
                 biblioteca</label>
             <div class="input-button-container">
                 <input name="pesquisa" type="text" class="formcampo">
-                <button name="pesquisar" stype="button" class="botaopesquisarAcervo"><i
+                <button name="pesquisar" stype="button" class="botaopesquisarAcervo2"><i
                         class="fa-solid fa-magnifying-glass"></i>
                 </button>
                 <?= $voltar; ?>
