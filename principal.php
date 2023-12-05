@@ -30,12 +30,14 @@ $voltar = "";
     <title>Bibliotech</title>
 </head>
 
-<body style="background-color: #ffd8be">
-
-
+<header>
+    <div class="logoutLeitor">
+    <a href="sair.php"><i class="uil uil-signout"></i>Logout</a>
+</div>
 <ul class="nav justify-content-end">
     <div class="justify-content-start">
-<a href="principal.php" style="text-decoration: none" class="logoLeitor justify-content-start"><h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1><br></a>
+
+<a href="principal.php" style="text-decoration: none" class="logoLeitor justify-content-start"><h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="7%"> Bibliotech</h1><br></a>
 </div>
 
   <li class="nav-item">
@@ -47,9 +49,10 @@ $voltar = "";
 
 </ul>
 
-        <div class="botaoLeitor">
-            
-    </div>
+</header>
+<body style="background-color: #ffd8be">
+
+
     </div>
     
     <div class="container">

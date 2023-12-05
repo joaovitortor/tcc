@@ -48,12 +48,13 @@ if (isset($_POST['devolver'])) {
             $diferencaEmDias = ($dataDevolucao - $dataPrevista) / (60 * 60 * 24);
 
             $multaItem = ($diferencaEmDias > 0) ? $diferencaEmDias * 1 : 0;
-
+                       
             $sql = "UPDATE itensdeemprestimo SET statusItem = 'Devolvido', dataDevolvido = '$dataAtual', multa = '$multaItem' WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             mysqli_query($conexao, $sql);
 
             $sql = "UPDATE livro SET statusLivro = 'Disponível' WHERE id = $idLivro";
             mysqli_query($conexao, $sql);
+                       
 
             $mensagem = "Devolvido com sucesso";
         }
@@ -92,8 +93,19 @@ if (isset($_POST['devolver'])) {
 }
 
 
+
+
 if (isset($_POST['renovar'])) {
 
+    $sqlAtraso ="SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+$resultadoAtraso = mysqli_query($conexao, $sqlAtraso);
+$dataPrevDev = "itensdeemprestimo.dataPrevDev";
+
+$atraso = ($dataPrevista - $dataAtual) / (60 * 60 * 24);
+if($atraso < 1){
+echo "atraso";
+}
+    
     if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
         // Percorre os livros selecionados
@@ -127,7 +139,8 @@ if (isset($_POST['renovar'])) {
         $mensagemRenovacao = "O livro já foi renovado duas vezes.";
   }
     }
-  } 
+  }
+  
 }
 
 if (isset($_POST["finalizar"]) && isset($_POST['check'])) {
