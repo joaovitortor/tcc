@@ -140,6 +140,7 @@ $resultado = mysqli_query($conexao, $sql);
                                 <td scope="col"><b>Data do Emp.</b></td>
                                 <td scope="col"><b>Data prevista dev.</b></td>
                                 <td scope="col"><b>Livros</b></td>
+                                <td scope="col"><b>Multa</b></td>
                                 <td scope="col"><b>Ações</b></td>
                             </tr>
                         </thead>
@@ -177,6 +178,9 @@ $resultado = mysqli_query($conexao, $sql);
 
                                         echo implode(', <br>', $titulosLivros);
                                         ?>
+                                    </td>
+                                    <td>
+                                        <?= $linha['valorMulta'] ?>
                                     </td>
                                     <td>
                                         <a href="itensDeEmprestimo.php? id=<?= $linha['id'] ?>" style="margin-right: 8px;"
