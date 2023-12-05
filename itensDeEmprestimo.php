@@ -102,6 +102,19 @@ if (isset($_POST['renovar'])) {
         // Percorre os livros selecionados
         foreach ($livrosSelecionados as $idLivro) {
 
+            $sqlDataPrevDev = "SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+            $resultDataPrevDev = mysqli_query($conexao, $sqlDataPrevDev);
+            $linhaDataPrevDev = mysqli_fetch_assoc($resultDataPrevDev);
+
+            $dataPrevista = strtotime($linhaDataPrevDev['dataPrevDev']);
+            $dataAtual = strtotime(date("Y-m-d"));
+
+            if ($dataAtual > $dataPrevista) {
+                $mensagemRenovacaoAtraso = "O livro não pode ser renovado pois está em atraso.";
+                break;  
+            }
+
+
             $consultaQuantRenov = "SELECT quantRenov FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             $resultadoConsulta = mysqli_query($conexao, $consultaQuantRenov);
 
