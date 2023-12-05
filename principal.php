@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('leitorAutenticacao.php');
 $voltar = "";
 ?>
@@ -31,40 +31,44 @@ $voltar = "";
 </head>
 
 <header>
-    <div class="logoutLeitor">
-    <a href="sair.php"><i class="uil uil-signout"></i>Logout</a>
-</div>
-<ul class="nav justify-content-end">
-    <div class="justify-content-start">
 
-<a href="principal.php" style="text-decoration: none" class="logoLeitor justify-content-start"><h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="7%"> Bibliotech</h1><br></a>
-</div>
+    <ul class="nav justify-content-end">
+       
+            <div class="logoutLeitor">
+                <a href="sair.php"><i class="uil uil-signout"></i>Logout</a>
+            </div>
 
-  <li class="nav-item">
-    <a class="nav-link active" href="meusEmprestimos.php">Meus empréstimos</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="renovarLeitor.php">Renovar livro</a>
-  </li>
+            <a href="principal.php" style="text-decoration: none" class="logoLeitor justify-content-start">
+                <h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="7%"> Bibliotech</h1><br>
+            </a>
+       
 
-</ul>
+        <li class="nav-item">
+            <a class="nav-link active" href="meusEmprestimos.php">Meus empréstimos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="renovarLeitor.php">Renovar livro</a>
+        </li>
+
+    </ul>
 
 </header>
+
 <body style="background-color: #ffd8be">
 
 
     </div>
-    
+
     <div class="container">
         <h2 class="mt-3" style="font-family: Fjalla One">
             <?php
-        
+
             $nome = $_SESSION['nome'];
             ?>
             Seja bem vindo(a),
             <?= $nome ?>
         </h2><br>
-       
+
     </div>
 
     <center>

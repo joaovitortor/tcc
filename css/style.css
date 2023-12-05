@@ -247,7 +247,7 @@ body.dark .switch:before {
 }
 
 .dashboardLeitor {
-    position: relative;
+    position: absolute;
     left: 0px;
     width: 100%;
     background-color: var(--panel-color);
