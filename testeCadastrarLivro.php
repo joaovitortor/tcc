@@ -169,6 +169,7 @@ if (isset($_POST['cadastrar'])) {
                             <table>
                                 <tr>
                                     <td>
+                                        <label for="autor" style="font-family: Fjalla One">Autor(es): </label><br>
                                         <select class="geekcb-field" name="autor[]" id="autor" multiple>
                                             <option class="fonte-status" disabled="disabled"
                                                 placeholder="Selecione os autores">
@@ -186,8 +187,9 @@ if (isset($_POST['cadastrar'])) {
                                             ?>
                                         </select>
                                     </td>
+                                   
                                     <td>
-                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalAutor">
+                                         <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalAutor">
                                             <i class="fa-solid fa-plus"></i>
                                         </a>
                                     </td>
@@ -202,27 +204,32 @@ if (isset($_POST['cadastrar'])) {
                         </div>
 
                         <div class="form-column">
-                            <table>
+                        <table>
                                 <tr>
                                     <td>
-                                        <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
-                                            <option class="fonte-status" value="idEditora" selected="selected"
-                                                disabled="disabled" placeholder="Editora">Editora</option>
+                                        <label for="editora" style="font-family: Fjalla One">Editora: </label><br>
+                                        <select class="geekcb-field" name="editora" id="editora">
+                                        <option class="fonte-status" disabled="disabled"
+                                                placeholder="Selecione os autores">
+                                            </option>
                                             <?php
-                                            $sql = "select * from editora order by nome";
+                                            $sql = "select * from editora where status = 'Ativo' order by nome";
                                             $resultado = mysqli_query($conexao, $sql);
 
                                             while ($linha = mysqli_fetch_array($resultado)):
-                                                $id = $linha['id'];
+                                                $idEditora = $linha['id'];
                                                 $nome = $linha['nome'];
 
-                                                echo "<option value='{$id}'>{$nome}</option>";
+                                                echo "<option value='{$idEditora}'>{$nome}</option>";
                                             endwhile;
                                             ?>
                                         </select>
                                     </td>
+                                   
                                     <td>
-                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalEditora"><i class="fa-solid fa-plus"></i></a>
+                                         <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalEditora">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
@@ -235,27 +242,32 @@ if (isset($_POST['cadastrar'])) {
                                 name="edicao">
                         </div>
                         <div class="form-column">
-                            <table>
+                        <table>
                                 <tr>
                                     <td>
-                                        <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
-                                            <option class="fonte-status" value="idGenero" selected="selected"
-                                                disabled="disabled" placeholder="Gênero">Gênero</option>
+                                        <label for="genero" style="font-family: Fjalla One">Gênero </label><br>
+                                        <select class="geekcb-field" name="genero" id="genero">
+                                            <option class="fonte-status" disabled="disabled"
+                                                placeholder="Selecione os autores">
+                                            </option>
                                             <?php
-                                            $sql = "select * from genero order by nome";
+                                            $sql = "select * from genero where status = 'Ativo' order by nome";
                                             $resultado = mysqli_query($conexao, $sql);
 
                                             while ($linha = mysqli_fetch_array($resultado)):
-                                                $id = $linha['id'];
+                                                $idAutor = $linha['id'];
                                                 $nome = $linha['nome'];
 
-                                                echo "<option value='{$id}'>{$nome}</option>";
+                                                echo "<option value='{$idGenero}'>{$nome}</option>";
                                             endwhile;
                                             ?>
                                         </select>
                                     </td>
+                                   
                                     <td>
-                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalGenero"><i class="fa-solid fa-plus"></i></a>
+                                         <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalGenero">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
@@ -408,6 +420,12 @@ if (isset($_POST['cadastrar'])) {
     <script>
         $(document).ready(function () {
             $('#autor').select2();
+        });
+        $(document).ready(function () {
+            $('#editora').select2();
+        });
+        $(document).ready(function () {
+            $('#genero').select2();
         });
     </script>
 </body>
