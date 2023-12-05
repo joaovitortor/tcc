@@ -141,7 +141,7 @@ if (isset($_POST['cadastrar'])) {
                     <select class="selectleitor" name="leitor" id="leitor">
                         <option class="fonte-status" placeholder="Selecione o leitor"></option>
                         <?php
-                        $sql = "select * from leitor order by nome";
+                        $sql = "select * from leitor where status = 'Ativo' order by nome";
                         $resultado = mysqli_query($conexao, $sql);
 
                         while ($linha = mysqli_fetch_array($resultado)):
