@@ -97,7 +97,7 @@ if (isset($_POST['devolver'])) {
 
 if (isset($_POST['renovar'])) {
 
-    $sqlAtraso ="SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
+$sqlAtraso ="SELECT dataPrevDev FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
 $resultadoAtraso = mysqli_query($conexao, $sqlAtraso);
 $dataPrevDev = "itensdeemprestimo.dataPrevDev";
 

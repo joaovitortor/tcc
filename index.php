@@ -64,7 +64,7 @@ if (isset($_GET['mensagemAlert'])) {
 
     <div style="align-items: right" class="navbar bg-body-tertiary">
         <div style="align-content: right" class="container-fluid">
-            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user"></i>
+            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user" style="padding-left: 2%; padding-right: 3%; cursor: pointer"> Login</i>
         </div>
     </div>
     <br><br><br>
@@ -77,11 +77,11 @@ if (isset($_GET['mensagemAlert'])) {
     }
     ?>
 
-    <h1 class="titulo text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
+    <h1 class="titulo"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
 
     <center>
         <form method="post">
-            <label name="pesquisa" for="exampleFormControlInput1" class="titulo text">Pesquisar livros no acervo da
+            <label name="pesquisa" for="exampleFormControlInput1" class="titulo">Pesquisar livros no acervo da
                 biblioteca</label>
             <div class="input-button-container">
                 <input name="pesquisa" type="text" class="formcampo">
