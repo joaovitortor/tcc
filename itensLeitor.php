@@ -7,12 +7,12 @@ require_once("leitorAutenticacao.php");
 $multa = "";
 $V_WHERE = "";
 
-if (isset($_POST['pesquisar'])) {
-    $V_WHERE = " AND livro.titulo LIKE '%" . $_POST['pesquisa'] . "%' ";
+if(isset($_POST['pesquisar'])) {
+    $V_WHERE = " AND livro.titulo LIKE '%".$_POST['pesquisa']."%' ";
 }
 $idEmprestimo = $_GET['id'];
 
-if (isset($_GET['mensagem'])) {
+if(isset($_GET['mensagem'])) {
     $mensagem = $_GET['mensagem'];
 }
 
@@ -22,7 +22,7 @@ $sqlNome = "SELECT leitor.nome, leitor.id AS idLeitor FROM emprestimo
 
 
 $sqlData = "SELECT dataEmprestimo FROM emprestimo 
-             WHERE id = " . $idEmprestimo;
+             WHERE id = ".$idEmprestimo;
 
 $nomeLeitor = mysqli_query($conexao, $sqlNome);
 $dataEmprestimo = mysqli_query($conexao, $sqlData);
@@ -31,12 +31,12 @@ $linhaLeitor = mysqli_fetch_assoc($nomeLeitor);
 $livrosSelecionados = array();
 
 
-if (isset($_POST['renovar'])) {
+if(isset($_POST['renovar'])) {
 
-    if (isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
+    if(isset($_POST['idLivro']) && is_array($_POST['idLivro'])) {
         $livrosSelecionados = $_POST['idLivro'];
         // Percorre os livros selecionados
-        foreach ($livrosSelecionados as $idLivro) {
+        foreach($livrosSelecionados as $idLivro) {
 
             $consultaQuantRenov = "SELECT quantRenov FROM itensdeemprestimo WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
             $resultadoConsulta = mysqli_query($conexao, $consultaQuantRenov);
@@ -51,7 +51,7 @@ if (isset($_POST['renovar'])) {
 
             $dataAtual = date("Y-m-d");
 
-            if ($quantRenov <= 2) {
+            if($quantRenov <= 2) {
                 // Realiza a atualização no banco de dados para marcar como renovado
                 $sql = "UPDATE itensdeemprestimo SET statusItem = 'Renovado', dataRenovacao = '$dataAtual', quantRenov = $quantRenov WHERE idLivro = $idLivro AND idEmprestimo = $idEmprestimo";
                 mysqli_query($conexao, $sql);
@@ -75,7 +75,7 @@ $sql = "SELECT distinct emprestimo.id as idEmprestimo, livro.titulo as titulo, s
         FROM itensDeEmprestimo 
         INNER JOIN livro ON itensDeEmprestimo.idLivro = livro.id 
         LEFT JOIN emprestimo ON itensDeEmprestimo.idEmprestimo = emprestimo.id     
-        WHERE idEmprestimo = $idEmprestimo" . $V_WHERE;
+        WHERE idEmprestimo = $idEmprestimo".$V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -107,13 +107,12 @@ $resultado = mysqli_query($conexao, $sql);
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="shortcut icon" href="logo.ico">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Renovação</title>
 </head>
 
-<body>
+<body style="background-color: #ffd8be">
 
     <section class="dashboardLeitor">
         <a href="principal.php" style="text-decoration: none">
@@ -126,95 +125,100 @@ $resultado = mysqli_query($conexao, $sql);
                 <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
                 <?php echo $multa; ?>
                 <br><br>
-                <div class="card cardlistar table-responsive" style="max-width: fit-content">
-                    <div class="card-body cardlistar2">
+              
+                    <div class="card cardlistar table-responsive" style="max-width: fit-content; margin: 0; padding: 0">
+                        <div class="card-body cardlistar2">
 
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 style="margin-right: ">Leitor(a):
-                                                <?php
-                                                echo $linhaLeitor['nome']; ?>
-                                            </h5>
-                                            <h5>Data Emprestimo
-                                                <?php $linhaData = mysqli_fetch_assoc($dataEmprestimo);
-                                                $dataEmpres = date("d/m/Y", strtotime($linhaData['dataEmprestimo']));
-                                                echo $dataEmpres ?>
-                                            </h5>
-                                        </div>
-                                    </tr>
-                                    <?php require_once("mensagem.php"); ?>
-                                    <tr>
-                                        <td scope="col"><b>Item</b></td>
-                                        <td scope="col"><b>Status</b></td>
-                                        <td scope="col"><b>Data Prevista</b></td>
-                                        <td scope="col"><b>Selecionar livro</b></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
                                         <tr>
-
-                                            <input type="hidden" name="idEmprestimo" value="<?= $linha['idEmprestimo'] ?>">
-                                            <td>
-                                                <?= $linha['titulo'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $linha['statusItem'] ?>
-                                            </td>
-                                            <td>
-                                                <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                $checked = "";
-                                                if ($linha['statusItem'] == 'Devolvido') {
-                                                    $checked = 'disabled';
-                                                } ?>
-                                                <input class="form-check-input" type="checkbox" name="idLivro[]"
-                                                    value=" <?= $linha['idLivro'] ?>" id="flexCheckIndeterminate" <?php echo $checked ?>>
-                                            </td>
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <h5 style="margin-right: ">Leitor(a):
+                                                    <?php
+                                                    echo $linhaLeitor['nome']; ?>
+                                                </h5>
+                                                <h5>Data Emprestimo
+                                                    <?php $linhaData = mysqli_fetch_assoc($dataEmprestimo);
+                                                    $dataEmpres = date("d/m/Y", strtotime($linhaData['dataEmprestimo']));
+                                                    echo $dataEmpres ?>
+                                                </h5>
+                                            </div>
                                         </tr>
-                                        <div class="modal fade" id="exampleModal4" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h2 class="modal-title fs-5" id="exampleModalLabel">Finalizar
-                                                        </h2>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
+                                        <?php require_once("mensagem.php"); ?>
+                                        <tr>
+                                            <td scope="col"><b>Item</b></td>
+                                            <td scope="col"><b>Status</b></td>
+                                            <td scope="col"><b>Data Prevista</b></td>
+                                            <td scope="col"><b>Selecionar livro</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php while($linha = mysqli_fetch_array($resultado)) { ?>
+                                            <tr>
+
+                                                <input type="hidden" name="idEmprestimo"
+                                                    value="<?= $linha['idEmprestimo'] ?>">
+                                                <td>
+                                                    <?= $linha['titulo'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= $linha['statusItem'] ?>
+                                                </td>
+                                                <td>
+                                                    <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $checked = "";
+                                                    if($linha['statusItem'] == 'Devolvido') {
+                                                        $checked = 'disabled';
+                                                    } ?>
+                                                    <input class="form-check-input" type="checkbox" name="idLivro[]"
+                                                        value=" <?= $linha['idLivro'] ?>" id="flexCheckIndeterminate" <?php echo $checked ?>>
+                                                </td>
+                                            </tr>
+                                            <div class="modal fade" id="exampleModal4" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h2 class="modal-title fs-5" id="exampleModalLabel">Finalizar
+                                                            </h2>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <form method="post">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" id="idEmprestimo" name="idEmprestimo"
+                                                                    value="<?= $linha['idEmprestimo'] ?>">
+                                                                <label for="">Para finalizar o empréstimo, pressione:
+                                                                </label>
+                                                                <input class="form-check-input" type="checkbox" value=""
+                                                                    id="flexCheckIndeterminate" name="check">
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Fechar</button>
+                                                                <button type="submit" name="finalizar"
+                                                                    class="btn btn-danger"
+                                                                    data-bs-dismiss="modal">Finalizar</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <form method="post">
-                                                        <div class="modal-body">
-                                                            <input type="hidden" id="idEmprestimo" name="idEmprestimo"
-                                                                value="<?= $linha['idEmprestimo'] ?>">
-                                                            <label for="">Para finalizar o empréstimo, pressione:
-                                                            </label>
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckIndeterminate" name="check">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Fechar</button>
-                                                            <button type="submit" name="finalizar" class="btn btn-danger"
-                                                                data-bs-dismiss="modal">Finalizar</button>
-                                                        </div>
-                                                    </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button name="renovar" type="submit" class="botaopesquisar"
-                            style="margin-top: 10pt">Renovar</button>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button name="renovar" type="submit" class="botaopesquisar"
+                              style="margin-top: 10pt">Renovar</button> 
+                            </div> 
             </form>
+           
             </div>
-            </div>
+            
         </center>
     </section>
     <script>
