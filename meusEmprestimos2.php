@@ -59,7 +59,7 @@ $resultado = mysqli_query($conexao, $sql);
 
     <section class="dashboardLeitor">
         <a href="principal.php" style="text-decoration: none">
-            <h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1><br>
+            <h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="70px"> Bibliotech</h1><br>
         </a>
 
 
