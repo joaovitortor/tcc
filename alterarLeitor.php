@@ -4,7 +4,7 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
-if (isset($_POST['salvar'])) {
+if(isset($_POST['salvar'])) {
     //2. Receber os dados para inserir no BD
     $id = $_POST['id'];
     $status = $_POST['status'];
@@ -41,7 +41,7 @@ if (isset($_POST['salvar'])) {
 }
 
 //Busca usuário selecionado pelo "usuarioListar.php"
-$sql = "select * from leitor where id = " . $_GET['id'];
+$sql = "select * from leitor where id = ".$_GET['id'];
 $resultado = mysqli_query($conexao, $sql);
 $linha = mysqli_fetch_array($resultado)
     ?>
@@ -141,6 +141,7 @@ $linha = mysqli_fetch_array($resultado)
                                 </option>
                                 <option value="Ativo" <?= ($linha['status'] == 'Ativo') ? 'selected="selected"' : '' ?>>
                                     Ativo</option>
+                                <option value="Inativo" <?= ($linha['status'] == 'Inativo') ? 'selected="selected"' : '' ?>>Inativo</option>
                                 <option value="Pendente" <?= ($linha['status'] == 'Pendente') ? 'selected="selected"' : '' ?>>Pendente</option>
                             </select>
                         </div>

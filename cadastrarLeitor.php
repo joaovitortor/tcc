@@ -9,6 +9,7 @@ $cpfInvalido = "";
 $emailInvalido = "";
 $senhaInvalido = "";
 $emailRepetido = "";
+$senhaPequena = "";
 
 if(isset($_GET['mensagem'])) {
     $mensagem = $_GET['mensagem'];
@@ -81,37 +82,42 @@ if(isset($_POST['cadastrar'])) {
         if($numeroLinhasCpf < 1) {
             if($numeroLinhas < 1 && $numeroLinhas2 < 1) {
                 if($email == $confirmarEmail) {
-                    if($senha == $confirmarSenha) {
-                        //3. preparar sql para inserir
-                        $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
+                    if(strlen($senha) >= 8) {
+                        if($senha == $confirmarSenha) {
+                            //3. preparar sql para inserir
+                            $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
                         values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
-                        $cpfInvalido = "";
+                            $cpfInvalido = "";
 
-                        // Criar objetos DateTime para a data de nascimento e a data atual
-                        $dataNascimentoObj = new DateTime($dn);
-                        $dataAtualObj = new DateTime();
+                            // Criar objetos DateTime para a data de nascimento e a data atual
+                            $dataNascimentoObj = new DateTime($dn);
+                            $dataAtualObj = new DateTime();
 
-                        // Calcular a diferença entre as datas
-                        $diferenca = $dataNascimentoObj->diff($dataAtualObj);
+                            // Calcular a diferença entre as datas
+                            $diferenca = $dataNascimentoObj->diff($dataAtualObj);
 
-                        // Obter a idade em anos
-                        $idade = $diferenca->y;
+                            // Obter a idade em anos
+                            $idade = $diferenca->y;
 
-                        //4. executar sql no bd
-                        mysqli_query($conexao, $sql);
+                            //4. executar sql no bd
+                            mysqli_query($conexao, $sql);
 
-                        //5.mostrar uma mensagem ao usuário
-                        $mensagem = "Cadastro realizado com sucesso!";
+                            //5.mostrar uma mensagem ao usuário
+                            $mensagem = "Cadastro realizado com sucesso!";
 
-                        if($idade < 18) {
-                            $idUsuario = mysqli_insert_id($conexao);
-                            header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
-                            exit;
+                            if($idade < 18) {
+                                $idUsuario = mysqli_insert_id($conexao);
+                                header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+                                exit;
+                            }
+                        } else {
+                            $mensagemAlert = "Erro ao cadastrar";
+                            $senhaInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senhas não correspondentes</span>';
                         }
                     } else {
                         $mensagemAlert = "Erro ao cadastrar";
-                        $senhaInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senhas não correspondentes</span>';
+                        $senhaPequena = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senha necessita de 8 caracteres</span>';
                     }
                 } else {
                     $mensagemAlert = "Erro ao cadastrar";
@@ -224,6 +230,7 @@ if(isset($_POST['cadastrar'])) {
                                 </option>
                                 <option value="Ativo" selected="selected">Ativo</option>
                                 <option value="Inativo">Inativo</option>
+                                <option value="Pendente">Pendente</option>
                             </select>
                         </div>
                         <div class="form-column">
@@ -267,7 +274,8 @@ if(isset($_POST['cadastrar'])) {
                     </div>
                     <div class="form-row">
                         <div class="form-column esquerda">
-                            <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
+                            <input class="geekcb-field" placeholder="Senha" value="<?= $senha ?>" required type="password" name="senha">
+                            <?php echo $senhaPequena; ?>
                         </div>
                         <div class="form-column">
                             <input class="geekcb-field" placeholder="Confirmar Senha" required type="password"

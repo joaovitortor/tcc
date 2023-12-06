@@ -4,22 +4,49 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
-if (isset($_POST['cadastrar'])) {
+$emailRepetido = "";
+$senhaInvalido = "";
+$senhaPequena = "";
+
+if(isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
     $login = $_POST['login'];
     $senha = $_POST['senha'];
+    $confirmarSenha = $_POST['confirmarSenha'];
 
+    $sqlEmail = "SELECT email FROM leitor WHERE email = '".$login."'";
+    $verificaEmail = mysqli_query($conexao, $sqlEmail);
+    $numeroLinhas = mysqli_num_rows($verificaEmail);
 
-    //3. preparar sql para inserir
-    $sql = "insert into administrador (status, login, senha)
-values ('$status', '$login', '$senha')";
+    $sqlEmail2 = "SELECT * FROM administrador WHERE login = '".$login."'";
+    $verificaEmail2 = mysqli_query($conexao, $sqlEmail2);
+    $numeroLinhas2 = mysqli_num_rows($verificaEmail2);
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    if($numeroLinhas < 1 && $numeroLinhas2 < 1) {
+        if(strlen($senha) >= 8) {
+            if($senha == $confirmarSenha) {
+                //3. preparar sql para inserir
+                $sql = "insert into administrador (status, login, senha)
+                values ('$status', '$login', '$senha')";
 
-    //5.mostrar uma mensagem ao usuário
-    $mensagem = "Cadastro realizado com sucesso!";
+                //4. executar sql no bd
+                mysqli_query($conexao, $sql);
+
+                //5.mostrar uma mensagem ao usuário
+                $mensagem = "Cadastro realizado com sucesso!";
+            } else {
+                $mensagemAlert = "Erro ao cadastrar";
+                $senhaInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senhas não correspondentes</span>';
+            }
+        } else {
+            $mensagemAlert = "Erro ao cadastrar";
+            $senhaPequena = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senha necessita de 8 caracteres</span>';
+        }
+    } else {
+        $mensagemAlert = "Erro ao cadastrar";
+        $emailRepetido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Email já cadastrado no sistema</span>';
+    }
 }
 
 ?>
@@ -96,6 +123,7 @@ values ('$status', '$login', '$senha')";
                     <?php
                     $status = isset($_POST['status']) ? $_POST['status'] : "";
                     $nome = isset($_POST['login']) ? $_POST['login'] : "";
+                    $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
                     ?>
 
                 </form>
@@ -111,14 +139,26 @@ values ('$status', '$login', '$senha')";
                         <option value="Inativo">Inativo</option>
                     </select>
 
-                    <input class="geekcb-field" placeholder="Login" required type="text" name="login">
+                    <div class="form-row">
+                        <input class="geekcb-field" placeholder="Login" value="<?= $login ?>" required type="text" name="login">
+                        <?php echo $emailRepetido; ?>
+                    </div>
 
-                    <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
+                    <div class="form-row">
+                        <input class="geekcb-field" placeholder="Senha" value="<?= $senha ?>" required type="password" name="senha">
+                        <?php echo $senhaPequena; ?>
+                    </div>
+
+                    <div class="form-row">
+                        <input class="geekcb-field" placeholder="Confirmar Senha" required type="password"
+                            name="confirmarSenha">
+                        <?php echo $senhaInvalido; ?>
+                    </div>
 
                     <table>
                         <tr>
-                            <td style="padding-right: 70px;width: 80%;"><a href="listarAdministrador.php" class="botaolistar"> <i
-                                        class="fa-regular fa-file-lines"></i></i></a></td>
+                            <td style="padding-right: 70px;width: 80%;"><a href="listarAdministrador.php"
+                                    class="botaolistar"> <i class="fa-regular fa-file-lines"></i></i></a></td>
                             <td> <button class="geekcb-btn" type="submit" name="cadastrar">Cadastrar</button></td>
 
                         </tr>

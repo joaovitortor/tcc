@@ -1,9 +1,38 @@
 <?php
+
+
 //1. Conecta no banco de dados (IP, usuario, senha, nome do banco)
 //require_once("verificaautenticacao.php");
 require_once("conexao.php");
 
 require_once("admAutenticacao.php");
+
+// Atualiza o status dos empréstimos para 'Em atraso' se houver algum item atrasado
+$sqlAtualizarStatus = "UPDATE emprestimo SET statusEmprestimo = 'Em atraso' WHERE id IN (
+    SELECT DISTINCT e.id
+    FROM emprestimo e
+    JOIN itensdeemprestimo ie ON e.id = ie.idEmprestimo
+    WHERE NOW() > ie.dataPrevDev AND e.statusEmprestimo = 'Em andamento'
+)";
+
+mysqli_query($conexao, $sqlAtualizarStatus);
+
+// Verifica todos os empréstimos e atualiza o status se necessário
+$sqlVerificarAtraso = "SELECT id FROM emprestimo WHERE statusEmprestimo = 'Em andamento'";
+$resultadoVerificarAtraso = mysqli_query($conexao, $sqlVerificarAtraso);
+
+while ($linhaVerificarAtraso = mysqli_fetch_array($resultadoVerificarAtraso)) {
+    $idEmprestimo = $linhaVerificarAtraso['id'];
+
+    $sqlItemAtrasado = "SELECT 1 FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo AND NOW() > dataPrevDev";
+    $resultadoItemAtrasado = mysqli_query($conexao, $sqlItemAtrasado);
+
+    if (mysqli_num_rows($resultadoItemAtrasado) > 0) {
+        // Pelo menos um item de empréstimo está atrasado, atualiza o status
+        $sqlAtualizarStatusEmprestimo = "UPDATE emprestimo SET statusEmprestimo = 'Em atraso' WHERE id = $idEmprestimo";
+        mysqli_query($conexao, $sqlAtualizarStatusEmprestimo);
+    }
+}
 
 $voltar = "";
 
@@ -28,7 +57,7 @@ if (isset($_GET['mensagemAlert'])) {
 $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
         FROM emprestimo 
         LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
-        ORDER BY statusEmprestimo = 'Em andamento'desc" . $V_WHERE;
+        ORDER BY FIELD(statusEmprestimo, 'Em atraso', 'Em andamento', 'Finalizado'), id DESC" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
