@@ -18,7 +18,7 @@ $sql = "SELECT emprestimo.id as idEmprestimo, leitor.nome as nomeLeitor, statusE
         FROM emprestimo 
         LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
         WHERE idLeitor = $_SESSION[id]
-        ORDER BY emprestimo.id desc".$V_WHERE;
+        ORDER BY statusEmprestimo = 'Em andamento' desc".$V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -69,21 +69,113 @@ $resultado = mysqli_query($conexao, $sql);
         <br><br>
 
 
+<center>
+        <?php while($linha = mysqli_fetch_array($resultado)) {
 
-        <?php while($linha = mysqli_fetch_array($resultado)) { ?>
 
+            if($linha['statusEmprestimo'] == 'Finalizado') { ?>
+                <div class="wrapperAcervo" style="height: 400px;">
 
-            <div>
-                <div class="wrapperAcervo">
-
-                    <div class="containerAcervo">
-                        <div style="background-color: white" class="topAcervo">
+                    <div class="containerAcervo"
+                        style="border: 5px solid #068C4D; padding: 10px; border-radius: 10px 10px 10px 10px; width: 290px; height: 400px;">
+                        <div class="topAcervo">
 
 
 
                             <div class="contentsAcervo">
                                 <table
-                                    style="padding-top: 30%; padding-left: 5%; padding-right: 5%;text-align:left; margin-left: 1rem width:90%">
+                                    style="padding-top: 10%; padding-left: 5%; padding-right: 5%;text-align:left; margin-left: 1rem width:90%">
+                                    <tr>
+                                        <th>Código: </th>
+                                        <td>
+                                            <?= $linha['idEmprestimo'] ?>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Status: </th>
+                                        <td>
+                                            <?= $linha['statusEmprestimo'] ?>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <th>Data do empréstimo</th>
+                                        <td>
+                                            <?= date("d/m/Y", strtotime($linha['dataEmprestimo'])); ?>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                
+                                        <th>Data prevista para dev.: </th>
+                                        <td>
+                                            <?= date("d/m/Y", strtotime($linha['dataPrevistaDevolucao'])) ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Livros: </th>
+
+                                        <td>
+                                            <?php
+                                            $idEmprestimo = $linha['idEmprestimo'];
+                                            $sqlLivros = "SELECT distinct livro.titulo FROM itensdeemprestimo
+                                            JOIN livro ON itensdeemprestimo.idLivro = livro.id
+                                            WHERE itensdeemprestimo.idEmprestimo = $idEmprestimo";
+
+                                            $resultadoLivros = mysqli_query($conexao, $sqlLivros);
+
+                                            $titulosLivros = array();
+                                            while($linhaLivro = mysqli_fetch_array($resultadoLivros)) {
+                                                $titulosLivros[] = $linhaLivro['titulo'];
+                                            }
+
+                                            echo implode(', <br>', $titulosLivros);
+                                            ?>
+                                        </td>
+                                    </tr>                              
+                                
+                             <?php if($linha['valorMulta'] > 0 ) {?> 
+                                <tr>
+                                <th>Valor da multa </th>
+                                <td>
+                                    <?= $linha['valorMulta'] . ',00' ?>
+
+                                </td>
+                            </tr>
+                            <?php } ?>
+                                </table>
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <?php }
+
+            if($linha['statusEmprestimo'] == 'Em andamento') { ?>
+                <div class="wrapperAcervo" style="height: 400px">
+
+                    <div class="containerAcervo"
+                        style="border: 5px solid #CF1706; padding: 10px; border-radius: 10px 10px 10px 10px;width: 290px; height: 400px">
+                        <div class="topAcervo">
+
+
+
+                            <div class="contentsAcervo">
+                                <table
+                                    style="padding-top: 10%; padding-left: 5%; padding-right: 5%;text-align:left; margin-left: 1rem width:90%">
                                     <tr>
                                         <th>Código: </th>
                                         <td>
@@ -122,8 +214,8 @@ $resultado = mysqli_query($conexao, $sql);
                                             <?php
                                             $idEmprestimo = $linha['idEmprestimo'];
                                             $sqlLivros = "SELECT distinct livro.titulo FROM itensdeemprestimo
-                                            JOIN livro ON itensdeemprestimo.idLivro = livro.id
-                                            WHERE itensdeemprestimo.idEmprestimo = $idEmprestimo";
+                                JOIN livro ON itensdeemprestimo.idLivro = livro.id
+                                WHERE itensdeemprestimo.idEmprestimo = $idEmprestimo";
 
                                             $resultadoLivros = mysqli_query($conexao, $sqlLivros);
 
@@ -140,21 +232,16 @@ $resultado = mysqli_query($conexao, $sql);
 
                             </div>
 
-
-
-
-
-
                         </div>
 
                     </div>
 
                 </div>
 
-            </div>
-            <?php } ?>
+            <?php }
+        } ?>
 
-     
+</center>
         <?php require_once('procurarEmprestimo.php') ?>
     </section>
     <script>

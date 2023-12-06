@@ -48,7 +48,7 @@ $voltar = "";
             <div class="col-4 text-end">
             <ul class="nav justify-content-end">         
         <li class="nav-item">
-            <a class="nav-link active" href="meusEmprestimos.php">Meus empréstimos</a>
+            <a class="nav-link active" href="meusEmprestimos2.php">Meus empréstimos</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="renovarLeitor.php">Renovar livro</a>
