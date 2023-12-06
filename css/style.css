@@ -250,7 +250,7 @@ body.dark .switch:before {
     position: absolute;
     left: 0px;
     width: 100%;
-    background-color: var(--panel-color);
+    background-color: #ffd8be;;
     min-height: 100vh;
     padding: 10px 14px;
     transition: var(--tran-05);

@@ -126,7 +126,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <input type="hidden" name="idEmprestimo" value="<?php echo $_GET['id'] ?>">
                 <?php echo $multa; ?>
                 <br><br>
-                <div class="card cardlistar">
+                <div class="card cardlistar table-responsive" style="max-width: fit-content">
                     <div class="card-body cardlistar2">
 
                         <div class="table-responsive">
@@ -147,20 +147,16 @@ $resultado = mysqli_query($conexao, $sql);
                                     </tr>
                                     <?php require_once("mensagem.php"); ?>
                                     <tr>
-                                        <td scope="col"><b>ID do Empréstimo</b></td>
                                         <td scope="col"><b>Item</b></td>
                                         <td scope="col"><b>Status</b></td>
                                         <td scope="col"><b>Data Prevista</b></td>
-                                        <td scope="col"><b>Data devolvido</b></td>
                                         <td scope="col"><b>Selecionar livro</b></td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
                                         <tr>
-                                            <td>
-                                                <?= $linha['idEmprestimo'] ?>
-                                            </td>
+
                                             <input type="hidden" name="idEmprestimo" value="<?= $linha['idEmprestimo'] ?>">
                                             <td>
                                                 <?= $linha['titulo'] ?>
@@ -170,10 +166,6 @@ $resultado = mysqli_query($conexao, $sql);
                                             </td>
                                             <td>
                                                 <?= date("d/m/Y", strtotime($linha['dataPrevista'])) ?>
-                                            </td>
-                                            <td>
-                                                <?php isset($linha['dataDevolvido']) ? $data = date("d/m/Y", strtotime($linha['dataDevolvido'])) : $data = "";
-                                                echo $data ?>
                                             </td>
                                             <td>
                                                 <?php
