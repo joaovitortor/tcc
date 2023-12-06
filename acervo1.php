@@ -29,7 +29,7 @@ $registros = mysqli_fetch_array(mysqli_query($conexao, "SELECT COUNT(titulo) cou
 
 $paginas = ceil($registros / $limite);
 
-//3. Executa a SQL
+
 $resultado = mysqli_query($conexao, $sql);
 
 ?>

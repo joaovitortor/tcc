@@ -18,7 +18,7 @@ $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataE
         FROM emprestimo 
         LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
         WHERE idLeitor = $_SESSION[id]
-        ORDER BY emprestimo.id desc" . $V_WHERE;
+        ORDER BY idEmprestimo desc" . $V_WHERE;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
