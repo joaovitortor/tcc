@@ -65,7 +65,7 @@ if (isset($_GET['mensagemAlert'])) {
 
     <div style="align-items: right" class="navbar bg-body-tertiary">
         <div style="align-content: right" class="container-fluid">
-            <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-user" style="padding-left: 2%; padding-right: 3%; cursor: pointer"> Login</i>
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-left: 2%; padding-right: 3%; cursor: pointer; font-family: Fjalla One; color: #9381ff; font-size: 1.4rem"> <i class="fa-solid fa-user"></i> Login</a>
         </div>
     </div>
     <br><br><br>
@@ -78,7 +78,7 @@ if (isset($_GET['mensagemAlert'])) {
     }
     ?>
 
-    <h1 class="titulo"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
+    <h1 class="titulo"> <img src="logobiblio.png" alt="logo" width="60px"> Bibliotech</h1>
 
 
 
