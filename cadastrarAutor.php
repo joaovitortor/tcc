@@ -4,18 +4,27 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
-if (isset($_POST['cadastrar'])) {
+if(isset($_POST['cadastrar'])) {
+
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
     $nome = $_POST['nome'];
 
-    //3. preparar sql para inserir
-    $sql = "INSERT INTO autor (status, nome) VALUES ('$status', '$nome')";
+    $sqlNome = "SELECT nome FROM autor WHERE nome = '".$nome."'";
+    $verificaNome = mysqli_query($conexao, $sqlNome);
+    $numeroLinhas = mysqli_num_rows($verificaNome);
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    if($numeroLinhas < 1) {
+        //3. preparar sql para inserir
+        $sql = "INSERT INTO autor (status, nome) VALUES ('$status', '$nome')";
 
-    $mensagem = "Cadastrado com sucesso!";
+        //4. executar sql no bd
+        mysqli_query($conexao, $sql);
+
+        $mensagem = "Cadastrado com sucesso!";
+    } else {
+        $mensagemAlert = "Erro. Já possui um autor cadastrado com esse nome";
+    }
 }
 
 ?>

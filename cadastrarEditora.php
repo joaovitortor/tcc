@@ -4,19 +4,27 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
-if (isset($_POST['cadastrar'])) {
+if(isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
     $nome = $_POST['nome'];
 
-    //3. preparar sql para inserir
-    $sql = "insert into editora (status, nome) values ('$status', '$nome')";
+    $sqlNome = "SELECT nome FROM editora WHERE nome = '".$nome."'";
+    $verificaNome = mysqli_query($conexao, $sqlNome);
+    $numeroLinhas = mysqli_num_rows($verificaNome);
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    if($numeroLinhas < 1) {
+        //3. preparar sql para inserir
+        $sql = "insert into editora (status, nome) values ('$status', '$nome')";
 
-    //5.mostrar uma mensagem ao usuário
-    $mensagem = "Cadastro realizado com sucesso!";
+        //4. executar sql no bd
+        mysqli_query($conexao, $sql);
+
+        //5.mostrar uma mensagem ao usuário
+        $mensagem = "Cadastro realizado com sucesso!";
+    } else {
+        $mensagemAlert = "Erro. Já possui uma Editora cadastrada com esse nome";
+    }
 }
 
 ?>

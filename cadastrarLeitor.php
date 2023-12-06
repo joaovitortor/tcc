@@ -27,6 +27,10 @@ if(isset($_POST['cadastrar'])) {
     $confirmarEmail = $_POST['confirmarEmail'];
     $confirmarSenha = $_POST['confirmarSenha'];
 
+    $sqlCpf = "SELECT * FROM leitor WHERE cpf = '".$cpf."'";
+    $verificaCpf = mysqli_query($conexao, $sqlCpf);
+    $numeroLinhasCpf = mysqli_num_rows($verificaCpf);
+
     function validarCPF($cpf) {
         // Remove caracteres não numéricos
         $cpf = preg_replace('/[^0-9]/', '', $cpf);
@@ -64,57 +68,67 @@ if(isset($_POST['cadastrar'])) {
             return false;
         }
     }
+
     $sqlEmail = "SELECT email FROM leitor WHERE email = '".$email."'";
     $verificaEmail = mysqli_query($conexao, $sqlEmail);
     $numeroLinhas = mysqli_num_rows($verificaEmail);
+
+    $sqlEmail2 = "SELECT * FROM administrador WHERE login = '".$email."'";
+    $verificaEmail2 = mysqli_query($conexao, $sqlEmail2);
+    $numeroLinhas2 = mysqli_num_rows($verificaEmail2);
+
     if(validarCPF($cpf)) {
-        if($numeroLinhas < 1) {
-            if($email == $confirmarEmail) {
-                if($senha == $confirmarSenha) {
-                    //3. preparar sql para inserir
-                    $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
-                values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
+        if($numeroLinhasCpf < 1) {
+            if($numeroLinhas < 1 && $numeroLinhas2 < 1) {
+                if($email == $confirmarEmail) {
+                    if($senha == $confirmarSenha) {
+                        //3. preparar sql para inserir
+                        $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
+                        values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
-                    $cpfInvalido = "";
+                        $cpfInvalido = "";
 
-                    // Criar objetos DateTime para a data de nascimento e a data atual
-                    $dataNascimentoObj = new DateTime($dn);
-                    $dataAtualObj = new DateTime();
+                        // Criar objetos DateTime para a data de nascimento e a data atual
+                        $dataNascimentoObj = new DateTime($dn);
+                        $dataAtualObj = new DateTime();
 
-                    // Calcular a diferença entre as datas
-                    $diferenca = $dataNascimentoObj->diff($dataAtualObj);
+                        // Calcular a diferença entre as datas
+                        $diferenca = $dataNascimentoObj->diff($dataAtualObj);
 
-                    // Obter a idade em anos
-                    $idade = $diferenca->y;
+                        // Obter a idade em anos
+                        $idade = $diferenca->y;
 
-                    //4. executar sql no bd
-                    mysqli_query($conexao, $sql);
+                        //4. executar sql no bd
+                        mysqli_query($conexao, $sql);
 
-                    //5.mostrar uma mensagem ao usuário
-                    $mensagem = "Cadastro realizado com sucesso!";
+                        //5.mostrar uma mensagem ao usuário
+                        $mensagem = "Cadastro realizado com sucesso!";
 
-                    if($idade < 18) {
-                        $idUsuario = mysqli_insert_id($conexao);
-                        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
-                        exit;
+                        if($idade < 18) {
+                            $idUsuario = mysqli_insert_id($conexao);
+                            header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+                            exit;
+                        }
+                    } else {
+                        $mensagemAlert = "Erro ao cadastrar";
+                        $senhaInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senhas não correspondentes</span>';
                     }
                 } else {
                     $mensagemAlert = "Erro ao cadastrar";
-                    $senhaInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senha não batem</span>';
+                    $emailInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Emails não correspondentes</span>';
                 }
             } else {
                 $mensagemAlert = "Erro ao cadastrar";
-                $emailInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Emails não batem</span>';
+                $emailRepetido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Email já cadastrado no sistema</span>';
             }
         } else {
             $mensagemAlert = "Erro ao cadastrar";
-            $emailRepetido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Email já cadastrado no sistema</span>';
+            $cpfInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Cpf já cadastrado no sistema</span>';
         }
     } else {
         $mensagemAlert = "Erro ao cadastrar";
         $cpfInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Cpf Inválido</span>';
     }
-
 }
 
 ?>
