@@ -6,11 +6,14 @@ require_once("conexao.php");
 require_once("admAutenticacao.php");
 
 $cpfInvalido = "";
+$emailInvalido = "";
+$senhaInvalido = "";
+$emailRepetido = "";
 
-if (isset($_GET['mensagem'])) {
-$mensagem = $_GET['mensagem'];
+if(isset($_GET['mensagem'])) {
+    $mensagem = $_GET['mensagem'];
 }
-if (isset($_POST['cadastrar'])) {
+if(isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['status'];
     $nome = $_POST['nome'];
@@ -21,25 +24,26 @@ if (isset($_POST['cadastrar'])) {
     $dnFormatted = date('d/m/Y', strtotime($dn));
     $email = $_POST['email'];
     $senha = $_POST['senha'];
+    $confirmarEmail = $_POST['confirmarEmail'];
+    $confirmarSenha = $_POST['confirmarSenha'];
 
-    function validarCPF($cpf)
-    {
+    function validarCPF($cpf) {
         // Remove caracteres não numéricos
         $cpf = preg_replace('/[^0-9]/', '', $cpf);
 
         // Verifica se o CPF possui 11 dígitos
-        if (strlen($cpf) != 11) {
+        if(strlen($cpf) != 11) {
             return false;
         }
 
         // Verifica se todos os dígitos são iguais
-        if (preg_match('/(\d)\1{10}/', $cpf)) {
+        if(preg_match('/(\d)\1{10}/', $cpf)) {
             return false;
         }
 
         // Calcula o primeiro dígito verificador
         $soma = 0;
-        for ($i = 0; $i < 9; $i++) {
+        for($i = 0; $i < 9; $i++) {
             $soma += $cpf[$i] * (10 - $i);
         }
         $resto = $soma % 11;
@@ -47,49 +51,67 @@ if (isset($_POST['cadastrar'])) {
 
         // Calcula o segundo dígito verificador
         $soma = 0;
-        for ($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 10; $i++) {
             $soma += $cpf[$i] * (11 - $i);
         }
         $resto = $soma % 11;
         $digito2 = ($resto < 2) ? 0 : 11 - $resto;
 
         // Verifica se os dígitos verificadores estão corretos
-        if ($cpf[9] == $digito1 && $cpf[10] == $digito2) {
+        if($cpf[9] == $digito1 && $cpf[10] == $digito2) {
             return true;
         } else {
             return false;
         }
     }
+    $sqlEmail = "SELECT email FROM leitor WHERE email = '".$email."'";
+    $verificaEmail = mysqli_query($conexao, $sqlEmail);
+    $numeroLinhas = mysqli_num_rows($verificaEmail);
+    if(validarCPF($cpf)) {
+        if($numeroLinhas < 1) {
+            if($email == $confirmarEmail) {
+                if($senha == $confirmarSenha) {
+                    //3. preparar sql para inserir
+                    $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
+                values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
 
-    if (validarCPF($cpf)) {
-        //3. preparar sql para inserir
-        $sql = "insert into leitor (status, nome, telefone, endereco, cpf, dn, email, senha)
-        values ('$status', '$nome', '$telefone', '$endereco','$cpf', '$dn', '$email', '$senha')";
+                    $cpfInvalido = "";
 
-        $cpfInvalido = "";
+                    // Criar objetos DateTime para a data de nascimento e a data atual
+                    $dataNascimentoObj = new DateTime($dn);
+                    $dataAtualObj = new DateTime();
 
-        // Criar objetos DateTime para a data de nascimento e a data atual
-        $dataNascimentoObj = new DateTime($dn);
-        $dataAtualObj = new DateTime();
+                    // Calcular a diferença entre as datas
+                    $diferenca = $dataNascimentoObj->diff($dataAtualObj);
 
-        // Calcular a diferença entre as datas
-        $diferenca = $dataNascimentoObj->diff($dataAtualObj);
+                    // Obter a idade em anos
+                    $idade = $diferenca->y;
 
-        // Obter a idade em anos
-        $idade = $diferenca->y;
+                    //4. executar sql no bd
+                    mysqli_query($conexao, $sql);
 
-        //4. executar sql no bd
-        mysqli_query($conexao, $sql);
+                    //5.mostrar uma mensagem ao usuário
+                    $mensagem = "Cadastro realizado com sucesso!";
 
-        //5.mostrar uma mensagem ao usuário
-        $mensagem = "Cadastro realizado com sucesso!";
-
-        if ($idade < 18) {
-            $idUsuario = mysqli_insert_id($conexao);
-            header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
-            exit;
+                    if($idade < 18) {
+                        $idUsuario = mysqli_insert_id($conexao);
+                        header("Location: cadastrarResponsavel.php?idusuario=$idUsuario");
+                        exit;
+                    }
+                } else {
+                    $mensagemAlert = "Erro ao cadastrar";
+                    $senhaInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Senha não batem</span>';
+                }
+            } else {
+                $mensagemAlert = "Erro ao cadastrar";
+                $emailInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Emails não batem</span>';
+            }
+        } else {
+            $mensagemAlert = "Erro ao cadastrar";
+            $emailRepetido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Email já cadastrado no sistema</span>';
         }
     } else {
+        $mensagemAlert = "Erro ao cadastrar";
         $cpfInvalido = '<span style="margin-top: -26pt; color: red; font-family: Fjalla One;">Cpf Inválido</span>';
     }
 
@@ -174,6 +196,8 @@ if (isset($_POST['cadastrar'])) {
                     $dn = isset($_POST['dn']) ? $_POST['dn'] : "";
                     $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : "";
                     $email = isset($_POST['email']) ? $_POST['email'] : "";
+                    $confirmarEmail = isset($_POST['confirmarEmail']) ? $_POST['confirmarEmail'] : "";
+                    $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
                     ?>
                 </form>
                 <form method="post" class="geekcb-form-contact" id="leitorForm">
@@ -219,9 +243,22 @@ if (isset($_POST['cadastrar'])) {
                         <div class="form-column esquerda">
                             <input class="geekcb-field" value="<?= $email ?>" placeholder="E-mail" required type="email"
                                 name="email">
+                            <?php echo $emailRepetido; ?>
                         </div>
                         <div class="form-column">
+                            <input class="geekcb-field" value="<?= $confirmarEmail ?>" placeholder="Confirmar E-mail"
+                                required type="email" name="confirmarEmail">
+                            <?php echo $emailInvalido; ?>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column esquerda">
                             <input class="geekcb-field" placeholder="Senha" required type="password" name="senha">
+                        </div>
+                        <div class="form-column">
+                            <input class="geekcb-field" placeholder="Confirmar Senha" required type="password"
+                                name="confirmarSenha">
+                            <?php echo $senhaInvalido; ?>
                         </div>
                     </div>
                     <div class="form-row">
