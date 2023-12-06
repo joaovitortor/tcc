@@ -32,17 +32,21 @@ $voltar = "";
 
 <header>
 
-    <ul class="nav justify-content-end">
-       
-            <div class="logoutLeitor">
-                <a href="sair.php"><i class="uil uil-signout"></i>Logout</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <div class="logoutLeitor">
+                    <a href="sair.php"><i class="uil uil-signout"></i> Logout</a>
+                </div>
             </div>
+            <div class="col-4 text-center">
+                <a href="principal.php" style="text-decoration: none" class="logoLeitor">
+                    <h1 class="tituloLeitor text"><img src="logobiblio.png" alt="logo" width="7%"> Bibliotech</h1>
+                </a>
 
-            <a href="principal.php" style="text-decoration: none" class="logoLeitor justify-content-start">
-                <h1 class="tituloLeitor text"> <img src="logobiblio.png" alt="logo" width="7%"> Bibliotech</h1><br>
-            </a>
-       
-
+            </div>
+            <div class="col-4 text-end">
+            <ul class="nav justify-content-end">         
         <li class="nav-item">
             <a class="nav-link active" href="meusEmprestimos.php">Meus empréstimos</a>
         </li>
@@ -51,6 +55,11 @@ $voltar = "";
         </li>
 
     </ul>
+    </div>
+        </div>
+    </div>
+
+
 
 </header>
 
@@ -60,6 +69,7 @@ $voltar = "";
     </div>
 
     <div class="container">
+        <br><br>
         <h2 class="mt-3" style="font-family: Fjalla One">
             <?php
 

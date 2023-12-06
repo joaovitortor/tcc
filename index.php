@@ -29,6 +29,7 @@ if (isset($_GET['mensagemAlert'])) {
     $mensagemAlert = $_GET['mensagemAlert'];
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -78,6 +79,8 @@ if (isset($_GET['mensagemAlert'])) {
     ?>
 
     <h1 class="titulo"> <img src="logobiblio.png" alt="logo" width="5%"> Bibliotech</h1>
+
+
 
     <center>
         <form method="post">
