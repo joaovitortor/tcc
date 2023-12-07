@@ -17,22 +17,30 @@ mysqli_query($conexao, $sqlAtualizarStatus);
 $sqlVerificarAtraso = "SELECT id FROM emprestimo WHERE statusEmprestimo = 'Em andamento'";
 $resultadoVerificarAtraso = mysqli_query($conexao, $sqlVerificarAtraso);
 
-while ($linhaVerificarAtraso = mysqli_fetch_array($resultadoVerificarAtraso)) {
+while($linhaVerificarAtraso = mysqli_fetch_array($resultadoVerificarAtraso)) {
     $idEmprestimo = $linhaVerificarAtraso['id'];
 
     $sqlItemAtrasado = "SELECT 1 FROM itensdeemprestimo WHERE idEmprestimo = $idEmprestimo AND NOW() > dataPrevDev";
     $resultadoItemAtrasado = mysqli_query($conexao, $sqlItemAtrasado);
 
-    if (mysqli_num_rows($resultadoItemAtrasado) > 0) {
+    if(mysqli_num_rows($resultadoItemAtrasado) > 0) {
         // Pelo menos um item de empréstimo está atrasado, atualiza o status
         $sqlAtualizarStatusEmprestimo = "UPDATE emprestimo SET statusEmprestimo = 'Em atraso' WHERE id = $idEmprestimo";
         mysqli_query($conexao, $sqlAtualizarStatusEmprestimo);
     }
 }
+if(isset($_POST["reset"])) {
+    $filtroGenero = '';
+    $filtroEditora = '';
+    $filtroStatus = '';
+    $_POST['idGenero'] = '';
+    $_POST['idEditora'] = '';
+    $_POST['statusLivro'] = '';
+}
 
 $voltar = "";
 
-if (isset($_GET['mensagemAlert'])) {
+if(isset($_GET['mensagemAlert'])) {
     $mensagemAlert = $_GET['mensagemAlert'];
 }
 
@@ -72,12 +80,14 @@ if (isset($_GET['mensagemAlert'])) {
 
     <div style="align-items: right" class="navbar bg-body-tertiary">
         <div style="align-content: right" class="container-fluid">
-            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-left: 2%; padding-right: 3%; cursor: pointer; font-family: Fjalla One; color: #9381ff; font-size: 1.4rem"> <i class="fa-solid fa-user"></i> Login</a>
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                style="padding-left: 2%; padding-right: 3%; cursor: pointer; font-family: Fjalla One; color: #9381ff; font-size: 1.4rem">
+                <i class="fa-solid fa-user"></i> Login</a>
         </div>
     </div>
     <br><br><br>
     <?php
-    if (isset($mensagemAlert)) {
+    if(isset($mensagemAlert)) {
         require_once('mensagem.php');
     }
     if(isset($_POST['pesquisar'])) {
@@ -104,75 +114,72 @@ if (isset($_GET['mensagemAlert'])) {
         </form>
 
         <form method="post">
-                        <div class="form-row">
-                            <div class="form-column esquerda">
-                                <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
-                                    <option class="fonte-status" value="" disabled="disabled" <?php echo empty($_POST['idEditora']) ? 'selected="selected"' : ''; ?>
-                                        placeholder="Editora">
-                                        Editora</option>
+            <div class="form-row">
+                <div class="form-column esquerda">
+                    <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
+                        <option class="fonte-status" value="" disabled="disabled" <?php echo empty($_POST['idEditora']) ? 'selected="selected"' : ''; ?>placeholder="Editora">Editora</option>
+                        <?php
+                        $sqlEditora = "select * from editora order by nome";
+                        $resultadoEditora = mysqli_query($conexao, $sqlEditora);
+
+                        while($linhaEditora = mysqli_fetch_array($resultadoEditora)):
+                            $idEditora = $linhaEditora['id'];
+                            $nomeEditora = $linhaEditora['nome'];
+                            $selectedEditora = ($idEditora == $_POST['idEditora']) ? 'selected="selected"' : '';
+
+                            echo "<option value='{$idEditora}' {$selectedEditora}>{$nomeEditora}</option>";
+                        endwhile;
+                        ?>
+                    </select>
+                </div>
+                <div class="form-column">
+                    <table>
+                        <tr>
+                            <td style="padding-right: 50px;">
+                                <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                                    <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero" <?php echo empty($_POST['idGenero']) ? 'selected="selected"' : ''; ?>>
+                                      Gênero</option>
                                     <?php
-                                    $sqlEditora = "select * from editora order by nome";
-                                    $resultadoEditora = mysqli_query($conexao, $sqlEditora);
+                                    $sqlGenero = "select * from genero order by nome";
+                                    $resultadoGenero = mysqli_query($conexao, $sqlGenero);
 
-                                    while($linhaEditora = mysqli_fetch_array($resultadoEditora)):
-                                        $idEditora = $linhaEditora['id'];
-                                        $nomeEditora = $linhaEditora['nome'];
-                                        $selectedEditora = ($idEditora == $_POST['idEditora']) ? 'selected="selected"' : '';
+                                    while($linhaGenero = mysqli_fetch_array($resultadoGenero)):
+                                        $idGenero = $linhaGenero['id'];
+                                        $nomeGenero = $linhaGenero['nome'];
+                                        $selectedGenero = ($idGenero == $_POST['idGenero']) ? 'selected="selected"' : '';
 
-                                        echo "<option value='{$idEditora}' {$selectedEditora}>{$nomeEditora}</option>";
+                                        echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
                                     endwhile;
                                     ?>
                                 </select>
-                            </div>
-                            <div class="form-column">
-                                <table>
-                                    <tr>
-                                        <td style="padding-right: 50px;">
-                                            <select class="geekcb-field" name="idGenero" id="selectbox"
-                                                data-selected="">
-                                                <option class="fonte-status" value="" disabled="disabled"
-                                                    placeholder="Gênero" <?php echo empty($_POST['idGenero']) ? 'selected="selected"' : ''; ?>>
-                                                    Gênero</option>
-                                                <?php
-                                                $sqlGenero = "select * from genero order by nome";
-                                                $resultadoGenero = mysqli_query($conexao, $sqlGenero);
+                            </td>
+                            <td>
+                                <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
+                                    <option value="" class="fonte-status" disabled selected hidden>Selecione
+                                        o Status</option>
+                                    <option value="Disponível" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível
+                                    </option>
+                                    <option value="Emprestado" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button name="filtro" stype="button" class="botaopesquisar">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                                <?php
+                                if(isset($_POST["filtro"])) {
+                                    $reset = '<button name="reset" stype="button" class="botaopesquisar"><i class="fa-solid fa-rotate-left"></i></button>';
+                                    echo $reset;
+                                }
+                                ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
-                                                while($linhaGenero = mysqli_fetch_array($resultadoGenero)):
-                                                    $idGenero = $linhaGenero['id'];
-                                                    $nomeGenero = $linhaGenero['nome'];
-                                                    $selectedGenero = ($idGenero == $_POST['idGenero']) ? 'selected="selected"' : '';
-
-                                                    echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
-                                                endwhile;
-                                                ?>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="geekcb-field" name="statusLivro" id="selectbox"
-                                                data-selected="">
-                                                <option value="" class="fonte-status" disabled selected hidden>Selecione
-                                                    o Status</option>
-                                                <option value="Disponível" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível</option>
-                                                <option value="Emprestado" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <button name="filtro" stype="button" class="botaopesquisar">
-                                                <i class="fa-solid fa-magnifying-glass"></i>
-                                            </button>
-                                            <?php
-                                            if(isset($_POST["filtro"])) {
-                                                $reset = '<button name="reset" stype="button" class="botaopesquisar"><i class="fa-solid fa-rotate-left"></i></button>';
-                                                echo $reset;
-                                            }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
-                    </form>
+        </form>
     </center>
 
     <div class="acervocontainer">
