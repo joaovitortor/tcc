@@ -102,6 +102,77 @@ if (isset($_GET['mensagemAlert'])) {
             </div>
             <br><br>
         </form>
+
+        <form method="post">
+                        <div class="form-row">
+                            <div class="form-column esquerda">
+                                <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
+                                    <option class="fonte-status" value="" disabled="disabled" <?php echo empty($_POST['idEditora']) ? 'selected="selected"' : ''; ?>
+                                        placeholder="Editora">
+                                        Editora</option>
+                                    <?php
+                                    $sqlEditora = "select * from editora order by nome";
+                                    $resultadoEditora = mysqli_query($conexao, $sqlEditora);
+
+                                    while($linhaEditora = mysqli_fetch_array($resultadoEditora)):
+                                        $idEditora = $linhaEditora['id'];
+                                        $nomeEditora = $linhaEditora['nome'];
+                                        $selectedEditora = ($idEditora == $_POST['idEditora']) ? 'selected="selected"' : '';
+
+                                        echo "<option value='{$idEditora}' {$selectedEditora}>{$nomeEditora}</option>";
+                                    endwhile;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-column">
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 50px;">
+                                            <select class="geekcb-field" name="idGenero" id="selectbox"
+                                                data-selected="">
+                                                <option class="fonte-status" value="" disabled="disabled"
+                                                    placeholder="Gênero" <?php echo empty($_POST['idGenero']) ? 'selected="selected"' : ''; ?>>
+                                                    Gênero</option>
+                                                <?php
+                                                $sqlGenero = "select * from genero order by nome";
+                                                $resultadoGenero = mysqli_query($conexao, $sqlGenero);
+
+                                                while($linhaGenero = mysqli_fetch_array($resultadoGenero)):
+                                                    $idGenero = $linhaGenero['id'];
+                                                    $nomeGenero = $linhaGenero['nome'];
+                                                    $selectedGenero = ($idGenero == $_POST['idGenero']) ? 'selected="selected"' : '';
+
+                                                    echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
+                                                endwhile;
+                                                ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="geekcb-field" name="statusLivro" id="selectbox"
+                                                data-selected="">
+                                                <option value="" class="fonte-status" disabled selected hidden>Selecione
+                                                    o Status</option>
+                                                <option value="Disponível" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível</option>
+                                                <option value="Emprestado" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button name="filtro" stype="button" class="botaopesquisar">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                            </button>
+                                            <?php
+                                            if(isset($_POST["filtro"])) {
+                                                $reset = '<button name="reset" stype="button" class="botaopesquisar"><i class="fa-solid fa-rotate-left"></i></button>';
+                                                echo $reset;
+                                            }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </form>
     </center>
 
     <div class="acervocontainer">
