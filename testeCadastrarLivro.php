@@ -47,8 +47,8 @@ if (isset($_POST['cadastrar'])) {
     $pag = $_POST['pag'];
     $isbn = $_POST['isbn'];
     $edicao = $_POST['edicao'];
-    $idEditora = $_POST['idEditora'];
-    $idGenero = $_POST['idGenero'];
+    $idEditora = $_POST['editora'];
+    $idGenero = $_POST['genero'];
 
     $diretorio = "uploads/";
     $arquivoDestino = $diretorio . $_FILES['arquivo']['name'];
