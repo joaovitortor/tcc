@@ -112,7 +112,8 @@ if(isset($_GET['mensagemAlert'])) {
             </div>
             <br><br>
         </form>
-
+</center>
+<div style="padding-left: 30%; align-content: center">
         <form method="post">
             <div class="form-row">
                 <div class="form-column esquerda">
@@ -180,7 +181,7 @@ if(isset($_GET['mensagemAlert'])) {
             </div>
 
         </form>
-    </center>
+        </div>
 
     <div class="acervocontainer">
 
