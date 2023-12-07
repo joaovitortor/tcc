@@ -112,13 +112,14 @@ if(isset($_GET['mensagemAlert'])) {
             </div>
             <br><br>
         </form>
-</center>
-<div style="padding-left: 30%; align-content: center">
-        <form method="post">
+    </center>
+    <div style="padding-left: 10%" class="container">
+        <form method="post" class="mx-auto">
             <div class="form-row">
                 <div class="form-column esquerda">
                     <select class="geekcb-field" name="idEditora" id="selectbox" data-selected="">
-                        <option class="fonte-status" value="" disabled="disabled" <?php echo empty($_POST['idEditora']) ? 'selected="selected"' : ''; ?>placeholder="Editora">Editora</option>
+                        <option class="fonte-status" value="" disabled="disabled" <?php echo empty($_POST['idEditora']) ? 'selected="selected"' : ''; ?>placeholder="Editora">Editora
+                        </option>
                         <?php
                         $sqlEditora = "select * from editora order by nome";
                         $resultadoEditora = mysqli_query($conexao, $sqlEditora);
@@ -152,22 +153,26 @@ if(isset($_GET['mensagemAlert'])) {
                     </select>
                 </div>
                 <div class="form-column">
+                    <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
+                        <option value="" class="fonte-status" disabled selected hidden>Selecione
+                            o Status</option>
+                        <option value="Disponível" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>
+                            Disponível
+                        </option>
+                        <option value="Emprestado" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>
+                            Emprestado
+                        </option>
+                    </select>
+                </div>
+                <div class="form-column">
                     <table>
                         <tr>
-                            <td>
-                                <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
-                                    <option value="" class="fonte-status" disabled selected hidden>Selecione
-                                        o Status</option>
-                                    <option value="Disponível" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível
-                                    </option>
-                                    <option value="Emprestado" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado
-                                    </option>
-                                </select>
-                            </td>
                             <td>
                                 <button name="filtro" stype="button" class="botaopesquisar">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
+                            </td>
+                            <td>
                                 <?php
                                 if(isset($_POST["filtro"])) {
                                     $reset = '<button name="reset" stype="button" class="botaopesquisar"><i class="fa-solid fa-rotate-left"></i></button>';
@@ -181,8 +186,7 @@ if(isset($_GET['mensagemAlert'])) {
             </div>
 
         </form>
-        </div>
-
+    </div>
     <div class="acervocontainer">
 
         <?php require_once('acervo1.php') ?>
