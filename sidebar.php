@@ -20,7 +20,7 @@
 <li><a class="listar-btn">
         <i class="fa-solid fa-list"></i><span class="link-name">Listar</span></a>
     <ul class="listar-show">
-        <li><a href="listarEmprestimo.php" class="text">Emprestimo</a></li>
+        <li><a href="listarEmprestimo2.php" class="text">Emprestimo</a></li>
         <li><a href="listarLeitor.php" class="text">Leitor</a></li>
         <li><a href="listarLivros.php" class="text">Livro</a></li>
         <li><a href="listarAutores.php" class="text">Autor</a></li>
