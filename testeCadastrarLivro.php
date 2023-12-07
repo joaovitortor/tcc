@@ -4,57 +4,75 @@ require_once("conexao.php");
 
 require_once("admAutenticacao.php");
 
-if (isset($_POST['cadastrarAutor'])) {
+if(isset($_POST['cadastrarAutor'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['cadastrarAutorStatus'];
     $nome = $_POST['cadastrarAutorNome'];
 
-    //3. preparar sql para inserir
-    $sql = "INSERT INTO autor (status, nome) VALUES ('$status', '$nome')";
+    $sqlNome = "SELECT nome FROM autor WHERE nome = '".$nome."'";
+    $verificaNome = mysqli_query($conexao, $sqlNome);
+    $numeroLinhas = mysqli_num_rows($verificaNome);
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    if($numeroLinhas < 1) {
+        //3. preparar sql para inserir
+        $sql = "INSERT INTO autor (status, nome) VALUES ('$status', '$nome')";
+
+        //4. executar sql no bd
+        mysqli_query($conexao, $sql);
+    }
 }
 
-if (isset($_POST['cadastrarEditora'])) {
+if(isset($_POST['cadastrarEditora'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['cadastrarEditoraStatus'];
     $nome = $_POST['cadastrarEditoraNome'];
 
-    //3. preparar sql para inserir
-    $sql = "INSERT INTO editora (status, nome) VALUES ('$status', '$nome')";
+    $sqlNome = "SELECT nome FROM editora WHERE nome = '".$nome."'";
+    $verificaNome = mysqli_query($conexao, $sqlNome);
+    $numeroLinhas = mysqli_num_rows($verificaNome);
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    if($numeroLinhas < 1) {
+        //3. preparar sql para inserir
+        $sql = "INSERT INTO editora (status, nome) VALUES ('$status', '$nome')";
+
+        //4. executar sql no bd
+        mysqli_query($conexao, $sql);
+    }
 }
 
-if (isset($_POST['cadastrarGenero'])) {
+if(isset($_POST['cadastrarGenero'])) {
     //2. Receber os dados para inserir no BD
     $status = $_POST['cadastrarGeneroStatus'];
     $nome = $_POST['cadastrarGeneroNome'];
 
-    //3. preparar sql para inserir
-    $sql = "INSERT INTO genero (status, nome) VALUES ('$status', '$nome')";
+    $sqlNome = "SELECT nome FROM genero WHERE nome = '".$nome."'";
+    $verificaNome = mysqli_query($conexao, $sqlNome);
+    $numeroLinhas = mysqli_num_rows($verificaNome);
 
-    //4. executar sql no bd
-    mysqli_query($conexao, $sql);
+    if($numeroLinhas < 1) {
+        //3. preparar sql para inserir
+        $sql = "INSERT INTO genero (status, nome) VALUES ('$status', '$nome')";
+
+        //4. executar sql no bd
+        mysqli_query($conexao, $sql);
+    }
 }
 
-if (isset($_POST['cadastrar'])) {
+if(isset($_POST['cadastrar'])) {
     //2. Receber os dados para inserir no BD
     $statusLivro = $_POST['statusLivro'];
     $titulo = $_POST['titulo'];
     $pag = $_POST['pag'];
     $isbn = $_POST['isbn'];
     $edicao = $_POST['edicao'];
-    $idEditora = $_POST['editora'];
-    $idGenero = $_POST['genero'];
+    $idEditora = $_POST['idEditora'];
+    $idGenero = $_POST['idGenero'];
 
     $diretorio = "uploads/";
-    $arquivoDestino = $diretorio . $_FILES['arquivo']['name'];
+    $arquivoDestino = $diretorio.$_FILES['arquivo']['name'];
 
     $nomeArquivo = "";
-    if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $arquivoDestino)) {
+    if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $arquivoDestino)) {
         $nomeArquivo = $_FILES['arquivo']['name'];
     } else {
         echo "ERRO: Arquivo não enviado";
@@ -69,7 +87,7 @@ if (isset($_POST['cadastrar'])) {
     $idAutores = $_POST['autor'];
 
 
-    foreach ($idAutores as $idAutor) {
+    foreach($idAutores as $idAutor) {
         $sql = "INSERT INTO livroautor (idLivro, idAutor) VALUES ('$idLivro','$idAutor')";
         mysqli_query($conexao, $sql);
     }
@@ -178,7 +196,7 @@ if (isset($_POST['cadastrar'])) {
                                             $sql = "select * from autor order by nome";
                                             $resultado = mysqli_query($conexao, $sql);
 
-                                            while ($linha = mysqli_fetch_array($resultado)):
+                                            while($linha = mysqli_fetch_array($resultado)):
                                                 $idAutor = $linha['id'];
                                                 $nome = $linha['nome'];
 
@@ -187,9 +205,9 @@ if (isset($_POST['cadastrar'])) {
                                             ?>
                                         </select>
                                     </td>
-                                   
+
                                     <td>
-                                         <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalAutor">
+                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalAutor">
                                             <i class="fa-solid fa-plus"></i>
                                         </a>
                                     </td>
@@ -204,30 +222,31 @@ if (isset($_POST['cadastrar'])) {
                         </div>
 
                         <div class="form-column">
-                        <table>
+                            <table>
                                 <tr>
                                     <td>
-                                        <label for="editora" style="font-family: Fjalla One">Editora: </label><br>
-                                        <select class="geekcb-field" name="editora" id="editora">
-                                        <option class="fonte-status" disabled="disabled"
-                                                placeholder="Selecione os autores">
-                                            </option>
+                                        <select required class="geekcb-field" name="idEditora" id="selectbox"
+                                            data-selected="">
+                                            <option class="fonte-status" value="" disabled="disabled" <?php echo !isset($_POST['idEditora']) ? 'selected="selected"' : ''; ?>
+                                                placeholder="Editora">
+                                                Editora</option>
                                             <?php
-                                            $sql = "select * from editora where status = 'Ativo' order by nome";
+                                            $sql = "select * from editora order by nome";
                                             $resultado = mysqli_query($conexao, $sql);
 
-                                            while ($linha = mysqli_fetch_array($resultado)):
-                                                $idEditora = $linha['id'];
-                                                $nome = $linha['nome'];
+                                            while($linhaEditora = mysqli_fetch_array($resultado)):
+                                                $idEditora = $linhaEditora['id'];
+                                                $nomeEditora = $linhaEditora['nome'];
+                                                $selectedEditora = ($idEditora == $linhaEditora['idEditora']) ? 'selected="selected"' : '';
 
-                                                echo "<option value='{$idEditora}'>{$nome}</option>";
+                                                echo "<option value='{$idEditora}' {$selectedEditora}>{$nomeEditora}</option>";
                                             endwhile;
                                             ?>
                                         </select>
                                     </td>
-                                   
+
                                     <td>
-                                         <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalEditora">
+                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalEditora">
                                             <i class="fa-solid fa-plus"></i>
                                         </a>
                                     </td>
@@ -242,30 +261,31 @@ if (isset($_POST['cadastrar'])) {
                                 name="edicao">
                         </div>
                         <div class="form-column">
-                        <table>
+                            <table>
                                 <tr>
                                     <td>
-                                        <label for="genero" style="font-family: Fjalla One">Gênero </label><br>
-                                        <select class="geekcb-field" name="genero" id="genero">
-                                            <option class="fonte-status" disabled="disabled"
-                                                placeholder="Selecione os autores">
-                                            </option>
+                                        <select class="geekcb-field" name="idGenero" required id="selectbox"
+                                            data-selected="">
+                                            <option class="fonte-status" value="" disabled="disabled"
+                                                placeholder="Gênero" <?php echo !isset($_POST['idGenero']) ? 'selected="selected"' : ''; ?>>
+                                                Gênero</option>
                                             <?php
-                                            $sql = "select * from genero where status = 'Ativo' order by nome";
+                                            $sql = "select * from genero order by nome";
                                             $resultado = mysqli_query($conexao, $sql);
 
-                                            while ($linha = mysqli_fetch_array($resultado)):
-                                                $idAutor = $linha['id'];
-                                                $nome = $linha['nome'];
+                                            while($linhaGenero = mysqli_fetch_array($resultado)):
+                                                $idGenero = $linhaGenero['id'];
+                                                $nomeGenero = $linhaGenero['nome'];
+                                                $selectedGenero = ($idGenero == $linha['idGenero']) ? 'selected="selected"' : '';
 
-                                                echo "<option value='{$idGenero}'>{$nome}</option>";
+                                                echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
                                             endwhile;
                                             ?>
                                         </select>
                                     </td>
-                                   
+
                                     <td>
-                                         <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalGenero">
+                                        <a class="geekcb-btn" data-bs-toggle="modal" data-bs-target="#modalGenero">
                                             <i class="fa-solid fa-plus"></i>
                                         </a>
                                     </td>
@@ -278,7 +298,7 @@ if (isset($_POST['cadastrar'])) {
                             <input class="geekcb-field" id="isbn" name="isbn" placeholder="ISBN" required type="texto">
                         </div>
                         <div class="form-column">
-                            <input type="file" class="geekcb-field" name="arquivo" id="arquivo">
+                            <input required type="file" class="geekcb-field" name="arquivo" id="arquivo">
                         </div>
                     </div>
                     <div class="form-row">
