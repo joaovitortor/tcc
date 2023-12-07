@@ -61,7 +61,33 @@ if(isset($_POST['andamento'])){
 
     //3. Executa a SQL
     $resultado = mysqli_query($conexao, $sql);
-} else {
+}elseif(isset($_POST['atraso'])){
+    $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
+    FROM emprestimo 
+    LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
+    WHERE statusEmprestimo = 'Em atraso'" . $V_WHERE;
+
+    //3. Executa a SQL
+    $resultado = mysqli_query($conexao, $sql);
+}elseif(isset($_POST['finalizado'])){
+    $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
+    FROM emprestimo 
+    LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
+    WHERE statusEmprestimo = 'Finalizado'" . $V_WHERE;
+
+    //3. Executa a SQL
+    $resultado = mysqli_query($conexao, $sql);
+}
+elseif(isset($_POST['todos'])){
+    $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
+    FROM emprestimo 
+    LEFT JOIN leitor ON emprestimo.idLeitor = leitor.id     
+    ORDER BY FIELD(statusEmprestimo, 'Em atraso', 'Em andamento', 'Finalizado'), id DESC" . $V_WHERE;
+
+    //3. Executa a SQL
+    $resultado = mysqli_query($conexao, $sql);
+}
+else{
 
 //2. Preparar a sql
 $sql = "SELECT emprestimo.id, leitor.nome as nomeLeitor, statusEmprestimo, dataEmprestimo, dataPrevistaDevolucao, valorMulta
@@ -147,10 +173,15 @@ $resultado = mysqli_query($conexao, $sql);
         </div>
         <br><br><br>
         <?php require_once("mensagem.php"); ?>
-        <h1 class="titulo text">Listagem de empréstimos ativos<a href="emprestimo.php" class="botao">
+        <h1 class="titulo text">Listagem de empréstimos<a href="emprestimo.php" class="botao">
                 <i class="fa-solid fa-plus"></i>
             </a></h1>
-
+            <form method="post">     
+            <button type="submit" name="andamento" value="andamento" class="botao">Em andamento</button>
+            <button type="submit" name="atraso" value="atraso" class="botao">Em atraso</button>
+            <button type="submit" name="finalizado" value="finalizado" class="botao">Finalizado</button>
+            <button type="submit" name="todos" value="todos" class="botao">Todos</button>
+            </form>
         <br><br>
 
 
@@ -166,9 +197,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <br><br>
             </form>
         </center>
-        <form method="post">
-<button type="submit" name="andamento" value="andamento">Em andamento</button>
-</form>
+
         <center>
             <div class="card cardlistar">
                 <div class="card-body cardlistar2">
