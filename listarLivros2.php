@@ -33,6 +33,7 @@ if(isset($_POST['excluir'])) { // Verifica se o botão excluir foi clicado
 $V_WHERE = "";
 $filtroGenero = "";
 $filtroEditora = "";
+$filtroStatus = "";
 
 if(isset($_POST['pesquisar'])) { // botao pesquisar
     $V_WHERE = " and titulo like '%".$_POST['titulo']."%' ";
@@ -40,23 +41,25 @@ if(isset($_POST['pesquisar'])) { // botao pesquisar
 }
 
 if(isset($_POST['filtro'])) {
-    if(isset($_POST['idGenero']) && isset($_POST['idEditora'])) {
+    if(isset($_POST['idGenero'])) {
         $genero = $_POST['idGenero'];
         $filtroGenero = " and genero.id = ".$genero;
+    }
+    if(isset($_POST["idEditora"])) {
         $editora = $_POST['idEditora'];
         $filtroEditora = " and editora.id = ".$editora;
-    } elseif(isset($_POST['idGenero'])) {
-        $genero = $_POST['idGenero'];
-        $filtroGenero = " and genero.id = ".$genero;
-    } else if(isset($_POST["idEditora"])) {
-        $editora = $_POST['idEditora'];
-        $filtroEditora = " and editora.id = ".$editora;
+    }
+    if(isset($_POST["statusLivro"])) {
+        $statusLivroFiltro = $_POST['statusLivro'];
+        $filtroStatus = " and livro.statusLivro = '".$statusLivroFiltro . "'";
+
     }
 }
 
 if(isset($_POST["reset"])) {
     $filtroGenero = '';
     $filtroEditora = '';
+    $filtroStatus = '';
     $_POST['idGenero'] = '';
     $_POST['idEditora'] = '';
 }
@@ -65,7 +68,7 @@ $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero,
         FROM livro
         LEFT JOIN editora ON livro.idEditora = editora.id
         LEFT JOIN genero ON livro.idGenero = genero.id
-        WHERE 1 = 1".$V_WHERE.$filtroGenero.$filtroEditora;
+        WHERE 1 = 1".$V_WHERE.$filtroGenero.$filtroEditora.$filtroStatus;
 
 //3. Executa a SQL
 $resultado = mysqli_query($conexao, $sql);
@@ -199,7 +202,7 @@ $resultado = mysqli_query($conexao, $sql);
                             <div class="form-column">
                                 <table>
                                     <tr>
-                                        <td>
+                                        <td style="padding-right: 50px;">
                                             <select class="geekcb-field" name="idGenero" id="selectbox"
                                                 data-selected="">
                                                 <option class="fonte-status" value="" disabled="disabled"
@@ -217,6 +220,15 @@ $resultado = mysqli_query($conexao, $sql);
                                                     echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
                                                 endwhile;
                                                 ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="geekcb-field" name="statusLivro" id="selectbox"
+                                                data-selected="">
+                                                <option value="" class="fonte-status" disabled selected hidden>Selecione
+                                                    o Status</option>
+                                                <option value="Disponível" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Disponível') ? 'selected="selected"' : '' ?>>Disponível</option>
+                                                <option value="Emprestado" <?= (isset($_POST['statusLivro']) && $_POST['statusLivro'] == 'Emprestado') ? 'selected="selected"' : '' ?>>Emprestado</option>
                                             </select>
                                         </td>
                                         <td>
