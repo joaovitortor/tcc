@@ -7,6 +7,35 @@ if (isset($_POST['pesquisar'])) { // botao pesquisar
     $voltar = '<a href="acervo.php" style="text-decoration: none"><button name="voltar" stype="button" class="botaopesquisarAcervo">Voltar</button></a>';
 }
 
+$filtroGenero = "";
+$filtroEditora = "";
+$filtroStatus = "";
+
+if(isset($_POST['filtro'])) {
+    if(isset($_POST['idGenero'])) {
+        $genero = $_POST['idGenero'];
+        $filtroGenero = " and genero.id = ".$genero;
+    }
+    if(isset($_POST["idEditora"])) {
+        $editora = $_POST['idEditora'];
+        $filtroEditora = " and editora.id = ".$editora;
+    }
+    if(isset($_POST["statusLivro"])) {
+        $statusLivroFiltro = $_POST['statusLivro'];
+        $filtroStatus = " and livro.statusLivro = '".$statusLivroFiltro . "'";
+
+    }
+}
+
+if(isset($_POST["reset"])) {
+    $filtroGenero = '';
+    $filtroEditora = '';
+    $filtroStatus = '';
+    $_POST['idGenero'] = '';
+    $_POST['idEditora'] = '';
+    $_POST['statusLivro'] = '';
+}
+
 $pagina = 1;
 
 if (isset($_GET['pagina']))
@@ -22,7 +51,7 @@ $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero,
         FROM livro
         LEFT JOIN editora ON livro.idEditora = editora.id
         LEFT JOIN genero ON livro.idGenero = genero.id
-        WHERE 1 {$V_WHERE}
+        WHERE 1 {$V_WHERE}{$filtroGenero}{$filtroEditora}{$filtroStatus}
         ORDER BY livro.id desc LIMIT $inicio, $limite";
 
 $registros = mysqli_fetch_array(mysqli_query($conexao, "SELECT COUNT(titulo) count FROM livro"))['count'];

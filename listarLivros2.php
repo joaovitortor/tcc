@@ -56,13 +56,6 @@ if(isset($_POST['filtro'])) {
     }
 }
 
-if(isset($_POST["reset"])) {
-    $filtroGenero = '';
-    $filtroEditora = '';
-    $filtroStatus = '';
-    $_POST['idGenero'] = '';
-    $_POST['idEditora'] = '';
-}
 //2. Preparar a sql
 $sql = "SELECT livro.id, editora.nome as nomeEditora, genero.nome as nomeGenero, livro.statusLivro, livro.titulo, livro.pag, livro.isbn, livro.edicao, livro.arquivo as arquivo
         FROM livro
