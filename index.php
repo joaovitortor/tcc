@@ -132,27 +132,27 @@ if(isset($_GET['mensagemAlert'])) {
                         ?>
                     </select>
                 </div>
+                <div class="form-column esquerda">
+                    <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
+                        <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero" <?php echo empty($_POST['idGenero']) ? 'selected="selected"' : ''; ?>>
+                            Gênero</option>
+                        <?php
+                        $sqlGenero = "select * from genero order by nome";
+                        $resultadoGenero = mysqli_query($conexao, $sqlGenero);
+
+                        while($linhaGenero = mysqli_fetch_array($resultadoGenero)):
+                            $idGenero = $linhaGenero['id'];
+                            $nomeGenero = $linhaGenero['nome'];
+                            $selectedGenero = ($idGenero == $_POST['idGenero']) ? 'selected="selected"' : '';
+
+                            echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
+                        endwhile;
+                        ?>
+                    </select>
+                </div>
                 <div class="form-column">
                     <table>
                         <tr>
-                            <td style="padding-right: 50px;">
-                                <select class="geekcb-field" name="idGenero" id="selectbox" data-selected="">
-                                    <option class="fonte-status" value="" disabled="disabled" placeholder="Gênero" <?php echo empty($_POST['idGenero']) ? 'selected="selected"' : ''; ?>>
-                                      Gênero</option>
-                                    <?php
-                                    $sqlGenero = "select * from genero order by nome";
-                                    $resultadoGenero = mysqli_query($conexao, $sqlGenero);
-
-                                    while($linhaGenero = mysqli_fetch_array($resultadoGenero)):
-                                        $idGenero = $linhaGenero['id'];
-                                        $nomeGenero = $linhaGenero['nome'];
-                                        $selectedGenero = ($idGenero == $_POST['idGenero']) ? 'selected="selected"' : '';
-
-                                        echo "<option value='{$idGenero}' {$selectedGenero}>{$nomeGenero}</option>";
-                                    endwhile;
-                                    ?>
-                                </select>
-                            </td>
                             <td>
                                 <select class="geekcb-field" name="statusLivro" id="selectbox" data-selected="">
                                     <option value="" class="fonte-status" disabled selected hidden>Selecione
