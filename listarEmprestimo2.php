@@ -176,12 +176,15 @@ $resultado = mysqli_query($conexao, $sql);
         <h1 class="titulo text">Listagem de empréstimos<a href="emprestimo.php" class="botao">
                 <i class="fa-solid fa-plus"></i>
             </a></h1>
+            <center>
+                <br>
             <form method="post">     
             <button type="submit" name="andamento" value="andamento" class="botao">Em andamento</button>
             <button type="submit" name="atraso" value="atraso" class="botao">Em atraso</button>
             <button type="submit" name="finalizado" value="finalizado" class="botao">Finalizado</button>
             <button type="submit" name="todos" value="todos" class="botao">Todos</button>
             </form>
+        </center>
         <br><br>
 
 
