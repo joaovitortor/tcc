@@ -161,7 +161,7 @@ $resultado = mysqli_query($conexao, $sql);
 <br>
 
 <center>
-<div class="paginacao">
+<div class="paginacao text">
 
     <a href="?pagina=1"> Primeira </a>
     <?php if ($pagina > 1) { ?>
