@@ -164,7 +164,7 @@ $resultado = mysqli_query($conexao, $sql);
 
             <?php }
 
-            if($linha['statusEmprestimo'] == 'Em andamento') { ?>
+            if($linha['statusEmprestimo'] == 'Em andamento' || $linha['statusEmprestimo'] == 'Em atraso') { ?>
                 <div class="wrapperAcervo" style="height: 400px">
 
                     <div class="containerAcervo"
